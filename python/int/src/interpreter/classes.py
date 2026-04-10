@@ -8,7 +8,7 @@ class Object:
     def __init__(self, *args):
         self.args = args
 
-    def _asString(self) -> str:
+    def asString(self, *args) -> str:
         return ''
 
     def identicalTo(self, obj: Object) -> bool:
@@ -55,7 +55,7 @@ class Nil(Object):
     #     if self.instance is None:
     #         self.instance = Object()
 
-    def _asString(self) -> str:
+    def asString(self) -> str:
         return 'nil'
     
     @classmethod
@@ -135,7 +135,7 @@ class String(Object):
     def equalTo(self, obj: String) -> bool:
         return self.string == obj.string
     
-    def _asString(self) -> String:
+    def asString(self) -> String:
         return String(self) # ?? String()
     
     def asInteger(self):

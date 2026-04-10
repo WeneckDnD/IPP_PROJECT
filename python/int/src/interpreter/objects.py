@@ -16,6 +16,7 @@ class NewObject:
         if self.class_def is not None: 
             for method in self.class_def.methods:
                 if method.selector == selector:
+                    # print(f'Mtethod from lookup {method}')
                     return method
         # print(self.parent, selector, dir(self.parent))
         for mthd_name in dir(self.parent):

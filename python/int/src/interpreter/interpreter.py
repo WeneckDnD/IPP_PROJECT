@@ -58,11 +58,14 @@ class Interpreter:
             ) from e
         
     def send_message(self, receiver: NewObject, selector: str, args, scope: Scope):
-        print(receiver)
+        # print(receiver)
+        # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
         method = receiver.lookup(selector)
+        # print(f'Method: {method}')
+        
         # built-in vs user-defined
         if callable(method):
-            return method(args)
+            return NewObject(None, method(args), receiver.parent)
         else:
             return self.execute_method(method, scope) #TODO: args are ignored
 
@@ -101,8 +104,12 @@ class Interpreter:
         # arity ?
         # find block
         # execute the block (execute_block)
-        block_arity = method.block.arity # TODO
-        self.execute_block(method.block, parent_scope)
+        # block_arity = method.block.arity # TODO
+        if method is not None:
+            return self.execute_block(method.block, parent_scope)
+        else:
+            raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
+        
 
     def execute_block(self, block: Block, parent_scope: Scope) -> Any:
         current_scope = Scope(parent=parent_scope)
@@ -217,6 +224,7 @@ class Interpreter:
             # method = class_y.lookup(selector)
             # print(f'method: {method}')
             # self.execute_method(method, current_scope)
+            # print(f'Result value: {result.value} Selector: {selector}')
             return result
 
 
