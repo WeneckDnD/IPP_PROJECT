@@ -26,7 +26,7 @@ class NewObject:
     def set_attribute(self, name: str, value: Any):
         self.attributes[name] = value
 
-    def send_messagge(self, receiver: any, selector: str, args):
-        method = receiver.cls.lookup(selector)
-        return method(receiver, args)
+    # def send_messagge(self, receiver: any, selector: str, args):
+    #     method = receiver.cls.lookup(selector)
+    #     return method(receiver, args)
          

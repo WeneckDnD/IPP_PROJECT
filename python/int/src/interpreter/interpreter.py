@@ -57,7 +57,13 @@ class Interpreter:
                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
             ) from e
         
-         
+    def send_message(self, receiver: NewObject, selector: str, args, scope: Scope):
+        method = receiver.lookup(selector)
+        # built-in vs user-defined
+        if callable(method):
+            return receiver.parent.method(args)
+        else:
+            return self.execute_method(method, scope) #TODO: args are ignored
 
     def execute(self, input_io: TextIO) -> None:
         """
@@ -117,7 +123,7 @@ class Interpreter:
             return self.execute_send(expr.send, current_scope)
         if expr.literal is not None:
             # print(f"LITERAL")
-            return self.execute_literal(expr.literal)
+            return self.execute_literal_new(expr.literal)
         if expr.var is not None:
             # print(f"VARIABLE")
             x = current_scope.get_variable(expr.var.name)
@@ -196,7 +202,7 @@ class Interpreter:
 
         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
         # - function to find out if current selector is build-in or not for the current Parent Class
-
+        self.send_message(class_y, selector, arguments, current_scope)
         if selector == "new":
             parent_class = Object.new(class_y.parent)
             class_object = NewObject(class_y, parent_class)
