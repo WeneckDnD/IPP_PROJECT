@@ -58,10 +58,11 @@ class Interpreter:
             ) from e
         
     def send_message(self, receiver: NewObject, selector: str, args, scope: Scope):
+        print(receiver)
         method = receiver.lookup(selector)
         # built-in vs user-defined
         if callable(method):
-            return receiver.parent.method(args)
+            return method(args)
         else:
             return self.execute_method(method, scope) #TODO: args are ignored
 
@@ -174,7 +175,7 @@ class Interpreter:
             new_nil_class = NewObject(None, value, parent_class)
             return new_nil_class
         if literal.class_id == "class":
-            value = literal.value
+            value = self.find_class(literal.value)
             parent_class = Object.new(Nil, value)
             new_nil_class = NewObject(None, value, parent_class)
             return new_nil_class
@@ -202,7 +203,7 @@ class Interpreter:
 
         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
         # - function to find out if current selector is build-in or not for the current Parent Class
-        self.send_message(class_y, selector, arguments, current_scope)
+        return self.send_message(class_y, selector, arguments, current_scope)
         if selector == "new":
             parent_class = Object.new(class_y.parent)
             class_object = NewObject(class_y, parent_class)

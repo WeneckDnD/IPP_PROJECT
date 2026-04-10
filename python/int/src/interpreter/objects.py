@@ -12,12 +12,16 @@ class NewObject:
         # self.methods: dict = {}
     
     def lookup(self, selector: str) -> Any:
-        for method in self.class_def.methods:
-            if method.selector == selector:
-                return method
+        # print(self.class_def)
+        if self.class_def is not None: 
+            for method in self.class_def.methods:
+                if method.selector == selector:
+                    return method
+        # print(self.parent, selector, dir(self.parent))
         for mthd_name in dir(self.parent):
             if selector == mthd_name:
-                return self.parent.mthd_name
+                # print(mthd_name)
+                return getattr(self.parent, mthd_name)
         
     def get_attribute(self, name: str) -> Any:
         if name in self.attributes:
