@@ -97,16 +97,17 @@ class Interpreter:
         
         self.execute_method(run_method, scope)
         
-    def execute_method(self, method: Method, parent_scope: Scope) -> None:
+    def execute_method(self, method: Method, parent_scope: Scope) -> Any:
         # arity ?
         # find block
         # execute the block (execute_block)
         block_arity = method.block.arity # TODO
         self.execute_block(method.block, parent_scope)
 
-    def execute_block(self, block: Block, parent_scope: Scope) -> None:
+    def execute_block(self, block: Block, parent_scope: Scope) -> Any:
         current_scope = Scope(parent=parent_scope)
         # self.scope.set_variable()
+        retValue = None
         for assgn in block.assigns:
             assgn_target = assgn.target # o
             print(f"Assign target: {assgn_target.name}")
@@ -117,6 +118,8 @@ class Interpreter:
             # look_up = exp.lookup("foo")
             # print(look_up) 
             # self.execute_block(look_up.block, current_scope)
+            retValue = exp
+        return retValue
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
         if expr.send is not None:
@@ -175,11 +178,10 @@ class Interpreter:
             new_nil_class = NewObject(None, value, parent_class)
             return new_nil_class
         if literal.class_id == "class":
-            value = self.find_class(literal.value)
-            parent_class = Object.new(Nil, value)
-            new_nil_class = NewObject(None, value, parent_class)
-            return new_nil_class
-
+            class_def = self.find_class(literal.value)
+            parent_class = Object.new(class_def.parent)
+            new_class = NewObject(class_def, None, parent_class)
+            return new_class
 
 
     def find_class(self, class_name: str) -> ClassDef | None:
@@ -203,16 +205,23 @@ class Interpreter:
 
         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
         # - function to find out if current selector is build-in or not for the current Parent Class
-        return self.send_message(class_y, selector, arguments, current_scope)
         if selector == "new":
-            parent_class = Object.new(class_y.parent)
-            class_object = NewObject(class_y, parent_class)
+            class_y = self.execute_expression(send.receiver, current_scope)
+        # return self.send_message(class_y, selector, arguments, current_scope)
+            # parent_class = Object.new(class_y.parent)
+            # class_object = NewObject(class_y, parent_class)
             # print(f"Created new object of class with these attributes:{new_object.attributes}")
-            return class_object
+            return class_y
         else:
-            method = class_y.lookup(selector)
-            print(f'method: {method}')
-            self.execute_method(method, current_scope)
+            result = self.send_message(class_y, selector, arguments, current_scope)
+            # method = class_y.lookup(selector)
+            # print(f'method: {method}')
+            # self.execute_method(method, current_scope)
+            return result
+
+
+
+
             # class_mthd = None
             # for mthd in class_y.methods:
             #     if selector == mthd.selector:
