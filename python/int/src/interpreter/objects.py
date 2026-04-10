@@ -10,12 +10,15 @@ class NewObject:
         self.parent = parent
         self.value = value
         # self.methods: dict = {}
-
+    
     def lookup(self, selector: str) -> Any:
         for method in self.class_def.methods:
             if method.selector == selector:
                 return method
-    
+        for mthd_name in dir(self.parent):
+            if selector == mthd_name:
+                return self.parent.mthd_name
+        
     def get_attribute(self, name: str) -> Any:
         if name in self.attributes:
             return self.attributes.get(name, None)
@@ -23,4 +26,7 @@ class NewObject:
     def set_attribute(self, name: str, value: Any):
         self.attributes[name] = value
 
-    def send_messagge(self, )
+    def send_messagge(self, receiver: any, selector: str, args):
+        method = receiver.cls.lookup(selector)
+        return method(receiver, args)
+         

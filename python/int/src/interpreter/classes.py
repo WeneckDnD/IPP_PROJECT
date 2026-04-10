@@ -5,13 +5,11 @@ from interpreter.exceptions import InterpreterError
 
 class Object:
 
-    obj_methods = {}
     def __init__(self, *args):
         self.args = args
-        self.obj_methods = {"asString": self._asString, "new":self.new}
 
-    def _asString(self, thing: any) -> str:
-        return str(thing)
+    def _asString(self) -> str:
+        return ''
 
     def identicalTo(self, obj: Object) -> bool:
         return self is obj
@@ -21,13 +19,14 @@ class Object:
         return cls(args)
 
     def equalTo(self, obj: Object) -> bool:
-        if obj.attributes == None:
-            return self.identicalTo(obj)
-        else:
-            for atr in self.attributes:
-                if self.attributes[atr] != obj.attributes[atr]:
-                    return False
-        return True
+        return self.identicalTo(obj)
+        # if obj.attributes == None:
+        #     return self.identicalTo(obj)
+        # else:
+        #     for atr in self.attributes:
+        #         if self.attributes[atr] != obj.attributes[atr]:
+        #             return False
+        # return True
 
 
     
@@ -49,17 +48,32 @@ class Object:
 
 class Nil(Object):
 
+    instance = Object()
+    # instance = None
+
+    # def __init__(self):
+    #     if self.instance is None:
+    #         self.instance = Object()
+
     def _asString(self) -> str:
         return 'nil'
-
+    
+    @classmethod
+    def new(cls):
+        return cls.instance
+    
+    @classmethod
+    def from_(cls):
+        return cls.instance 
 
 class Integer(Object):
+
     def __init__(self, value: int = 0):
         self.value = value
 
     @classmethod
     def new(cls, *args):
-        return cls(args)
+        return cls(*args)
 
     def equalTo(self, obj: Integer) -> bool:
         return self.value == obj.value
@@ -89,15 +103,15 @@ class Integer(Object):
             return self.value // obj.value
     
     def asInteger(self) -> Integer: 
-        return self
+        return Integer(self)
     
-    def timesRepeat(self, block: Block):
-        if self.value <= 0:
-            return None
+    def timesRepeat(n: int, block: Block):
+        if n <= 0:
+            return Nil()
         
         result = None
-        for i in range(1, self.value + 1):
-            pass # ??? result = block[i]
+        for i in range(1, n + 1):
+            result = block.value(i)
         return result
     
 
@@ -124,18 +138,22 @@ class String(Object):
     def _asString(self) -> String:
         return String(self) # ?? String()
     
+    def asInteger(self):
+        if self.string.isdigit():
+            return int(self.string)
+    
     def concatenateWith(self, obj: String):
         if isinstance(obj, String):
-            return None
+            return Nil()
         else: 
             return String(self.string + obj.string) # ?? String()
     
     def startsWithendsWith(self, index_start: int, index_end: int) -> str:
         if isinstance(index_start, int) or isinstance(index_end, int):
-            return None # nil ??
+            return Nil() # nil ??
             
         if index_start <= 0 or index_end <= 0:
-            return None 
+            return Nil()
         
         if index_start < 1:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "indexing from 1")
@@ -144,7 +162,7 @@ class String(Object):
         if index_end > len(self.string):
             return self.string[index_start-1:]
         else:
-            return self.string[index_start-1:index_end]
+            return self.string[index_start-1:index_end-1]
         
     def length(self, obj: String) -> Integer:
         len = len(obj.string) + 1 # null terminator
@@ -152,6 +170,7 @@ class String(Object):
         
 
 class Block(Object):
+    
     def __init__(self, func=None):
         if func is None:
             self.func = lambda: None
@@ -165,8 +184,11 @@ class Block(Object):
     def value(self, *args):
         return self.func(*args) # idk ci dobre 
     
-    # def whileTrue(self, block: Block): ABOSLUTNE NETUSIM 
-    #     if
+    def whileTrue(self, body: Block):
+        result = None
+        while self.value():
+            result = body.value()
+        return result
 
 
 class True_(Object):
