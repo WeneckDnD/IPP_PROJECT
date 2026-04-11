@@ -16,7 +16,7 @@
               </expr>
               <arg order="1">
                 <expr>
-                  <literal class="Integer" value="1"/>
+                  <literal class="Integer" value="176"/>
                 </expr>
               </arg>
             </send>
@@ -29,7 +29,7 @@
     <method selector="foo_2">
       <block arity="0"/>
     </method>
-    <method selector="bar_2:">
+    <method selector="bar:">
       <block arity="1">
         <parameter order="1" name="x"/>
         <assign order="1">
@@ -41,7 +41,7 @@
               </expr>
               <arg order="1">
                 <expr>
-                  <literal class="Integer" value="1"/>
+                  <literal class="Integer" value="180"/>
                 </expr>
               </arg>
             </send>
@@ -86,7 +86,7 @@
         <assign order="4">
           <var name="_"/>
           <expr>
-            <send selector="bar_2:">
+            <send selector="bar:">
               <expr>
                 <var name="o"/>
               </expr>
@@ -108,6 +108,50 @@
               <arg order="1">
                 <expr>
                   <literal class="Integer" value="1"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="6">
+          <var name="_"/>
+          <expr>
+            <send selector="bar_3:">
+              <expr>
+                <var name="self"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="5"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+    <method selector="bar_3:">
+      <block arity="1">
+        <parameter order="1" name="x"/>
+        <assign order="1">
+          <var name="r"/>
+          <expr>
+            <send selector="plus:">
+              <expr>
+                <send selector="plus:">
+                  <expr>
+                    <var name="x"/>
+                  </expr>
+                  <arg order="1">
+                    <expr>
+                      <literal class="Integer" value="1"/>
+                    </expr>
+                  </arg>
+                </send>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="3"/>
                 </expr>
               </arg>
             </send>

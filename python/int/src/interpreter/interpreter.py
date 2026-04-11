@@ -80,6 +80,7 @@ class Interpreter:
 
         scope = Scope(parent=None)
         main_class_def = self.find_class("Main")
+        # print(main_class_def)
         parent_class_str = self.find_parent(main_class_def.parent)
         parent_class = self.create_obj_by_type(parent_class_str)
         scope.set_variable("self", NewObject(main_class_def,None, parent_class))
@@ -221,17 +222,21 @@ class Interpreter:
                     
     def find_parent(self, parent: str):
         class_def = self.find_class(parent)
+        # print(class_def)
         prev_class_def = None
         while class_def is not None:
             prev_class_def = class_def
             class_def = self.find_class(class_def.parent)
-        return prev_class_def.parent
+        if prev_class_def is not None:
+            return prev_class_def.parent
+        return parent
 
 
     def find_class(self, class_name: str) -> ClassDef | None:
         for cls in self.current_program.classes:
             if cls.name == class_name:
                 return cls
+        # print(f'NONE {cls} ')
         return None
 
     def execute_send(self, send: Send, current_scope: Scope) -> Any:
@@ -256,10 +261,12 @@ class Interpreter:
             # class_object = NewObject(class_y, parent_class)
             # print(f"Created new object of class with these attributes:{new_object.attributes}")
             return class_y
+        print(f'Arguments for send: {arguments} + Selector: {selector}')
+        print(f'Class_y value: {class_y.value if "value" in dir(class_y) else class_y}')
         result = self.send_message(class_y, selector, arguments, current_scope)
         # method = class_y.lookup(selector)
         # print(f'method: {method}')
-        # print(f'Result value: {result.value} Selector: {selector}')
+        # print(f'Result value: {result.value if "value" in dir(result) else result}')
         return result
 
     def eval_expr(self, expr: Expr) -> Any:

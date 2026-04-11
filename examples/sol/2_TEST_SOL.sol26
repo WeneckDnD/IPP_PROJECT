@@ -1,11 +1,11 @@
 class A : Integer {
   foo [|]
-  bar: [ :x | r := x plus: 1. ]
+  bar: [ :x | r := x plus: 176. ]
 }
 
 class B : A {
   foo_2 [|]
-  bar_2: [ :x | r := x plus: 1. ]
+  bar: [ :x | r := x plus: 180. ]
 }
 
 class Main : Object {
@@ -14,8 +14,11 @@ class Main : Object {
     o := B new. "vytvoří instanci B"
     _ := o foo_2. "metoda se najde v třídě A"
     _ := o asString. "metoda se najde v třídě Object"
-    _ := o bar_2: 2. "metoda se nenajde v A ani v Object, neexistuje atribut 'bad' -> CHYBA 51"
+    _ := o bar: 2. "metoda se nenajde v A ani v Object, neexistuje atribut 'bad' -> CHYBA 51"
     "Jednoparametrické selektory"
     _ := o bar: 1. "metoda se najde v třídě A"
+    _ := self bar_3: 5.
   ]
+
+  bar_3: [ :x | r := ( x plus: 1 ) plus: 3. ]
 }
