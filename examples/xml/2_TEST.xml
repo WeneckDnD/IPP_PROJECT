@@ -128,6 +128,21 @@
             </send>
           </expr>
         </assign>
+        <assign order="7">
+          <var name="a"/>
+          <expr>
+            <send selector="p:">
+              <expr>
+                <var name="self"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="String" value="hello"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
     <method selector="bar_3:">
