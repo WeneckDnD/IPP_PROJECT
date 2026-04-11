@@ -22,10 +22,11 @@ class Object:
     @classmethod
     def new(cls, *args):
         """Create new instance of class."""
-        return cls(args)
+        return cls(*args)
 
-    def equalTo(self, obj: Object) -> bool:
+    def equalTo(self, obj: any) -> bool:
         """Check if objects are equal."""
+        print(f'OBJ VALUE FROM equalTo: {obj.value}')
         return self.identicalTo(obj)
         # if obj.attributes == None:
         #     return self.identicalTo(obj)

@@ -60,13 +60,13 @@ class Interpreter:
         # print(f'Receiver: {receiver.class_def}')
         # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
         method = receiver.lookup(selector)
-        isParam = selector in receiver.param_foos and method
+        isParam = selector in receiver.param_foos and method is not None
         print(f'Method: {method} isParam {isParam}')
 
         # built-in vs user-defined
         if callable(method):
-            return NewObject(None, method(args) if isParam else method(), receiver.parent)
-        return self.execute_method(method, scope)  # TODO: args are ignored
+            return NewObject(None, method(*args) if isParam else method(), receiver.parent)
+        return self.execute_method(method, scope, args)
 
     def execute(self, input_io: TextIO) -> None:
         """
@@ -99,7 +99,7 @@ class Interpreter:
 
         self.execute_method(run_method, scope)
 
-    def execute_method(self, method: Method, parent_scope: Scope) -> Any:
+    def execute_method(self, method: Method, parent_scope: Scope, *args) -> Any:
         # arity ?
         # find block
         # execute the block (execute_block)
@@ -124,6 +124,11 @@ class Interpreter:
             # self.execute_block(look_up.block, current_scope)
             retValue = exp
         return retValue
+    
+    def execute_params():
+        pass
+
+
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
         if expr.send is not None:
@@ -193,14 +198,16 @@ class Interpreter:
 
     def execute_send(self, send: Send, current_scope: Scope) -> Any:
         selector = send.selector  # foo
-        print(f"Selector: {selector}")
-        arguments = 0  # nn
+        arguments = []  
         for arg in send.args:
-            arguments += 1
+            order = arg.order
+            print(f'ORDER: {order}')
+            exp_arg = self.execute_expression(arg.expr, current_scope)
+            arguments.append(exp_arg)
+        print(f'ARGUMETS: {arguments}')
         class_y = self.execute_expression(send.receiver, current_scope)  # object
 
         # print(f"Executing send: selector={selector}, arguments={arguments}")
-        # TODO: if NEW --> new object create
 
         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
         # - function to find out if current selector is build-in or not for the current Parent Class
@@ -217,23 +224,6 @@ class Interpreter:
         # self.execute_method(method, current_scope)
         # print(f'Result value: {result.value} Selector: {selector}')
         return result
-
-        # class_mthd = None
-        # for mthd in class_y.methods:
-        #     if selector == mthd.selector:
-        #         class_mthd = mthd
-        # if class_mthd == None:
-        #     raise InterpreterError(
-        #         error_code=ErrorCode.INT_DNU, message=f"Method {selector} not found in class {class_y.name}"
-        #     )
-        # return class_mthd
-
-        # block = run_method.block
-        # # main_object = Object(main_class)
-        # print(f"Block arity: {block.arity}")
-        # for assign in block.assigns:
-        #     if assign.expr:
-        #         self.eval_expr(assign.expr)
 
     def eval_expr(self, expr: Expr) -> Any:
         """
