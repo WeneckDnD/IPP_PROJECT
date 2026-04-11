@@ -55,17 +55,36 @@ class Interpreter:
             raise InterpreterError(
                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
             ) from e
+    
+    def create_parent_by_type(self, obj_type: str, value= None) -> any:
+        # print(f'value to create {value}')
+        match obj_type:
+            case "int":
+                return Integer.new(value if value is not None else 0)
+            case "str":
+                return String.new(value if value is not None else "")
+            case "None":
+                return Nil.new()
+            case "bool":
+                return True_.new() if value is not None and value == True else False_.new()
+
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
         # print(f'DIR Receiver: {dir(receiver)}')
-        # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
+        # print(f'Receiver: {receiver}, Selector: {selector}')
         method = receiver.lookup(selector, self.current_program.classes)
-        print(f'Method: {method}')  
+        # print(f'Method: {method}')  
         # built-in vs user-defined
         if callable(method):
             isParam = selector in receiver.param_foos and method is not None
             print(f'isParam {isParam}')
-            return NewObject(None, method(*args) if isParam else method(), receiver.parent)
+            new_value = method(*args) if isParam else method()
+            print(f'New value: {new_value}')
+            value_type = type(new_value).__name__
+            # print(f'Value type: {value_type}')
+            new_parent = self.create_parent_by_type(value_type, new_value)
+            # print(f'New parent: {new_parent}')
+            return NewObject(None, new_value, new_parent)
         else:
             new_class_scope = Scope(scope)
             new_class_scope.set_variable("self", receiver)
@@ -261,8 +280,8 @@ class Interpreter:
             # class_object = NewObject(class_y, parent_class)
             # print(f"Created new object of class with these attributes:{new_object.attributes}")
             return class_y
-        print(f'Arguments for send: {arguments} + Selector: {selector}')
-        print(f'Class_y value: {class_y.value if "value" in dir(class_y) else class_y}')
+        # print(f'Arguments for send: {arguments} + Selector: {selector}')
+        # print(f'Class_y value: {class_y.value if "value" in dir(class_y) else class_y}')
         result = self.send_message(class_y, selector, arguments, current_scope)
         # method = class_y.lookup(selector)
         # print(f'method: {method}')

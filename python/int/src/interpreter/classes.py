@@ -154,9 +154,9 @@ class String(Object):
         self.string = string
 
     @classmethod
-    def new(cls):
+    def new(cls, *args):
         """Create new instance of String"""
-        return cls()
+        return cls(*args)
 
     @classmethod
     def read(cls) -> String:
