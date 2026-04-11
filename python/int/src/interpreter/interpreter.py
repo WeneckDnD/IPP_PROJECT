@@ -60,11 +60,11 @@ class Interpreter:
         # print(f'DIR Receiver: {dir(receiver)}')
         # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
         method = receiver.lookup(selector, self.current_program.classes)
-        isParam = selector in receiver.param_foos and method is not None
-        print(f'Method: {method} isParam {isParam}')
-
+        print(f'Method: {method}')  
         # built-in vs user-defined
         if callable(method):
+            isParam = selector in receiver.param_foos and method is not None
+            print(f'isParam {isParam}')
             return NewObject(None, method(*args) if isParam else method(), receiver.parent)
         return self.execute_method(method, scope, args)
 
