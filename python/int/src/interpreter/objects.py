@@ -1,6 +1,6 @@
 from typing import Any
 
-from interpreter.input_model import ClassDef
+from interpreter.input_model import ClassDef, Method
 
 
 class NewObject:
@@ -9,11 +9,11 @@ class NewObject:
         self.attributes: dict = {}
         self.parent = parent
         self.value = value
-        self.param_foos = ["identicalTo", "equalTo", "greaterThan", "plus", "minus", "multiplyBy", "divBy", "timesRepeat", "concatenateWith", "startsWith:endsBefore",  "whileTrue", "and", "or", "ifTrue:ifFalse"]
+        self.param_foos = ["identicalTo:", "equalTo:", "greaterThan:", "plus:", "minus:", "multiplyBy:", "divBy:", "timesRepeat:", "concatenateWith:", "startsWith:endsBefore:",  "whileTrue:", "and:", "or:", "ifTrue:ifFalse:"]
 
         # self.methods: dict = {}
 
-    def lookup(self, selector: str) -> Any:
+    def lookup(self, selector: str) -> Method | Any:
         # print(self.class_def)
         if self.class_def is not None:
             for method in self.class_def.methods:
@@ -22,11 +22,12 @@ class NewObject:
                     return method
         # print(f'DIR: {dir(self.parent)}')
         for mthd_name in dir(self.parent):
-            if selector == mthd_name and selector not in self.param_foos:
+            if selector == mthd_name and selector + ":" not in self.param_foos:
                 # print(mthd_name)
                 return getattr(self.parent, mthd_name)
-            elif selector[:-1] == mthd_name and selector[:-1] in self.param_foos:
+            elif selector[:-1] == mthd_name and selector in self.param_foos:
                 return getattr(self.parent, mthd_name)
+        return None
 
     def get_attribute(self, name: str) -> Any:
         if name in self.attributes:

@@ -60,11 +60,12 @@ class Interpreter:
         # print(f'Receiver: {receiver.class_def}')
         # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
         method = receiver.lookup(selector)
-        print(f'Method: {method}')
+        isParam = selector in receiver.param_foos and method
+        print(f'Method: {method} isParam {isParam}')
 
         # built-in vs user-defined
         if callable(method):
-            return NewObject(None, method(args), receiver.parent)
+            return NewObject(None, method(args) if isParam else method(), receiver.parent)
         return self.execute_method(method, scope)  # TODO: args are ignored
 
     def execute(self, input_io: TextIO) -> None:

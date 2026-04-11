@@ -11,7 +11,7 @@ class Object:
         """Initialize object with arguments."""
         self.args = args
 
-    def asString(self, *args) -> str:
+    def asString(self) -> str:
         """Convert object to string representation."""
         return ""
 
@@ -97,7 +97,7 @@ class Integer(Object):
         """Check if integers are equal."""
         return self.value == obj.value
 
-    def _asString(self) -> str:
+    def asString(self) -> str:
         """Convert integer to string."""
         return str(self.value)
 
