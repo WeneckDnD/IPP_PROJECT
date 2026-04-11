@@ -1,0 +1,104 @@
+# ==============================================================================
+# STAGE: check
+# Prostredie pre nástroje kvality kódu (mypy, ruff pre Python; eslint/tsc pre TS)
+# Bind mounty z hostu:
+#   - interpret    -> /src/int
+#   - tester (TS)  -> /src/tester
+# ==============================================================================
+FROM python:3.12-slim AS check
+
+# Systémové závislosti pre Node.js (potrebné pre TS nástroje)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl \
+    ca-certificates \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+# Python nástroje pre kvalitu kódu
+RUN pip install --no-cache-dir mypy ruff
+
+# Node.js nástroje pre kvalitu kódu (globálne)
+RUN npm install -g typescript eslint
+
+WORKDIR /src
+
+# Adresáre pre bind mounty (vytvorené vopred)
+RUN mkdir -p /src/int /src/tester
+
+# Vstupný bod: bash (spúšťanie nástrojov ručne / cez skripty)
+ENTRYPOINT ["/bin/bash"]
+
+
+# ==============================================================================
+# STAGE: build  (iba TS – preklad interpretu)
+# ==============================================================================
+FROM node:20-slim AS build
+
+WORKDIR /src/int
+
+# Najprv skopíruj package.json a nainštaluj závislosti (cache layer)
+COPY int/package*.json ./
+RUN npm ci
+
+# Skopíruj zdrojový kód a prelož
+COPY int/ ./
+RUN npm run build
+
+
+# ==============================================================================
+# STAGE: build-test  (iba TS – preklad testovacieho nástroja)
+# ==============================================================================
+FROM node:20-slim AS build-test
+
+WORKDIR /src/tester
+
+COPY tester/package*.json ./
+RUN npm ci
+
+COPY tester/ ./
+RUN npm run build
+
+
+# ==============================================================================
+# STAGE: runtime
+# Čo najľahší obraz – spúšťa Python interpret priamo.
+# Žiadne dev závislosti, žiadne nástroje kvality kódu.
+# Pre TS: obsahuje iba skompilované JS súbory (nie zdrojový kód ani tsc).
+# ==============================================================================
+FROM python:3.12-slim AS runtime
+
+WORKDIR /app
+
+# Skopíruj iba produkčné Python závislosti (ak existuje requirements.txt)
+COPY int/requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Skopíruj zdrojový kód Python interpretu
+COPY int/ ./
+
+# Ak projekt obsahuje TS časti interpretu, skopíruj skompilované súbory:
+# COPY --from=build /src/int/dist ./dist
+
+ENTRYPOINT ["python", "interpret.py"]
+
+
+# ==============================================================================
+# STAGE: test
+# Vychádza z runtime, pridáva testovací nástroj (skopírovaný z build-test).
+# ==============================================================================
+FROM runtime AS test
+
+WORKDIR /app
+
+# Skopíruj skompilovaný testovací nástroj zo stupňa build-test
+COPY --from=build-test /src/tester/dist /tester
+
+# Ak tester potrebuje Node.js runtime
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    curl ca-certificates \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
+    && rm -rf /var/lib/apt/lists/*
+
+ENTRYPOINT ["node", "/tester/index.js"]
