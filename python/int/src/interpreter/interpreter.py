@@ -56,8 +56,8 @@ class Interpreter:
                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
             ) from e
 
-    def send_message(self, receiver: NewObject, selector: str, args, scope: Scope):
-        # print(f'Receiver: {receiver.class_def}')
+    def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
+        print(f'DIR Receiver: {dir(receiver)}')
         # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
         method = receiver.lookup(selector)
         isParam = selector in receiver.param_foos and method is not None
@@ -97,9 +97,9 @@ class Interpreter:
                 error_code=ErrorCode.SEM_MAIN, message="No run method found in the Main class"
             )
 
-        self.execute_method(run_method, scope)
+        self.execute_method(run_method, scope, [])
 
-    def execute_method(self, method: Method, parent_scope: Scope, *args) -> Any:
+    def execute_method(self, method: Method, parent_scope: Scope, args: list) -> Any:
         # arity ?
         # find block
         # execute the block (execute_block)
@@ -108,12 +108,12 @@ class Interpreter:
             return self.execute_block(method.block, parent_scope, args)
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
-    def execute_block(self, block: Block, parent_scope: Scope, *args) -> Any:
+    def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
         current_scope = Scope(parent=parent_scope)
 
         for param in block.parameters:
             param_name = param.name
-            param_value = args[param.order]
+            param_value = args[param.order - 1]
             print(f'PARAM NAME: {param_name} PARAM VALUE: {param_value}')
             current_scope.set_variable(param_name, param_value)
         # self.scope.set_variable()
@@ -167,7 +167,7 @@ class Interpreter:
     def execute_literal_new(self, literal: Literal) -> Any:
         if literal.class_id == "Integer":
             value = int(literal.value)
-            parent_class = Object.new(Integer, value)
+            parent_class = Integer.new(value)
             new_integer_class = NewObject(None, value, parent_class)
             return new_integer_class
         if literal.class_id == "String":

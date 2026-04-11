@@ -114,6 +114,7 @@ class Integer(Object):
 
     def plus(self, obj: Integer) -> int:
         """Add two integers."""
+        print(f'PRINT CALLED {self.value} + {obj.value}')
         return self.value + obj.value
 
     def minus(self, obj: Integer) -> int:
