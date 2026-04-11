@@ -4,9 +4,8 @@ This module contains the main logic of the interpreter.
 IPP: You must definitely modify this file. Bend it to your will.
 
 Author: Ondřej Ondryáš <iondryas@fit.vut.cz>
-Author: Tadeas Bujdoso 
+Author: Tadeas Bujdoso <xbjdot00>
 """
-
 
 import logging
 from pathlib import Path
@@ -20,12 +19,12 @@ from interpreter.error_codes import ErrorCode
 from interpreter.exceptions import InterpreterError
 from interpreter.input_model import *
 
-from .scope import Scope
-from .objects import NewObject
 from .classes import *
+from .objects import NewObject
+from .scope import Scope
 
 logger = logging.getLogger(__name__)
- 
+
 
 class Interpreter:
     """
@@ -51,23 +50,22 @@ class Interpreter:
                 error_code=ErrorCode.INT_XML, message="Error parsing input XML"
             ) from e
         try:
-            self.current_program = Program.from_xml_tree(xml_tree.getroot()) 
+            self.current_program = Program.from_xml_tree(xml_tree.getroot())
         except ValidationError as e:
             raise InterpreterError(
                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
             ) from e
-        
+
     def send_message(self, receiver: NewObject, selector: str, args, scope: Scope):
-        # print(receiver)
+        # print(f'Receiver: {receiver.class_def}')
         # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
         method = receiver.lookup(selector)
-        # print(f'Method: {method}')
-        
+        print(f'Method: {method}')
+
         # built-in vs user-defined
         if callable(method):
             return NewObject(None, method(args), receiver.parent)
-        else:
-            return self.execute_method(method, scope) #TODO: args are ignored
+        return self.execute_method(method, scope)  # TODO: args are ignored
 
     def execute(self, input_io: TextIO) -> None:
         """
@@ -87,7 +85,7 @@ class Interpreter:
             raise InterpreterError(
                 error_code=ErrorCode.SEM_MAIN, message="No Main class found in the program"
             )
-        
+
         run_method = None
         for mthd in main_class.methods:
             if mthd.selector == "run":
@@ -97,9 +95,9 @@ class Interpreter:
             raise InterpreterError(
                 error_code=ErrorCode.SEM_MAIN, message="No run method found in the Main class"
             )
-        
+
         self.execute_method(run_method, scope)
-        
+
     def execute_method(self, method: Method, parent_scope: Scope) -> Any:
         # arity ?
         # find block
@@ -107,23 +105,21 @@ class Interpreter:
         # block_arity = method.block.arity # TODO
         if method is not None:
             return self.execute_block(method.block, parent_scope)
-        else:
-            raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
-        
+        raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
     def execute_block(self, block: Block, parent_scope: Scope) -> Any:
         current_scope = Scope(parent=parent_scope)
         # self.scope.set_variable()
         retValue = None
         for assgn in block.assigns:
-            assgn_target = assgn.target # o
+            assgn_target = assgn.target  # o
             print(f"Assign target: {assgn_target.name}")
             assgn_expr = assgn.expr
-            exp = self.execute_expression(assgn_expr, current_scope) # NewObject()
+            exp = self.execute_expression(assgn_expr, current_scope)  # NewObject()
             print(f"Assign expr: {exp}")
             current_scope.set_variable(assgn_target.name, exp)
             # look_up = exp.lookup("foo")
-            # print(look_up) 
+            # print(look_up)
             # self.execute_block(look_up.block, current_scope)
             retValue = exp
         return retValue
@@ -141,7 +137,6 @@ class Interpreter:
             # print(f"value: {x}")
             return x
 
-
     def execute_literal(self, literal: Literal) -> Any:
         if literal.class_id == "Integer":
             return int(literal.value)
@@ -155,8 +150,7 @@ class Interpreter:
             return False
         if literal.class_id == "class":
             # print(f"CLASS")
-            return self.find_class(literal.value) # TODO: Error None case
-
+            return self.find_class(literal.value)  # TODO: Error None case
 
     def execute_literal_new(self, literal: Literal) -> Any:
         if literal.class_id == "Integer":
@@ -190,7 +184,6 @@ class Interpreter:
             new_class = NewObject(class_def, None, parent_class)
             return new_class
 
-
     def find_class(self, class_name: str) -> ClassDef | None:
         for cls in self.current_program.classes:
             if cls.name == class_name:
@@ -198,52 +191,41 @@ class Interpreter:
         return None
 
     def execute_send(self, send: Send, current_scope: Scope) -> Any:
-        selector = send.selector # foo
+        selector = send.selector  # foo
         print(f"Selector: {selector}")
-        arguments = 0 # nn
+        arguments = 0  # nn
         for arg in send.args:
             arguments += 1
-        class_y = self.execute_expression(send.receiver, current_scope) # object
-
+        class_y = self.execute_expression(send.receiver, current_scope)  # object
 
         # print(f"Executing send: selector={selector}, arguments={arguments}")
         # TODO: if NEW --> new object create
-
 
         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
         # - function to find out if current selector is build-in or not for the current Parent Class
         if selector == "new":
             class_y = self.execute_expression(send.receiver, current_scope)
-        # return self.send_message(class_y, selector, arguments, current_scope)
+            # return self.send_message(class_y, selector, arguments, current_scope)
             # parent_class = Object.new(class_y.parent)
             # class_object = NewObject(class_y, parent_class)
             # print(f"Created new object of class with these attributes:{new_object.attributes}")
             return class_y
-        else:
-            result = self.send_message(class_y, selector, arguments, current_scope)
-            # method = class_y.lookup(selector)
-            # print(f'method: {method}')
-            # self.execute_method(method, current_scope)
-            # print(f'Result value: {result.value} Selector: {selector}')
-            return result
+        result = self.send_message(class_y, selector, arguments, current_scope)
+        # method = class_y.lookup(selector)
+        # print(f'method: {method}')
+        # self.execute_method(method, current_scope)
+        # print(f'Result value: {result.value} Selector: {selector}')
+        return result
 
-
-
-
-            # class_mthd = None
-            # for mthd in class_y.methods:
-            #     if selector == mthd.selector:
-            #         class_mthd = mthd
-            # if class_mthd == None:
-            #     raise InterpreterError(
-            #         error_code=ErrorCode.INT_DNU, message=f"Method {selector} not found in class {class_y.name}"
-            #     )
-            # return class_mthd
-            
-
-
-
-
+        # class_mthd = None
+        # for mthd in class_y.methods:
+        #     if selector == mthd.selector:
+        #         class_mthd = mthd
+        # if class_mthd == None:
+        #     raise InterpreterError(
+        #         error_code=ErrorCode.INT_DNU, message=f"Method {selector} not found in class {class_y.name}"
+        #     )
+        # return class_mthd
 
         # block = run_method.block
         # # main_object = Object(main_class)
@@ -275,7 +257,6 @@ class Interpreter:
 
         return (receiver, selector, args)
 
-
     def eval_literal(self, literal: Literal) -> Any:
         """Evaluates literal class and returns its associated value."""
         if literal.class_id == "Integer":
@@ -299,9 +280,3 @@ class Interpreter:
         for cls in self.current_program.classes:
             object_map[cls.name] = cls
         return object_map
-    
-            
-
-
-
-

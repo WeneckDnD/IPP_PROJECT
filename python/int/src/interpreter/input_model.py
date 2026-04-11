@@ -9,6 +9,7 @@ Author: Ondřej Ondryáš <iondryas@fit.vut.cz>
 """
 
 from __future__ import annotations
+
 from typing import Any
 
 from pydantic import model_validator

@@ -1,5 +1,6 @@
 from typing import *
 
+
 class Scope:
     def __init__(self, parent) -> Any:
         self.parent = parent
@@ -11,11 +12,10 @@ class Scope:
     def get_variable(self, name):
         if name in self.variables:
             return self.variables[name]
-        elif self.parent is not None:
+        if self.parent is not None:
             return self.parent.get_variable(name)
-        else:
-            raise NameError(f"Variable '{name}' not found in scope.") # TODO use interpreter errors
-    
+        raise NameError(f"Variable '{name}' not found in scope.")  # TODO use interpreter errors
+
     def update_variable(self, name, new):
         if name in self.variables:
             self.variables[name] = new

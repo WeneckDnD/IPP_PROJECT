@@ -1,0 +1,452 @@
+scope.py: note: In member "__init__" of class "Scope":
+scope.py:5:5: error: The return type of "__init__" must be None  [misc]
+        def __init__(self, parent) -> Any:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+scope.py:5:5: error: Function is missing a type annotation for one or more
+arguments  [no-untyped-def]
+        def __init__(self, parent) -> Any:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+scope.py:7:9: error: Need type annotation for "variables" (hint:
+"variables: dict[<type>, <type>] = ...")  [var-annotated]
+            self.variables = {}
+            ^~~~~~~~~~~~~~
+scope.py: note: In member "set_variable" of class "Scope":
+scope.py:9:5: error: Function is missing a type annotation  [no-untyped-def]
+        def set_variable(self, name, value):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+scope.py: note: In member "get_variable" of class "Scope":
+scope.py:12:5: error: Function is missing a type annotation  [no-untyped-def]
+        def get_variable(self, name):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+scope.py: note: In member "update_variable" of class "Scope":
+scope.py:19:5: error: Function is missing a type annotation  [no-untyped-def]
+        def update_variable(self, name, new):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+objects.py:3:1: error: Cannot find implementation or library stub for module
+named "interpreter.input_model"  [import]
+    from interpreter.input_model import ClassDef
+    ^
+objects.py: note: In member "__init__" of class "NewObject":
+objects.py:7:5: error: Function is missing a type annotation for one or more
+arguments  [no-untyped-def]
+        def __init__(self, class_def: ClassDef | None, value: any, parent=...
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+objects.py:7:59: error: Function "builtins.any" is not valid as a type 
+[valid-type]
+    ...f __init__(self, class_def: ClassDef | None, value: any, parent=None):
+                                                           ^
+objects.py:7:59: note: Perhaps you meant "typing.Any" instead of "any"?
+objects.py:9:26: error: Missing type parameters for generic type "dict" 
+[type-arg]
+            self.attributes: dict = {}
+                             ^
+objects.py: note: In member "set_attribute" of class "NewObject":
+objects.py:31:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def set_attribute(self, name: str, value: Any):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+exceptions.py:13:1: error: Cannot find implementation or library stub for
+module named "interpreter.error_codes"  [import]
+    from interpreter.error_codes import ErrorCode
+    ^
+classes.py:3:1: error: Cannot find implementation or library stub for module
+named "interpreter.error_codes"  [import]
+    from interpreter.error_codes import ErrorCode
+    ^
+classes.py:3:1: note: You may be running mypy in a subpackage, mypy should be run on the package root
+classes.py:4:1: error: Cannot find implementation or library stub for module
+named "interpreter.exceptions"  [import]
+    from interpreter.exceptions import InterpreterError
+    ^
+classes.py: note: In member "__init__" of class "Object":
+classes.py:10:5: error: Function is missing a type annotation  [no-untyped-def]
+        def __init__(self, *args):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "asString" of class "Object":
+classes.py:14:5: error: Function is missing a type annotation for one or more
+arguments  [no-untyped-def]
+        def asString(self, *args) -> str:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "new" of class "Object":
+classes.py:23:5: error: Function is missing a type annotation  [no-untyped-def]
+        def new(cls, *args):
+        ^~~~~~~~~~~~~~~~~~~~
+classes.py: note: In class "Nil":
+classes.py:62:16: error: Call to untyped function "Object" in typed context 
+[no-untyped-call]
+        instance = Object()
+                   ^~~~~~~~
+classes.py: note: In member "new" of class "Nil":
+classes.py:74:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def new(cls):
+        ^~~~~~~~~~~~~
+classes.py: note: In member "from_" of class "Nil":
+classes.py:79:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def from_(cls):
+        ^~~~~~~~~~~~~~~
+classes.py: note: In member "new" of class "Integer":
+classes.py:92:5: error: Function is missing a type annotation  [no-untyped-def]
+        def new(cls, *args):
+        ^~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "equalTo" of class "Integer":
+classes.py:96:23: error: Argument 1 of "equalTo" is incompatible with supertype
+"Object"; supertype defines the argument type as "Object"  [override]
+        def equalTo(self, obj: Integer) -> bool:
+                          ^~~~~~~~~~~~
+classes.py:96:23: note: This violates the Liskov substitution principle
+classes.py:96:23: note: See https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-overrides
+classes.py: note: In member "asInteger" of class "Integer":
+classes.py:132:24: error: Argument 1 to "Integer" has incompatible type
+"Integer"; expected "int"  [arg-type]
+            return Integer(self)
+                           ^~~~
+classes.py: note: In member "timesRepeat" of class "Integer":
+classes.py:134:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def timesRepeat(self, n: int, block: Block):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py:137:20: error: Call to untyped function "Nil" in typed context 
+[no-untyped-call]
+                return Nil()
+                       ^~~~~
+classes.py:141:22: error: Call to untyped function "value" in typed context 
+[no-untyped-call]
+                result = block.value(i)
+                         ^~~~~~~~~~~~~~
+classes.py: note: In member "new" of class "String":
+classes.py:153:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def new(cls):
+        ^~~~~~~~~~~~~
+classes.py: note: In member "print" of class "String":
+classes.py:162:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def print(self, string: str):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "equalTo" of class "String":
+classes.py:167:23: error: Argument 1 of "equalTo" is incompatible with
+supertype "Object"; supertype defines the argument type as "Object"  [override]
+        def equalTo(self, obj: String) -> bool:
+                          ^~~~~~~~~~~
+classes.py:167:23: note: This violates the Liskov substitution principle
+classes.py:167:23: note: See https://mypy.readthedocs.io/en/stable/common_issues.html#incompatible-overrides
+classes.py: note: In member "asString" of class "String":
+classes.py:171:5: error: Signature of "asString" incompatible with supertype
+"Object"  [override]
+        def asString(self) -> String:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py:171:5: note:      Superclass:
+classes.py:171:5: note:          def asString(self, *args: Any) -> str
+classes.py:171:5: note:      Subclass:
+classes.py:171:5: note:          def asString(self) -> String
+classes.py:173:23: error: Argument 1 to "String" has incompatible type
+"String"; expected "str"  [arg-type]
+            return String(self)  # ?? String()
+                          ^~~~
+classes.py: note: In member "asInteger" of class "String":
+classes.py:178:20: error: Incompatible return value type (got "int", expected
+"Nil")  [return-value]
+                return int(self.string)
+                       ^~~~~~~~~~~~~~~~
+classes.py:179:16: error: Call to untyped function "Nil" in typed context 
+[no-untyped-call]
+            return Nil()
+                   ^~~~~
+classes.py: note: In member "concatenateWith" of class "String":
+classes.py:181:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def concatenateWith(self, obj: String):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py:184:20: error: Call to untyped function "Nil" in typed context 
+[no-untyped-call]
+                return Nil()
+                       ^~~~~
+classes.py: note: In member "startsWithendsWith" of class "String":
+classes.py:190:20: error: Call to untyped function "Nil" in typed context 
+[no-untyped-call]
+                return Nil()  # nil ??
+                       ^~~~~
+classes.py:190:20: error: Incompatible return value type (got "Nil", expected
+"str")  [return-value]
+                return Nil()  # nil ??
+                       ^~~~~
+classes.py: note: In member "__init__" of class "Block":
+classes.py:212:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def __init__(self, func=None):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "new" of class "Block":
+classes.py:220:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def new(cls):
+        ^~~~~~~~~~~~~
+classes.py: note: In member "value" of class "Block":
+classes.py:224:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def value(self, *args):
+        ^~~~~~~~~~~~~~~~~~~~~~~
+classes.py:226:16: error: Call to untyped function (unknown) in typed context 
+[no-untyped-call]
+            return self.func(*args)  # idk ci dobre
+                   ^~~~~~~~~~~~~~~~
+classes.py: note: In member "whileTrue" of class "Block":
+classes.py:228:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def whileTrue(self, body: Block):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py:231:15: error: Call to untyped function "value" in typed context 
+[no-untyped-call]
+            while self.value():
+                  ^~~~~~~~~~~~
+classes.py:232:22: error: Call to untyped function "value" in typed context 
+[no-untyped-call]
+                result = body.value()
+                         ^~~~~~~~~~~~
+classes.py: note: In member "__init__" of class "True_":
+classes.py:239: error: Invalid type: try using Literal[True] instead? 
+[valid-type]
+        def __init__(self, boolean: True):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "asString" of class "True_":
+classes.py:243:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def asString(self, obj: True_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "not_" of class "True_":
+classes.py:249:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def not_(self, obj: True_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "isBoolean" of class "True_":
+classes.py:258:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def isBoolean(self):
+        ^~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "__init__" of class "False_":
+classes.py:266: error: Invalid type: try using Literal[False] instead? 
+[valid-type]
+        def __init__(self, bool: False):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "asString" of class "False_":
+classes.py:270:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def asString(self, obj: False_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "not_" of class "False_":
+classes.py:276:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def not_(self, obj: False_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+classes.py: note: In member "and_" of class "False_":
+classes.py:280:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def and_(self):
+        ^~~~~~~~~~~~~~~
+classes.py: note: In member "isBoolean" of class "False_":
+classes.py:286:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def isBoolean(self):
+        ^~~~~~~~~~~~~~~~~~~~
+interpreter_former_ignore.py:18:1: error: Cannot find implementation or library
+stub for module named "interpreter.error_codes"  [import]
+    from interpreter.error_codes import ErrorCode
+    ^
+interpreter_former_ignore.py:19:1: error: Cannot find implementation or library
+stub for module named "interpreter.exceptions"  [import]
+    from interpreter.exceptions import InterpreterError
+    ^
+interpreter_former_ignore.py:20:1: error: Cannot find implementation or library
+stub for module named "interpreter.input_model"  [import]
+    from interpreter.input_model import Program
+    ^
+interpreter_former_ignore.py:49: error: Unused "type: ignore" comment 
+[unused-ignore]
+                self.current_program = Program.from_xml_tree(xml_tree.getr...
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+interpreter.py:18:1: error: Cannot find implementation or library stub for
+module named "interpreter.error_codes"  [import]
+    from interpreter.error_codes import ErrorCode
+    ^
+interpreter.py:19:1: error: Cannot find implementation or library stub for
+module named "interpreter.exceptions"  [import]
+    from interpreter.exceptions import InterpreterError
+    ^
+interpreter.py:20:1: error: Cannot find implementation or library stub for
+module named "interpreter.input_model"  [import]
+    from interpreter.input_model import *
+    ^
+interpreter.py:22:1: error: Cannot find implementation or library stub for
+module named ".classes"  [import-not-found]
+    from .classes import *
+    ^
+interpreter.py:22:1: note: See https://mypy.readthedocs.io/en/stable/running_mypy.html#missing-imports
+interpreter.py:23:1: error: Cannot find implementation or library stub for
+module named ".objects"  [import-not-found]
+    from .objects import NewObject
+    ^
+interpreter.py:24:1: error: Cannot find implementation or library stub for
+module named ".scope"  [import-not-found]
+    from .scope import Scope
+    ^
+interpreter.py: note: In member "__init__" of class "Interpreter":
+interpreter.py:35:31: error: Name "Program" is not defined  [name-defined]
+            self.current_program: Program | None = None
+                                  ^
+interpreter.py: note: In member "load_program" of class "Interpreter":
+interpreter.py:53:36: error: Name "Program" is not defined  [name-defined]
+                self.current_program = Program.from_xml_tree(xml_tree.getr...
+                                       ^~~~~~~
+interpreter.py: note: In member "send_message" of class "Interpreter":
+interpreter.py:59:5: error: Function is missing a return type annotation 
+[no-untyped-def]
+        def send_message(self, receiver: NewObject, selector: str, args, s...
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+interpreter.py:59:5: error: Function is missing a type annotation for one or
+more arguments  [no-untyped-def]
+        def send_message(self, receiver: NewObject, selector: str, args, s...
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+interpreter.py: note: In member "execute_method" of class "Interpreter":
+interpreter.py:101:38: error: Name "Method" is not defined  [name-defined]
+        def execute_method(self, method: Method, parent_scope: Scope) -> A...
+                                         ^
+interpreter.py:101:70: error: Name "Any" is not defined  [name-defined]
+    ... def execute_method(self, method: Method, parent_scope: Scope) -> Any:
+                                                                         ^
+interpreter.py:101:70: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "execute_block" of class "Interpreter":
+interpreter.py:110:36: error: Name "Block" is not defined  [name-defined]
+        def execute_block(self, block: Block, parent_scope: Scope) -> Any:
+                                       ^
+interpreter.py:110:67: error: Name "Any" is not defined  [name-defined]
+        def execute_block(self, block: Block, parent_scope: Scope) -> Any:
+                                                                      ^
+interpreter.py:110:67: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "execute_expression" of class "Interpreter":
+interpreter.py:127:40: error: Name "Expr" is not defined  [name-defined]
+        def execute_expression(self, expr: Expr, current_scope: Scope) -> ...
+                                           ^
+interpreter.py:127:71: error: Name "Any" is not defined  [name-defined]
+    ...def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
+                                                                         ^
+interpreter.py:127:71: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "execute_literal" of class "Interpreter":
+interpreter.py:140:40: error: Name "Literal" is not defined  [name-defined]
+        def execute_literal(self, literal: Literal) -> Any:
+                                           ^
+interpreter.py:140:52: error: Name "Any" is not defined  [name-defined]
+        def execute_literal(self, literal: Literal) -> Any:
+                                                       ^
+interpreter.py:140:52: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "execute_literal_new" of class "Interpreter":
+interpreter.py:155:44: error: Name "Literal" is not defined  [name-defined]
+        def execute_literal_new(self, literal: Literal) -> Any:
+                                               ^
+interpreter.py:155:56: error: Name "Any" is not defined  [name-defined]
+        def execute_literal_new(self, literal: Literal) -> Any:
+                                                           ^
+interpreter.py:155:56: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py:158:28: error: Name "Object" is not defined  [name-defined]
+                parent_class = Object.new(Integer, value)
+                               ^~~~~~
+interpreter.py:158:39: error: Name "Integer" is not defined  [name-defined]
+                parent_class = Object.new(Integer, value)
+                                          ^~~~~~~
+interpreter.py:163:28: error: Name "Object" is not defined  [name-defined]
+                parent_class = Object.new(String, value)
+                               ^~~~~~
+interpreter.py:163:39: error: Name "String" is not defined  [name-defined]
+                parent_class = Object.new(String, value)
+                                          ^~~~~~
+interpreter.py:168:28: error: Name "Object" is not defined  [name-defined]
+                parent_class = Object.new(True_, value)
+                               ^~~~~~
+interpreter.py:168:39: error: Name "True_" is not defined  [name-defined]
+                parent_class = Object.new(True_, value)
+                                          ^~~~~
+interpreter.py:173:28: error: Name "Object" is not defined  [name-defined]
+                parent_class = Object.new(False_, value)
+                               ^~~~~~
+interpreter.py:173:39: error: Name "False_" is not defined  [name-defined]
+                parent_class = Object.new(False_, value)
+                                          ^~~~~~
+interpreter.py:177:21: error: Incompatible types in assignment (expression has
+type "None", variable has type "int")  [assignment]
+                value = None
+                        ^~~~
+interpreter.py:178:28: error: Name "Object" is not defined  [name-defined]
+                parent_class = Object.new(Nil, value)
+                               ^~~~~~
+interpreter.py:178:39: error: Name "Nil" is not defined  [name-defined]
+                parent_class = Object.new(Nil, value)
+                                          ^~~
+interpreter.py:183:28: error: Name "Object" is not defined  [name-defined]
+                parent_class = Object.new(class_def.parent)
+                               ^~~~~~
+interpreter.py:183:39: error: Item "None" of "Any | None" has no attribute
+"parent"  [union-attr]
+                parent_class = Object.new(class_def.parent)
+                                          ^~~~~~~~~~~~~~~~
+interpreter.py: note: In member "find_class" of class "Interpreter":
+interpreter.py:187:46: error: Name "ClassDef" is not defined  [name-defined]
+        def find_class(self, class_name: str) -> ClassDef | None:
+                                                 ^
+interpreter.py:188:20: error: Item "None" of "Any | None" has no attribute
+"classes"  [union-attr]
+            for cls in self.current_program.classes:
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+interpreter.py: note: In member "execute_send" of class "Interpreter":
+interpreter.py:193:34: error: Name "Send" is not defined  [name-defined]
+        def execute_send(self, send: Send, current_scope: Scope) -> Any:
+                                     ^
+interpreter.py:193:65: error: Name "Any" is not defined  [name-defined]
+        def execute_send(self, send: Send, current_scope: Scope) -> Any:
+                                                                    ^
+interpreter.py:193:65: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "eval_expr" of class "Interpreter":
+interpreter.py:237:31: error: Name "Expr" is not defined  [name-defined]
+        def eval_expr(self, expr: Expr) -> Any:
+                                  ^
+interpreter.py:237:40: error: Name "Any" is not defined  [name-defined]
+        def eval_expr(self, expr: Expr) -> Any:
+                                           ^
+interpreter.py:237:40: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "eval_send" of class "Interpreter":
+interpreter.py:252:31: error: Name "Send" is not defined  [name-defined]
+        def eval_send(self, send: Send) -> Any:
+                                  ^
+interpreter.py:252:40: error: Name "Any" is not defined  [name-defined]
+        def eval_send(self, send: Send) -> Any:
+                                           ^
+interpreter.py:252:40: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "eval_literal" of class "Interpreter":
+interpreter.py:260:37: error: Name "Literal" is not defined  [name-defined]
+        def eval_literal(self, literal: Literal) -> Any:
+                                        ^
+interpreter.py:260:49: error: Name "Any" is not defined  [name-defined]
+        def eval_literal(self, literal: Literal) -> Any:
+                                                    ^
+interpreter.py:260:49: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py: note: In member "eval_var" of class "Interpreter":
+interpreter.py:275:29: error: Name "Var" is not defined  [name-defined]
+        def eval_var(self, var: Var) -> Any:
+                                ^
+interpreter.py:275:37: error: Name "Any" is not defined  [name-defined]
+        def eval_var(self, var: Var) -> Any:
+                                        ^
+interpreter.py:275:37: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py:276:16: error: "Interpreter" has no attribute "stack" 
+[attr-defined]
+            return self.stack.get(var.name)
+                   ^~~~~~~~~~
+interpreter.py: note: In member "map_objects" of class "Interpreter":
+interpreter.py:278:30: error: Name "Any" is not defined  [name-defined]
+        def map_objects(self) -> Any:
+                                 ^
+interpreter.py:278:30: note: Did you forget to import it from "typing"? (Suggestion: "from typing import Any")
+interpreter.py:280:20: error: Item "None" of "Any | None" has no attribute
+"classes"  [union-attr]
+            for cls in self.current_program.classes:
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Found 105 errors in 6 files (checked 9 source files)
