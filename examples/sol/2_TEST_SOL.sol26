@@ -20,7 +20,10 @@ class Main : Object {
     _ := self bar_3: 5.
     a := self p: 'hello'.
     _ := (self p) print.
-
+    x := String from: 'Test'.
+    _ := x print.
+    a := self attrib: (Integer from: 10).
+    _ := (self attrib) print.
   ]
 
   bar_3: [ :x | r := ( x plus: 1 ) plus: 3. ]

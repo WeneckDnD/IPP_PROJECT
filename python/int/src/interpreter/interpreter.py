@@ -203,6 +203,7 @@ class Interpreter:
             # print(f"CLASS")
             return self.find_class(literal.value)  # TODO: Error None case
 
+    # value is used in special case for 'from:' selector
     def execute_literal_new(self, literal: Literal) -> Any:
         if literal.class_id == "Integer":
             value = int(literal.value)
@@ -236,7 +237,13 @@ class Interpreter:
             print(parent_class, parent_class_str)
             new_class = NewObject(class_def, None, parent_class)
             return new_class
-        
+    
+    def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
+        class_def = self.find_class(literal.value)
+        parent_class_str = self.find_parent(literal.value)
+        parent_class = self.create_obj_by_type(parent_class_str, value)
+        new_class = NewObject(class_def, value, parent_class)
+        return new_class
 
     def create_obj_by_type(self, obj_type: str, *value) -> any:
         match obj_type:
@@ -291,6 +298,9 @@ class Interpreter:
             # parent_class = Object.new(class_y.parent)
             # class_object = NewObject(class_y, parent_class)
             # print(f"Created new object of class with these attributes:{new_object.attributes}")
+            return class_y
+        if selector == "from:":
+            class_y = self.execute_literal_new_from(send.receiver.literal, arguments[0].value)
             return class_y
         # print(f'Arguments for send: {arguments} + Selector: {selector}')
         # print(f'Class_y value: {class_y.value if "value" in dir(class_y) else class_y}')

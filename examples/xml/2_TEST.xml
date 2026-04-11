@@ -157,6 +157,69 @@
             </send>
           </expr>
         </assign>
+        <assign order="9">
+          <var name="x"/>
+          <expr>
+            <send selector="from:">
+              <expr>
+                <literal class="class" value="String"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="String" value="Test"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="10">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <var name="x"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="11">
+          <var name="a"/>
+          <expr>
+            <send selector="attrib:">
+              <expr>
+                <var name="self"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <send selector="from:">
+                    <expr>
+                      <literal class="class" value="Integer"/>
+                    </expr>
+                    <arg order="1">
+                      <expr>
+                        <literal class="Integer" value="10"/>
+                      </expr>
+                    </arg>
+                  </send>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="12">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="attrib">
+                  <expr>
+                    <var name="self"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
     <method selector="bar_3:">
