@@ -66,7 +66,10 @@ class Interpreter:
             isParam = selector in receiver.param_foos and method is not None
             print(f'isParam {isParam}')
             return NewObject(None, method(*args) if isParam else method(), receiver.parent)
-        return self.execute_method(method, scope, args)
+        else:
+            new_class_scope = Scope(scope)
+            new_class_scope.set_variable("self", receiver)
+            return self.execute_method(method, new_class_scope, args)
 
     def execute(self, input_io: TextIO) -> None:
         """
@@ -76,6 +79,10 @@ class Interpreter:
         assert self.current_program is not None
 
         scope = Scope(parent=None)
+        main_class_def = self.find_class("Main")
+        parent_class_str = self.find_parent(main_class_def.parent)
+        parent_class = self.create_obj_by_type(parent_class_str)
+        scope.set_variable("self", NewObject(main_class_def,None, parent_class))
 
         main_class = None
         for cls in self.current_program.classes:
