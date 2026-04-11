@@ -163,9 +163,9 @@ class String(Object):
         """Read string from input."""
         return cls(input())
 
-    def print(self, string: str):
+    def print(self):
         """Print string and return self."""
-        print(string)
+        print(self.string)
         return self
 
     def equalTo(self, obj: String) -> bool:

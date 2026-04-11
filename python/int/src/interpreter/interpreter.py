@@ -73,7 +73,7 @@ class Interpreter:
         # print(f'DIR Receiver: {dir(receiver)}')
         # print(f'Receiver: {receiver}, Selector: {selector}')
         method = receiver.lookup(selector, self.current_program.classes)
-        print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
+        # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
         if method is None:
             att = receiver.get_attribute(selector)
             if att is not None:
