@@ -57,7 +57,7 @@ class Interpreter:
             ) from e
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
-        print(f'DIR Receiver: {dir(receiver)}')
+        # print(f'DIR Receiver: {dir(receiver)}')
         # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
         method = receiver.lookup(selector)
         isParam = selector in receiver.param_foos and method is not None
@@ -172,29 +172,51 @@ class Interpreter:
             return new_integer_class
         if literal.class_id == "String":
             value = literal.value
-            parent_class = Object.new(String, value)
+            parent_class = String.new(value)
             new_string_class = NewObject(None, value, parent_class)
             return new_string_class
         if literal.class_id == "True":
             value = True
-            parent_class = Object.new(True_, value)
+            parent_class = True_.new()
             new_true_class = NewObject(None, value, parent_class)
             return new_true_class
         if literal.class_id == "False":
             value = False
-            parent_class = Object.new(False_, value)
+            parent_class = False_.new()
             new_false_class = NewObject(None, value, parent_class)
             return new_false_class
         if literal.class_id == "Nil":
             value = None
-            parent_class = Object.new(Nil, value)
+            parent_class = Nil.new()
             new_nil_class = NewObject(None, value, parent_class)
             return new_nil_class
         if literal.class_id == "class":
             class_def = self.find_class(literal.value)
-            parent_class = Object.new(class_def.parent)
+            parent_class_str = self.find_parent(literal.value)
+            parent_class = self.create_obj_by_type(parent_class_str)
             new_class = NewObject(class_def, None, parent_class)
             return new_class
+        
+
+    def create_obj_by_type(self, obj_type: str, *value) -> any:
+        match obj_type:
+            case "Integer":
+                return Integer.new(*value)
+            case "String":
+                return String.new(*value)
+            case "Nil":
+                return Nil.new()
+            case "True":
+                return True_.new()
+            case "False":
+                return False_.new()
+                    
+    def find_parent(self, parent: str):
+        class_def = self.find_class(parent)
+        while class_def.parent in self.current_program.classes:
+            class_def = self.find_class(class_def.parent)
+        return class_def.parent
+
 
     def find_class(self, class_name: str) -> ClassDef | None:
         for cls in self.current_program.classes:

@@ -244,6 +244,11 @@ class True_(Object):
         """Initialize true boolean."""
         self.boolean = boolean
 
+    @classmethod
+    def new(cls):
+        """Create new instance of String"""
+        return cls.boolean
+
     def asString(self, obj: True_):
         """Convert true to string."""
         if obj is not None:
@@ -267,10 +272,15 @@ class True_(Object):
 class False_(Object):
     """False object with inherited methods from parent Object"""
 
-    def __init__(self, bool: False):
+    def __init__(self, boolean: False):
         """Initialize false boolean."""
-        self.bool = bool
+        self.boolean = boolean
 
+    @classmethod
+    def new(cls):
+        """Create new instance of String"""
+        return cls.boolean
+    
     def asString(self, obj: False_):
         """Convert false to string."""
         if obj is not None:
