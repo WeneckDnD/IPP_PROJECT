@@ -86,6 +86,14 @@ class Interpreter:
             # print(f'New parent: {new_parent}')
             return NewObject(None, new_value, new_parent)
         else:
+            print(f'Method: {method}')
+            if method is None:
+                current_self = scope.get_variable("self")
+                print(f'Current args: {args}')
+                current_self.set_attribute(selector, *args)
+                scope.update_variable("self", current_self)
+                return current_self
+
             new_class_scope = Scope(scope)
             new_class_scope.set_variable("self", receiver)
             return self.execute_method(method, new_class_scope, args)
