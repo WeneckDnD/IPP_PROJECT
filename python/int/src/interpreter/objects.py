@@ -26,8 +26,9 @@ class NewObject:
             while method is None and class_def.parent in all_classes:
                 class_def = all_classes[class_def.parent]
                 method = self.find_method_in_class_def(class_def, selector)
-            return method
-        # print(f'DIR: {dir(self.parent)}')
+            if method is not None:
+                return method
+        print(f'DIR: {dir(self.parent)}')
         for mthd_name in dir(self.parent):
             if selector == mthd_name and selector + ":" not in self.param_foos:
                 # print(mthd_name)

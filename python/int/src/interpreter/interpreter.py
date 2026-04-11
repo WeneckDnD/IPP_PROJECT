@@ -59,7 +59,7 @@ class Interpreter:
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
         # print(f'DIR Receiver: {dir(receiver)}')
         # print(f'Receiver: {receiver.class_def}, Selector: {selector}')
-        method = receiver.lookup(selector)
+        method = receiver.lookup(selector, self.current_program.classes)
         isParam = selector in receiver.param_foos and method is not None
         print(f'Method: {method} isParam {isParam}')
 
@@ -194,6 +194,7 @@ class Interpreter:
             class_def = self.find_class(literal.value)
             parent_class_str = self.find_parent(literal.value)
             parent_class = self.create_obj_by_type(parent_class_str)
+            print(parent_class, parent_class_str)
             new_class = NewObject(class_def, None, parent_class)
             return new_class
         
