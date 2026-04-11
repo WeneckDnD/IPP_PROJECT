@@ -19,6 +19,8 @@ class Main : Object {
     _ := o bar: 1. "metoda se najde v třídě A"
     _ := self bar_3: 5.
     a := self p: 'hello'.
+    _ := (self p) print.
+
   ]
 
   bar_3: [ :x | r := ( x plus: 1 ) plus: 3. ]

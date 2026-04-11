@@ -143,6 +143,20 @@
             </send>
           </expr>
         </assign>
+        <assign order="8">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="p">
+                  <expr>
+                    <var name="self"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
     <method selector="bar_3:">
