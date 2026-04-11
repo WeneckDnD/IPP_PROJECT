@@ -73,11 +73,11 @@ class Interpreter:
         # print(f'DIR Receiver: {dir(receiver)}')
         # print(f'Receiver: {receiver}, Selector: {selector}')
         method = receiver.lookup(selector, self.current_program.classes)
+        print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
         if method is None:
             att = receiver.get_attribute(selector)
             if att is not None:
                 return att
-        # print(f'Method: {method}')  
         # built-in vs user-defined
         if callable(method):
             isParam = selector in receiver.param_foos and method is not None
@@ -94,7 +94,7 @@ class Interpreter:
             if method is None:
                 current_self = scope.get_variable("self")
                 print(f'Current args: {args}')
-                current_self.set_attribute(selector, *args)
+                current_self.set_attribute(selector[:-1], *args)
                 scope.update_variable("self", current_self)
                 return current_self
 
