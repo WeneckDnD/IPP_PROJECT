@@ -23,12 +23,17 @@ class NewObject:
         if self.class_def is not None:
             class_def = self.class_def
             method = self.find_method_in_class_def(class_def, selector)
-            while method is None and class_def.parent in all_classes:
-                class_def = all_classes[class_def.parent]
+            # print(f'CLASS DEF PARENT {class_def.parent} METHOD: {method}')
+            parent_def = self.find_class(class_def.parent, all_classes)
+            while method is None and parent_def in all_classes:
+                # print(f'DIR2: {dir(class_def.parent)}')
+                class_def = parent_def
+                parent_def = self.find_class(class_def.parent, all_classes)
                 method = self.find_method_in_class_def(class_def, selector)
+            # print(f'CLASS DEF PARENT {class_def.parent} METHOD: {method}')
             if method is not None:
                 return method
-        print(f'DIR: {dir(self.parent)}')
+        # print(f'DIR: {dir(self.parent)}')
         for mthd_name in dir(self.parent):
             if selector == mthd_name and selector + ":" not in self.param_foos:
                 # print(mthd_name)
@@ -47,3 +52,18 @@ class NewObject:
     # def send_messagge(self, receiver: any, selector: str, args):
     #     method = receiver.cls.lookup(selector)
     #     return method(receiver, args)
+
+    def find_parent(self, parent: str):
+        class_def = self.find_class(parent)
+        prev_class_def = None
+        while class_def is not None:
+            prev_class_def = class_def
+            class_def = self.find_class(class_def.parent)
+        return prev_class_def.parent
+
+
+    def find_class(self, class_name: str, classes: list[ClassDef]) -> ClassDef | None:
+        for cls in classes:
+            if cls.name == class_name:
+                return cls
+        return None
