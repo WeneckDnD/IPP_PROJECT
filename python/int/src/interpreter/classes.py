@@ -27,7 +27,9 @@ class Object:
     def equalTo(self, obj: any) -> bool:
         """Check if objects are equal."""
         print(f'OBJ VALUE FROM equalTo: {obj.value}')
-        return self.identicalTo(obj)
+        retVal = self.identicalTo(obj)
+        print(f'RETVAL FROM equalTo: {retVal}')
+        return retVal
         # if obj.attributes == None:
         #     return self.identicalTo(obj)
         # else:

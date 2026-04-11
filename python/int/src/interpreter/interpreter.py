@@ -105,11 +105,17 @@ class Interpreter:
         # execute the block (execute_block)
         # block_arity = method.block.arity # TODO
         if method is not None:
-            return self.execute_block(method.block, parent_scope)
+            return self.execute_block(method.block, parent_scope, args)
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
-    def execute_block(self, block: Block, parent_scope: Scope) -> Any:
+    def execute_block(self, block: Block, parent_scope: Scope, *args) -> Any:
         current_scope = Scope(parent=parent_scope)
+
+        for param in block.parameters:
+            param_name = param.name
+            param_value = args[param.order]
+            print(f'PARAM NAME: {param_name} PARAM VALUE: {param_value}')
+            current_scope.set_variable(param_name, param_value)
         # self.scope.set_variable()
         retValue = None
         for assgn in block.assigns:
@@ -221,7 +227,6 @@ class Interpreter:
         result = self.send_message(class_y, selector, arguments, current_scope)
         # method = class_y.lookup(selector)
         # print(f'method: {method}')
-        # self.execute_method(method, current_scope)
         # print(f'Result value: {result.value} Selector: {selector}')
         return result
 
