@@ -73,6 +73,10 @@ class Interpreter:
         # print(f'DIR Receiver: {dir(receiver)}')
         # print(f'Receiver: {receiver}, Selector: {selector}')
         method = receiver.lookup(selector, self.current_program.classes)
+        if method is None:
+            att = receiver.get_attribute(selector)
+            if att is not None:
+                return att
         # print(f'Method: {method}')  
         # built-in vs user-defined
         if callable(method):
