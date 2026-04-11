@@ -213,7 +213,7 @@ class Interpreter:
                     
     def find_parent(self, parent: str):
         class_def = self.find_class(parent)
-        while class_def.parent in self.current_program.classes:
+        while class_def is not None:
             class_def = self.find_class(class_def.parent)
         return class_def.parent
 
