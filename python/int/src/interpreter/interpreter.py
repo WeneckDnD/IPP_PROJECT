@@ -214,9 +214,11 @@ class Interpreter:
                     
     def find_parent(self, parent: str):
         class_def = self.find_class(parent)
+        prev_class_def = None
         while class_def is not None:
+            prev_class_def = class_def
             class_def = self.find_class(class_def.parent)
-        return class_def.parent
+        return prev_class_def.parent
 
 
     def find_class(self, class_name: str) -> ClassDef | None:
