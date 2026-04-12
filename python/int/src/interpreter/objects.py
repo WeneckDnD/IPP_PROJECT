@@ -38,7 +38,7 @@ class NewObject:
             if selector == mthd_name and selector + ":" not in self.param_foos:
                 # print(mthd_name)
                 return getattr(self.parent, mthd_name)
-            elif selector[:-1] == mthd_name and selector in self.param_foos:
+            if selector[:-1] == mthd_name and selector in self.param_foos:
                 return getattr(self.parent, mthd_name)
         return None
 

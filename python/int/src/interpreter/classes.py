@@ -26,9 +26,9 @@ class Object:
 
     def equalTo(self, obj: any) -> bool:
         """Check if objects are equal."""
-        print(f'OBJ VALUE FROM equalTo: {obj.value}')
+        print(f"OBJ VALUE FROM equalTo: {obj.value}")
         retVal = self.identicalTo(obj)
-        print(f'RETVAL FROM equalTo: {retVal}')
+        print(f"RETVAL FROM equalTo: {retVal}")
         return retVal
         # if obj.attributes == None:
         #     return self.identicalTo(obj)
@@ -98,6 +98,8 @@ class Integer(Object):
 
     def equalTo(self, obj: Integer) -> bool:
         """Check if integers are equal."""
+        if not isinstance(obj, Integer):
+            raise InterpreterError(ErrorCode.INT_OTHER, "equalTo: expected Integer operand")
         return self.value == obj.value
 
     def asString(self) -> str:
@@ -110,23 +112,35 @@ class Integer(Object):
 
     def greaterThan(self, obj: Integer) -> bool:
         """Check if greater than another integer."""
+        if not isinstance(obj, Integer):
+            raise InterpreterError(
+                ErrorCode.INT_OTHER, "greaterThan: expected Integer operand"
+            )
         return self.value > obj.value
 
     def plus(self, obj: Integer) -> int:
         """Add two integers."""
-        print(f'PRINT CALLED {self.value} + {obj.value}')
+        if not isinstance(obj.parent, Integer):
+            raise InterpreterError(ErrorCode.INT_OTHER, "plus: expected Integer operand")
+        print(f"PRINT CALLED {self.value} + {obj.value}")
         return self.value + obj.value
 
     def minus(self, obj: Integer) -> int:
         """Subtract two integers."""
+        if not isinstance(obj.parent, Integer):
+            raise InterpreterError(ErrorCode.INT_OTHER, "minus: expected Integer operand")
         return self.value - obj.value
 
     def multiplyBy(self, obj: Integer) -> int:
         """Multiply two integers."""
+        if not isinstance(obj.parent, Integer):
+            raise InterpreterError(ErrorCode.INT_OTHER, "multiplyBy: expected Integer operand")
         return self.value * obj.value
 
     def divBy(self, obj: Integer) -> int:
         """Divide two integers."""
+        if not isinstance(obj.parent, Integer):
+            raise InterpreterError(ErrorCode.INT_OTHER, "divBy: expected Integer operand")
         if obj.value == 0:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "Division by zero is not allowed.")
         return self.value // obj.value
@@ -170,7 +184,9 @@ class String(Object):
 
     def equalTo(self, obj: String) -> bool:
         """Check if strings are equal."""
-        return self.string == obj.string
+        if not isinstance(obj.parent, String):
+            raise InterpreterError(ErrorCode.INT_OTHER, "equalTo: expected String operand")
+        return self.string == obj.value
 
     def asString(self) -> String:
         """Convert to string."""
@@ -184,6 +200,10 @@ class String(Object):
 
     def concatenateWith(self, obj: String):
         """Concatenate with another string."""
+        if not isinstance(obj.parent, String):
+            raise InterpreterError(
+                ErrorCode.INT_OTHER, "concatenateWith: expected String operand"
+            )
         if isinstance(obj, String):
             return Nil()
         return String(self.string + obj.string)  # ?? String()
@@ -206,7 +226,9 @@ class String(Object):
 
     def length(self, obj: String) -> Integer:
         """Get string length."""
-        l = len(obj.string) + 1  # null terminator
+        if not isinstance(obj.parent, String):
+            raise InterpreterError(ErrorCode.INT_OTHER, "length: expected String operand")
+        l = len(obj.value) + 1  # null terminator
         return Integer(l)
 
 
@@ -280,7 +302,7 @@ class False_(Object):
     def new(cls):
         """Create new instance of String"""
         return cls.boolean
-    
+
     def asString(self, obj: False_):
         """Convert false to string."""
         if obj is not None:

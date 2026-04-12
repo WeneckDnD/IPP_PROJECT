@@ -9,7 +9,7 @@ Author: Tadeas Bujdoso <xbjdot00>
 
 import logging
 from pathlib import Path
-from typing import TextIO
+from typing import Any, TextIO
 
 from lxml import etree
 from lxml.etree import ParseError
@@ -55,8 +55,8 @@ class Interpreter:
             raise InterpreterError(
                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
             ) from e
-    
-    def create_parent_by_type(self, obj_type: str, value= None) -> any:
+
+    def create_parent_by_type(self, obj_type: str, value= None) -> Any:
         # print(f'value to create {value}')
         match obj_type:
             case "int":
@@ -67,16 +67,17 @@ class Interpreter:
                 return Nil.new()
             case "bool":
                 return True_.new() if value is not None and value == True else False_.new()
-
+            case _:
+                return None
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
-        print(f'💬SEND MESSAGE: {selector} {args} {receiver.__class__}')
+        print(f"💬SEND MESSAGE: {selector} {args} {receiver.__class__}")
         # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
         # print(f'❓Receiver: {isinstance(receiver.value, Block)}, Selector: {selector}')
         if isinstance(receiver.value, Block) and selector == "value:":
             return self.execute_block(receiver.value, scope, args)
         method = receiver.lookup(selector, self.current_program.classes)
-        # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
+        # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')
         if method is None:
             # print(f'Selector: {selector}, Receiver: {receiver.attributes}')
             att = receiver.get_attribute(selector)
@@ -86,26 +87,25 @@ class Interpreter:
         # built-in vs user-defined
         if callable(method):
             isParam = selector in receiver.param_foos and method is not None
-            print(f'isParam {isParam}')
+            print(f"isParam {isParam}")
             new_value = method(*args) if isParam else method()
-            print(f'New value: {new_value}')
+            print(f"New value: {new_value}")
             value_type = type(new_value).__name__
             # print(f'Value type: {value_type}')
             new_parent = self.create_parent_by_type(value_type, new_value)
             # print(f'New parent: {new_parent}')
             return NewObject(None, new_value, new_parent)
-        else:
-            print(f'Method: {method}')
-            if method is None:
-                current_self = scope.get_variable("self")
-                print(f'Current args: {args}, Selector: {selector}')
-                current_self.set_attribute(selector[:-1], *args)
-                scope.update_variable("self", current_self)
-                return current_self
+        print(f"Method: {method}")
+        if method is None:
+            current_self = scope.get_variable("self")
+            print(f"Current args: {args}, Selector: {selector}")
+            current_self.set_attribute(selector[:-1], *args)
+            scope.update_variable("self", current_self)
+            return current_self
 
-            new_class_scope = Scope(scope)
-            new_class_scope.set_variable("self", receiver)
-            return self.execute_method(method, new_class_scope, args)
+        new_class_scope = Scope(scope)
+        new_class_scope.set_variable("self", receiver)
+        return self.execute_method(method, new_class_scope, args)
 
     def execute(self, input_io: TextIO) -> None:
         """
@@ -116,6 +116,14 @@ class Interpreter:
 
         scope = Scope(parent=None)
         main_class_def = self.find_class("Main")
+        if main_class_def is None:
+            raise InterpreterError(
+                error_code=ErrorCode.SEM_MAIN, message="No Main class found in the program"
+            )
+        if not any(m.selector == "run" for m in main_class_def.methods):
+            raise InterpreterError(
+                error_code=ErrorCode.SEM_MAIN, message="No run method found in the Main class"
+            )
         # print(main_class_def)
         parent_class_str = self.find_parent(main_class_def.parent)
         parent_class = self.create_obj_by_type(parent_class_str)
@@ -155,37 +163,48 @@ class Interpreter:
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
-        print(f'EXECUTE BLOCK: {block.parameters} {block.assigns}')
+        print(f"EXECUTE BLOCK: {block.parameters} {block.assigns}")
+        if len(args) != block.arity:
+            raise InterpreterError(
+                error_code=ErrorCode.SEM_ARITY,
+                message=f"Block arity mismatch: expected {block.arity} arguments, got {len(args)}",
+            )
+        param_names = {p.name for p in block.parameters}
         current_scope = Scope(parent=parent_scope)
 
         for param in block.parameters:
             param_name = param.name
             param_value = args[param.order - 1]
-            print(f'PARAM NAME: {param_name} PARAM VALUE: {param_value}')
+            print(f"PARAM NAME: {param_name} PARAM VALUE: {param_value}")
             current_scope.set_variable(param_name, param_value)
         # self.scope.set_variable()
         retValue = None
         for assgn in block.assigns:
             assgn_target = assgn.target  # o
+            if assgn_target.name in param_names:
+                raise InterpreterError(
+                    error_code=ErrorCode.SEM_COLLISION,
+                    message=f"Assignment to formal parameter '{assgn_target.name}' is not allowed",
+                )
             print(f"Assign target: {assgn_target.name}")
             assgn_expr = assgn.expr
             exp = self.execute_expression(assgn_expr, current_scope)  # NewObject()
             print(f"Assign expr: {exp}")
             current_scope.set_variable(assgn_target.name, exp)
-            print(f'💾STORED: {assgn_target.name} {exp}')
+            print(f"💾STORED: {assgn_target.name} {exp}")
             # look_up = exp.lookup("foo")
             # print(look_up)
             # self.execute_block(look_up.block, current_scope)
             retValue = exp
         return retValue
-    
+
     def execute_params():
         pass
 
 
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
-        print(f'EXECUTE EXPRESSION: {expr}')
+        print(f"EXECUTE EXPRESSION: {expr}")
         if expr.send is not None:
             # print(f"SEND")
             return self.execute_send(expr.send, current_scope)
@@ -199,7 +218,10 @@ class Interpreter:
             return x
         if expr.block is not None:
             return NewObject(None, expr.block, None)
-        print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
+        print(f"🛑EXECUTE EXPRESSION: {expr} RETURNING NONE")
+        raise InterpreterError(
+            error_code=ErrorCode.INT_OTHER, message="Invalid or unsupported expression"
+        )
 
     def execute_literal(self, literal: Literal) -> Any:
         if literal.class_id == "Integer":
@@ -218,7 +240,7 @@ class Interpreter:
 
     # value is used in special case for 'from:' selector
     def execute_literal_new(self, literal: Literal) -> Any:
-        print(f'EXECUTE LITERAL NEW: {literal}')
+        print(f"EXECUTE LITERAL NEW: {literal}")
         if literal.class_id == "Integer":
             value = int(literal.value)
             parent_class = Integer.new(value)
@@ -246,14 +268,24 @@ class Interpreter:
             return new_nil_class
         if literal.class_id == "class":
             class_def = self.find_class(literal.value)
+            # if class_def is None:
+            #     raise InterpreterError(
+            #         error_code=ErrorCode.SEM_UNDEF,
+            #         message=f"Undefined class '{literal.value}'",
+            #     )
             parent_class_str = self.find_parent(literal.value)
             parent_class = self.create_obj_by_type(parent_class_str)
             print(parent_class, parent_class_str)
             new_class = NewObject(class_def, None, parent_class)
             return new_class
-    
+
     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
         class_def = self.find_class(literal.value)
+        # if class_def is None:
+        #     raise InterpreterError(
+        #         error_code=ErrorCode.SEM_UNDEF,
+        #         message=f"Undefined class '{literal.value}'",
+        #     )
         parent_class_str = self.find_parent(literal.value)
         parent_class = self.create_obj_by_type(parent_class_str, value)
         new_class = NewObject(class_def, value, parent_class)
@@ -271,7 +303,7 @@ class Interpreter:
                 return True_.new()
             case "False":
                 return False_.new()
-                    
+
     def find_parent(self, parent: str):
         class_def = self.find_class(parent)
         # print(class_def)
@@ -292,15 +324,15 @@ class Interpreter:
         return None
 
     def execute_send(self, send: Send, current_scope: Scope) -> Any:
-        print(f'EXECUTE SEND: {send}')
+        print(f"EXECUTE SEND: {send}")
         selector = send.selector  # foo
-        arguments = []  
+        arguments = []
         for arg in send.args:
             order = arg.order
-            print(f'ORDER: {order}')
+            print(f"ORDER: {order}")
             exp_arg = self.execute_expression(arg.expr, current_scope)
             arguments.append(exp_arg)
-        print(f'ARGUMETS: {arguments}')
+        print(f"ARGUMETS: {arguments}")
         class_y = self.execute_expression(send.receiver, current_scope)  # object
 
         # print(f"Executing send: selector={selector}, arguments={arguments}")
@@ -315,6 +347,11 @@ class Interpreter:
             # print(f"Created new object of class with these attributes:{new_object.attributes}")
             return class_y
         if selector == "from:":
+            if not arguments:
+                raise InterpreterError(
+                    error_code=ErrorCode.INT_INVALID_ARG,
+                    message="from: requires a value argument",
+                )
             class_y = self.execute_literal_new_from(send.receiver.literal, arguments[0].value)
             return class_y
         # print(f'Arguments for send: {arguments} + Selector: {selector}')
