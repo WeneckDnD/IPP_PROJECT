@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<program language="SOL26" description="Bezparametrické selektory">
+<program language="SOL26" description="B dědí z A, redefinuje metodu m">
   <class name="A" parent="Integer">
     <method selector="foo">
       <block arity="0"/>
@@ -50,129 +50,11 @@
       </block>
     </method>
   </class>
-  <class name="Main" parent="Object">
-    <method selector="run">
-      <block arity="0">
+  <class name="AA" parent="Object">
+    <method selector="m:">
+      <block arity="1">
+        <parameter order="1" name="x"/>
         <assign order="1">
-          <var name="o"/>
-          <expr>
-            <send selector="new">
-              <expr>
-                <literal class="class" value="B"/>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="2">
-          <var name="_"/>
-          <expr>
-            <send selector="foo_2">
-              <expr>
-                <var name="o"/>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="3">
-          <var name="_"/>
-          <expr>
-            <send selector="asString">
-              <expr>
-                <var name="o"/>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="4">
-          <var name="_"/>
-          <expr>
-            <send selector="bar:">
-              <expr>
-                <var name="o"/>
-              </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="Integer" value="2"/>
-                </expr>
-              </arg>
-            </send>
-          </expr>
-        </assign>
-        <assign order="5">
-          <var name="_"/>
-          <expr>
-            <send selector="bar:">
-              <expr>
-                <var name="o"/>
-              </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="Integer" value="1"/>
-                </expr>
-              </arg>
-            </send>
-          </expr>
-        </assign>
-        <assign order="6">
-          <var name="_"/>
-          <expr>
-            <send selector="bar_3:">
-              <expr>
-                <var name="self"/>
-              </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="Integer" value="5"/>
-                </expr>
-              </arg>
-            </send>
-          </expr>
-        </assign>
-        <assign order="7">
-          <var name="t"/>
-          <expr>
-            <send selector="p:">
-              <expr>
-                <var name="self"/>
-              </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="String" value="hello"/>
-                </expr>
-              </arg>
-            </send>
-          </expr>
-        </assign>
-        <assign order="8">
-          <var name="_"/>
-          <expr>
-            <send selector="print">
-              <expr>
-                <send selector="p">
-                  <expr>
-                    <var name="self"/>
-                  </expr>
-                </send>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="9">
-          <var name="x"/>
-          <expr>
-            <send selector="from:">
-              <expr>
-                <literal class="class" value="String"/>
-              </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="String" value="Test"/>
-                </expr>
-              </arg>
-            </send>
-          </expr>
-        </assign>
-        <assign order="10">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -182,122 +64,134 @@
             </send>
           </expr>
         </assign>
-        <assign order="11">
-          <var name="r"/>
+      </block>
+    </method>
+    <method selector="r">
+      <block arity="0">
+        <assign order="1">
+          <var name="_"/>
           <expr>
-            <send selector="attrib:">
+            <send selector="print">
+              <expr>
+                <var name="self"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+  <class name="BB" parent="AA">
+    <method selector="m:">
+      <block arity="1">
+        <parameter order="1" name="x"/>
+        <assign order="1">
+          <var name="_"/>
+          <expr>
+            <send selector="m:">
+              <expr>
+                <var name="super"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="String" value="ahyj"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="2">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <var name="x"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+  <class name="CC" parent="BB">
+    <method selector="u">
+      <block arity="0">
+        <assign order="1">
+          <var name="_"/>
+          <expr>
+            <send selector="m:">
               <expr>
                 <var name="self"/>
               </expr>
               <arg order="1">
                 <expr>
-                  <send selector="from:">
-                    <expr>
-                      <literal class="class" value="Integer"/>
-                    </expr>
-                    <arg order="1">
-                      <expr>
-                        <literal class="Integer" value="10"/>
-                      </expr>
-                    </arg>
-                  </send>
+                  <var name="super"/>
                 </expr>
               </arg>
             </send>
           </expr>
         </assign>
-        <assign order="12">
+      </block>
+    </method>
+    <method selector="print">
+      <block arity="0">
+        <assign order="1">
           <var name="_"/>
           <expr>
             <send selector="print">
               <expr>
-                <send selector="from:">
-                  <expr>
-                    <literal class="class" value="String"/>
-                  </expr>
-                  <arg order="1">
-                    <expr>
-                      <send selector="attrib">
-                        <expr>
-                          <var name="self"/>
-                        </expr>
-                      </send>
-                    </expr>
-                  </arg>
-                </send>
+                <literal class="String" value="bar"/>
               </expr>
             </send>
           </expr>
         </assign>
-        <assign order="13">
-          <var name="a"/>
+      </block>
+    </method>
+  </class>
+  <class name="Main" parent="Object">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="cc"/>
           <expr>
-            <send selector="fooo:">
+            <send selector="new">
               <expr>
-                <var name="self"/>
+                <literal class="class" value="CC"/>
               </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="Integer" value="4"/>
-                </expr>
-              </arg>
             </send>
           </expr>
         </assign>
-        <assign order="14">
-          <var name="b"/>
-          <expr>
-            <block arity="1">
-              <parameter order="1" name="x"/>
-              <assign order="1">
-                <var name="_"/>
-                <expr>
-                  <literal class="Integer" value="42"/>
-                </expr>
-              </assign>
-            </block>
-          </expr>
-        </assign>
-        <assign order="15">
-          <var name="c"/>
-          <expr>
-            <send selector="value:">
-              <expr>
-                <var name="b"/>
-              </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="Integer" value="16"/>
-                </expr>
-              </arg>
-            </send>
-          </expr>
-        </assign>
-        <assign order="16">
+        <assign order="2">
           <var name="_"/>
           <expr>
-            <send selector="print">
+            <send selector="m:">
               <expr>
-                <send selector="from:">
-                  <expr>
-                    <literal class="class" value="String"/>
-                  </expr>
-                  <arg order="1">
-                    <expr>
-                      <var name="c"/>
-                    </expr>
-                  </arg>
-                </send>
+                <var name="cc"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="String" value="fuu"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="3">
+          <var name="_"/>
+          <expr>
+            <send selector="u">
+              <expr>
+                <var name="cc"/>
               </expr>
             </send>
           </expr>
         </assign>
-        <assign order="17">
-          <var name="d"/>
+        <assign order="4">
+          <var name="_"/>
           <expr>
-            <send selector="print">
+            <send selector="r">
               <expr>
-                <literal class="String" value="ahoj"/>
+                <var name="cc"/>
               </expr>
             </send>
           </expr>

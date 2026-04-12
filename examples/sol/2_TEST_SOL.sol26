@@ -8,27 +8,30 @@ class B : A {
   bar: [ :x | r := x plus: 180. ]
 }
 
+class AA : Object {
+  m: [ :x | _ := x print. ]
+  r [ | _ := self print. ]
+}
+
+class BB : AA { "B dědí z A, redefinuje metodu m"
+  m: [ 
+    :x | 
+      _ := super m: 'ahyj'.
+      _ := x print. 
+  ]
+"super -> použije se implementace z A"
+}
+class CC : BB {
+  u [ | _ := self m: super. ]
+  print [ | _ :='bar' print. ]
+}
+
 class Main : Object {
   run [|
-    "Bezparametrické selektory"
-    o := B new. "vytvoří instanci B"
-    _ := o foo_2. "metoda se najde v třídě A"
-    _ := o asString. "metoda se najde v třídě Object"
-    _ := o bar: 2. "metoda se nenajde v A ani v Object, neexistuje atribut 'bad' -> CHYBA 51"
-    "Jednoparametrické selektory"
-    _ := o bar: 1. "metoda se najde v třídě A"
-    _ := self bar_3: 5.
-    t := self p: 'hello'.
-    _ := (self p) print.
-    x := String from: 'Test'.
-    _ := x print.
-    r := self attrib: (Integer from: 10).
-    _ := (String from: (self attrib)) print.
-    a := self fooo: 4. "a = instance 14"
-    b := [ :x | _ := 42. ]. "b = instance Block"
-    c := b value: 16. "c = instance 42"
-    _ := (String from: c) print.
-    d := 'ahoj' print. 
+    cc := CC new.
+    _ := cc m: 'fuu'.
+    _ := cc u.
+    _ := cc r.
   ]
 
   fooo: [ :x |

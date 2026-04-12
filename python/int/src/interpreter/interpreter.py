@@ -83,16 +83,26 @@ class Interpreter:
                 )
             case _:
                 return None
+    def get_super_class(self, obj: NewObject) -> NewObject:
+        # print(f'GET SUPER CLASS: {obj.class_def} {obj.parent}')
+        if obj.class_def is not None:
+            obj_parent = self.find_class(obj.class_def.parent)
+            if obj_parent is not None:
+                return NewObject(obj_parent, None, obj.parent)
+        elif obj.parent is not None:
+            return NewObject(None, None, obj.parent)
+        return None
+
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
         """Dispatch a message send to a receiver object."""
-        print(f"💬SEND MESSAGE: {selector} {args} {receiver.__class__}")
+        print(f"💬SEND MESSAGE: {selector} {args} {receiver.class_def} {receiver.__class__}")
         # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
         # print(f'❓Receiver: {isinstance(receiver.value, Block)}, Selector: {selector}')
-        if isinstance(receiver.value, Block) and selector == "value:":
+        if isinstance(receiver.value, Block):
             return self.execute_block(receiver.value, scope, args)
-        method = receiver.lookup(selector, self.current_program.classes)
-        # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')
+        method, class_def = receiver.lookup(selector, self.current_program.classes)
+        # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
         if method is None:
             # print(f'Selector: {selector}, Receiver: {receiver.attributes}')
             att = receiver.get_attribute(selector)
@@ -102,15 +112,15 @@ class Interpreter:
         # built-in vs user-defined
         if callable(method):
             is_param = selector in receiver.param_foos and method is not None
-            print(f"isParam {is_param}")
+            # print(f"isParam {is_param}")
             new_value = method(*args) if is_param else method()
-            print(f"New value: {new_value}")
+            # print(f"New value: {new_value}")
             value_type = type(new_value).__name__
             # print(f'Value type: {value_type}')
             new_parent = self.create_parent_by_type(value_type, new_value)
             # print(f'New parent: {new_parent}')
             return NewObject(None, new_value, new_parent)
-        print(f"Method: {method}")
+        # print(f"Method: {method}")
         if method is None:
             current_self = scope.get_variable("self")
             print(f"Current args: {args}, Selector: {selector}")
@@ -119,7 +129,12 @@ class Interpreter:
             return current_self
 
         new_class_scope = Scope(scope)
-        new_class_scope.set_variable("self", receiver)
+        if class_def is not None:
+            print(f'CLASS DEF: {class_def.name} {class_def.parent}')
+            self_receiver = NewObject(class_def, receiver.value, receiver.parent)
+            super_receiver = self.get_super_class(self_receiver)
+            new_class_scope.set_variable("self", receiver)
+            new_class_scope.set_variable("super", super_receiver)
         return self.execute_method(method, new_class_scope, args)
 
     def execute(self, input_io: TextIO) -> None:
@@ -179,7 +194,7 @@ class Interpreter:
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
-        """Evaluate a block: bind parameters, then run assignments in order."""
+        # """Evaluate a block: bind parameters, then run assignments in order."""
         print(f"EXECUTE BLOCK: {block.parameters} {block.assigns}")
         if len(args) != block.arity:
             raise InterpreterError(
@@ -192,7 +207,7 @@ class Interpreter:
         for param in block.parameters:
             param_name = param.name
             param_value = args[param.order - 1]
-            print(f"PARAM NAME: {param_name} PARAM VALUE: {param_value}")
+            # print(f'PARAM NAME: {param_name} PARAM VALUE: {param_value}')
             current_scope.set_variable(param_name, param_value)
         # self.scope.set_variable()
         ret_value = None
@@ -203,12 +218,12 @@ class Interpreter:
                     error_code=ErrorCode.SEM_COLLISION,
                     message=f"Assignment to formal parameter '{assgn_target.name}' is not allowed",
                 )
-            print(f"Assign target: {assgn_target.name}")
+            # print(f"Assign target: {assgn_target.name}")
             assgn_expr = assgn.expr
             exp = self.execute_expression(assgn_expr, current_scope)  # NewObject()
-            print(f"Assign expr: {exp}")
+            # print(f"Assign expr: {exp}")
             current_scope.set_variable(assgn_target.name, exp)
-            print(f"💾STORED: {assgn_target.name} {exp}")
+            # print(f'💾STORED: {assgn_target.name} {exp}')
             # look_up = exp.lookup("foo")
             # print(look_up)
             # self.execute_block(look_up.block, current_scope)
@@ -222,7 +237,7 @@ class Interpreter:
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
         """Evaluate an expression in the given scope and return its value."""
-        print(f"EXECUTE EXPRESSION: {expr}")
+        # print(f"EXECUTE EXPRESSION: {expr}")
         if expr.send is not None:
             # print(f"SEND")
             return self.execute_send(expr.send, current_scope)
@@ -235,7 +250,7 @@ class Interpreter:
             return current_scope.get_variable(expr.var.name)
         if expr.block is not None:
             return NewObject(None, expr.block, None)
-        print(f"🛑EXECUTE EXPRESSION: {expr} RETURNING NONE")
+        # print(f"🛑EXECUTE EXPRESSION: {expr} RETURNING NONE")
         raise InterpreterError(
             error_code=ErrorCode.INT_OTHER, message="Invalid or unsupported expression"
         )
@@ -260,7 +275,7 @@ class Interpreter:
     # value is used in special case for 'from:' selector
     def execute_literal_new(self, literal: Literal) -> Any:
         """Build a NewObject wrapper for a literal value."""
-        print(f"EXECUTE LITERAL NEW: {literal}")
+        # print(f"EXECUTE LITERAL NEW: {literal}")
         if literal.class_id == "Integer":
             value = int(literal.value)
             parent_class = Integer.new(value)
@@ -348,8 +363,11 @@ class Interpreter:
         arguments = []
         for arg in send.args:
             order = arg.order
-            print(f"ORDER: {order}")
-            exp_arg = self.execute_expression(arg.expr, current_scope)
+            # print(f'ORDER: {order}')
+            if arg.expr.var is not None and arg.expr.var.name == "super":
+                exp_arg = current_scope.get_variable("self")
+            else:
+                exp_arg = self.execute_expression(arg.expr, current_scope)
             arguments.append(exp_arg)
         print(f"ARGUMETS: {arguments}")
         class_y = self.execute_expression(send.receiver, current_scope)  # object

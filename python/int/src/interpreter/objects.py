@@ -54,15 +54,15 @@ class NewObject:
                 method = self.find_method_in_class_def(class_def, selector)
             # print(f'CLASS DEF PARENT {class_def.parent} METHOD: {method}')
             if method is not None:
-                return method
+                return method, class_def
         # print(f'DIR: {dir(self.parent)}')
         for mthd_name in dir(self.parent):
             if selector == mthd_name and selector + ":" not in self.param_foos:
                 # print(mthd_name)
-                return getattr(self.parent, mthd_name)
+                return getattr(self.parent, mthd_name), None
             if selector[:-1] == mthd_name and selector in self.param_foos:
-                return getattr(self.parent, mthd_name)
-        return None
+                return getattr(self.parent, mthd_name), None
+        return None, None
 
     def get_attribute(self, name: str) -> Any:
         """Return a stored instance attribute, or None if absent."""
