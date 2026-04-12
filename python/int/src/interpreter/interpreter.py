@@ -113,9 +113,21 @@ class Interpreter:
                 return att
         # built-in vs user-defined
         if callable(method):
+            print('callable')
             is_param = selector in receiver.param_foos and method is not None
             # print(f"isParam {is_param}")
-            new_value = method(*args) if is_param else method()
+            new_args = []
+            for arg in args or []:
+                print(f"ARG: {arg.value if hasattr(arg, 'value') else arg} {isinstance(arg, Block)}")
+                if isinstance(arg.value, Block):
+                    print('idem block')
+                    new_value = self.execute_block(arg.value, scope, [])
+                    new_args.append(new_value)
+                    print(f"ARG: {new_value.value if hasattr(arg, 'value') else arg}")
+                else:
+                    new_args.append(arg)
+
+            new_value = method(*new_args) if is_param else method()
             # print(f"New value: {new_value}")
             value_type = type(new_value).__name__
             # print(f'Value type: {value_type}')

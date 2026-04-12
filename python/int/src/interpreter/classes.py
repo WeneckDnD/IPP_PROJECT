@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from interpreter.error_codes import ErrorCode
 from interpreter.exceptions import InterpreterError
-from interpreter.input_model import Block  ## ?
+# from interpreter.input_model import Block  ## ?
 
 
 class Object:
@@ -152,7 +152,7 @@ class Integer(Object):
         """Convert to integer."""
         return Integer(self)
 
-    def timesRepeat(self, n: int, block: Block):
+    def timesRepeat(self, n: int, block: Block_):
         """Repeat block n times."""
         if n <= 0:
             return Nil()
@@ -212,7 +212,7 @@ class String(Object):
         print(f'CONCATENATE WITH: {type(obj.value)} {self.string + obj.value}')
         return String(self.string + obj.value)  # ?? String()
 
-    def startsWithendsWith(self, index_start: int, index_end: int) -> str:
+    def startsWithEndsBefore(self, index_start: int, index_end: int) -> str:
         """Get substring between indices."""
         if isinstance(index_start, int) or isinstance(index_end, int):
             return Nil()  # nil ??
@@ -255,7 +255,7 @@ class Block_(Object):
         """Execute block with arguments."""
         return self.func(*args)  # idk ci dobre
 
-    def whileTrue(self, body: Block):
+    def whileTrue(self, body: Block_):
         """Execute while condition is true."""
         result = None
         while self.value():
@@ -288,7 +288,11 @@ class True_(Object):
     # def and_(self): ???
     #     if self.bool is True:
     #         return
-    # def ifTrueifFalse(self, )
+    def ifTrueIfFalse(self, condition: bool, true_block: Block_, false_block: Block_):
+        if condition:
+            return true_block.value()
+        return false_block.value()
+
 
     def isBoolean(self):
         """Check if object is boolean."""
@@ -322,6 +326,11 @@ class False_(Object):
         if self.bool is False:
             return False
         return None
+    
+    def ifTrueIfFalse(self, condition: bool, true_block: Block_, false_block: Block_):
+        if condition:
+            return true_block.value()
+        return false_block.value()
 
     def isBoolean(self):
         """Check if object is boolean."""

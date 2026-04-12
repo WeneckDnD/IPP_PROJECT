@@ -30,6 +30,14 @@ class NewObject:
             "or:",
             "ifTrue:ifFalse:",
         ]
+    def transfer_function_name(self, function_name: str) -> str:
+        """Transfer function name to the parent class."""
+        match function_name:
+            case "startsWith:endsBefore:":
+                return "startsWithEndsBefore"
+            case "ifTrue:ifFalse:":
+                return "ifTrueIfFalse"
+            case _: return function_name
 
         # self.methods: dict = {}
     def find_method_in_class_def(self, class_def: ClassDef, selector: str) -> Method | Any:
@@ -41,7 +49,7 @@ class NewObject:
 
     def lookup(self, selector: str, all_classes: list[ClassDef]) -> Method | Any:
         """Resolve a selector to a user method or a built-in on ``self.parent``."""
-        # print(self.class_def)
+        print('lookup', selector)
         if self.class_def is not None:
             class_def = self.class_def
             method = self.find_method_in_class_def(class_def, selector)
@@ -55,12 +63,15 @@ class NewObject:
             # print(f'CLASS DEF PARENT {class_def.parent} METHOD: {method}')
             if method is not None:
                 return method, class_def
-        # print(f'DIR: {self.parent.__class__} {dir(self.parent)}')
+        print(f'DIR: {self.parent} {dir(self.parent)}')
         for mthd_name in dir(self.parent):
             if selector == mthd_name and selector + ":" not in self.param_foos:
                 # print(mthd_name)
                 return getattr(self.parent, mthd_name), None
             if selector[:-1] == mthd_name and selector in self.param_foos:
+                return getattr(self.parent, mthd_name), None
+            if self.transfer_function_name(selector) == mthd_name:
+                print(f"TRANSFER FUNCTION NAME: {mthd_name}")
                 return getattr(self.parent, mthd_name), None
         return None, None
 
