@@ -184,6 +184,20 @@
         <assign order="4">
           <var name="_"/>
           <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <literal class="Integer" value="222"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="5">
+          <var name="_"/>
+          <expr>
             <send selector="bar:">
               <expr>
                 <var name="o"/>
@@ -196,7 +210,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="5">
+        <assign order="6">
           <var name="_"/>
           <expr>
             <send selector="bar:">
@@ -211,7 +225,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="6">
+        <assign order="7">
           <var name="_"/>
           <expr>
             <send selector="bar_3:">
@@ -226,7 +240,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="7">
+        <assign order="8">
           <var name="t"/>
           <expr>
             <send selector="p:">
@@ -241,7 +255,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="8">
+        <assign order="9">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -255,7 +269,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="9">
+        <assign order="10">
           <var name="x"/>
           <expr>
             <send selector="from:">
@@ -270,7 +284,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="10">
+        <assign order="11">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -280,7 +294,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="11">
+        <assign order="12">
           <var name="r"/>
           <expr>
             <send selector="attrib:">
@@ -304,7 +318,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="12">
+        <assign order="13">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -327,7 +341,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="13">
+        <assign order="14">
           <var name="a"/>
           <expr>
             <send selector="fooo:">
@@ -342,7 +356,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="14">
+        <assign order="15">
           <var name="b"/>
           <expr>
             <block arity="2">
@@ -366,7 +380,7 @@
             </block>
           </expr>
         </assign>
-        <assign order="15">
+        <assign order="16">
           <var name="c"/>
           <expr>
             <send selector="value:value:">
@@ -386,7 +400,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="16">
+        <assign order="17">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -405,7 +419,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="17">
+        <assign order="18">
           <var name="d"/>
           <expr>
             <send selector="print">
@@ -415,7 +429,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="18">
+        <assign order="19">
           <var name="z"/>
           <expr>
             <send selector="block:">
@@ -434,7 +448,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="19">
+        <assign order="20">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -448,7 +462,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="20">
+        <assign order="21">
           <var name="cc"/>
           <expr>
             <send selector="new">
@@ -458,7 +472,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="21">
+        <assign order="22">
           <var name="_"/>
           <expr>
             <send selector="m:">
@@ -473,7 +487,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="22">
+        <assign order="23">
           <var name="_"/>
           <expr>
             <send selector="u">
@@ -483,7 +497,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="23">
+        <assign order="24">
           <var name="_"/>
           <expr>
             <send selector="r">

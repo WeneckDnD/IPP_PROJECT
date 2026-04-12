@@ -2,19 +2,21 @@
 
 from __future__ import annotations
 
+from collections.abc import Callable
+from typing import Any, cast, override
+
 from interpreter.error_codes import ErrorCode
 from interpreter.exceptions import InterpreterError
-# from interpreter.input_model import Block  ## ?
 
 
 class Object:
     """main class object"""
 
-    def __init__(self, *args):
+    def __init__(self, *args: Any) -> None:
         """Initialize object with arguments."""
         self.args = args
 
-    def asString(self) -> str:
+    def asString(self) -> Any:
         """Convert object to string representation."""
         return ""
 
@@ -23,23 +25,14 @@ class Object:
         return self is obj
 
     @classmethod
-    def new(cls, *args):
+    def new(cls, *args: Any) -> Any:
         """Create new instance of class."""
         return cls(*args)
 
-    def equalTo(self, obj: any) -> bool:
+    def equalTo(self, obj: Any) -> bool:
         """Check if objects are equal."""
-        print(f"OBJ VALUE FROM equalTo: {obj.value}")
         ret_val = self.identicalTo(obj)
-        print(f"RETVAL FROM equalTo: {ret_val}")
         return ret_val
-        # if obj.attributes == None:
-        #     return self.identicalTo(obj)
-        # else:
-        #     for atr in self.attributes:
-        #         if self.attributes[atr] != obj.attributes[atr]:
-        #             return False
-        # return True
 
     def isNumber(self) -> bool:
         """Check if object is a number."""
@@ -66,23 +59,19 @@ class Nil(Object):
     """Nil object with inherited methods from parent Object"""
 
     instance = Object()
-    # instance = None
 
-    # def __init__(self):
-    #     if self.instance is None:
-    #         self.instance = Object()
-
+    @override
     def asString(self) -> str:
         """Return nil as string."""
         return "nil"
 
     @classmethod
-    def new(cls):
+    def new(cls) -> Any:
         """Get nil instance."""
         return cls.instance
 
     @classmethod
-    def from_(cls):
+    def from_(cls) -> Any:
         """Get nil instance from class."""
         return cls.instance
 
@@ -90,21 +79,22 @@ class Nil(Object):
 class Integer(Object):
     """Integer object with inherited methods from parent Object"""
 
-    def __init__(self, value: int = 0):
+    def __init__(self, value: Any = 0):
         """Initialize integer with value."""
         self.value = value
 
     @classmethod
-    def new(cls, *args):
+    def new(cls, *args: Any) -> Any:
         """Create new integer instance."""
         return cls(*args)
 
-    def equalTo(self, obj: Integer) -> bool:
+    def equalTo(self, obj: Integer) -> Any:
         """Check if integers are equal."""
-        if not isinstance(obj.parent, Integer):
+        if not isinstance(cast(Any, obj).parent, Integer):
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "equalTo: expected Integer operand")
         return self.value == obj.value
 
+    @override
     def asString(self) -> str:
         """Convert integer to string."""
         return str(self.value)
@@ -115,42 +105,41 @@ class Integer(Object):
 
     def greaterThan(self, obj: Integer) -> bool:
         """Check if greater than another integer."""
-        if not isinstance(obj.parent, Integer):
+        if not isinstance(cast(Any, obj).parent, Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "greaterThan: expected Integer operand")
-        return self.value > obj.value
+        return True if self.value > obj.value else False
 
     def plus(self, obj: Integer) -> int:
         """Add two integers."""
-        if not isinstance(obj.parent, Integer):
+        if not isinstance(cast(Any, obj).parent, Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "plus: expected Integer operand")
-        print(f"PRINT CALLED {self.value} + {obj.value}")
-        return self.value + obj.value
+        return int(self.value + obj.value)
 
     def minus(self, obj: Integer) -> int:
         """Subtract two integers."""
-        if not isinstance(obj.parent, Integer):
+        if not isinstance(cast(Any, obj).parent, Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "minus: expected Integer operand")
-        return self.value - obj.value
+        return int(self.value - obj.value)
 
     def multiplyBy(self, obj: Integer) -> int:
         """Multiply two integers."""
-        if not isinstance(obj.parent, Integer):
+        if not isinstance(cast(Any, obj).parent, Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "multiplyBy: expected Integer operand")
-        return self.value * obj.value
+        return int(self.value * obj.value)
 
     def divBy(self, obj: Integer) -> int:
         """Divide two integers."""
-        if not isinstance(obj.parent, Integer):
+        if not isinstance(cast(Any, obj).parent, Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "divBy: expected Integer operand")
         if obj.value == 0:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "Division by zero is not allowed.")
-        return self.value // obj.value
+        return int(self.value // obj.value)
 
-    def asInteger(self) -> Integer:
+    def asInteger(self) -> Any:
         """Convert to integer."""
         return Integer(self)
 
-    def timesRepeat(self, n: int, block: Block_):
+    def timesRepeat(self, n: int, block: Block_) -> Any:
         """Repeat block n times."""
         if n <= 0:
             return Nil()
@@ -169,7 +158,7 @@ class String(Object):
         self.string = string
 
     @classmethod
-    def new(cls, *args):
+    def new(cls, *args: Any) -> Any:
         """Create new instance of String"""
         return cls(*args)
 
@@ -178,20 +167,21 @@ class String(Object):
         """Read string from input."""
         return cls(input())
 
-    def print(self):
+    def print(self) -> Any:
         """Print string and return self."""
         print(self.string)
         return self
 
     def equalTo(self, obj: String) -> bool:
         """Check if strings are equal."""
-        if not isinstance(obj.parent, String):
+        if not isinstance(cast(Any, obj).parent, String):
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "equalTo: expected String operand")
-        return self.string == obj.value
+        return bool(self.string == cast(Any, obj).value)
 
-    def asString(self) -> String:
+    @override
+    def asString(self) -> str:
         """Convert to string."""
-        return String(self)  # ?? String()
+        return str(self.string)
 
     def asInteger(self) -> Integer | Nil:
         """Convert string to integer."""
@@ -199,25 +189,14 @@ class String(Object):
             return Integer(int(self.string))
         return Nil()
 
-    def concatenateWith(self, obj: String):
+    def concatenateWith(self, obj: String) -> Any:
         """Concatenate with another string."""
-        # if not isinstance(obj.parent, String):
-        #     raise InterpreterError(
-        #         ErrorCode.INT_OTHER, "concatenateWith: expected String operand"
-        #     )
-        # if isinstance(obj.parent, String):
-        #     return Nil()
-        print(f"CONCATENATE WITH: {type(obj.value)} {self.string + obj.value}")
-        return String(self.string + obj.value)  # ?? String()
+        return String(self.string + cast(Any, obj).value)  # ?? String()
 
-    def startsWithEndsBefore(self, index_start: int, index_end: int) -> str:
+    def startsWithEndsBefore(self, index_start: int, index_end: int) -> Any:
         """Get substring between indices."""
-        if isinstance(index_start, int) or isinstance(index_end, int):
-            return Nil()  # nil ??
-
         if index_start <= 0 or index_end <= 0:
             return Nil()
-
         if index_start < 1:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "indexing from 1")
         if (index_start - index_end) >= 0:
@@ -228,32 +207,31 @@ class String(Object):
 
     def length(self, obj: String) -> Integer:
         """Get string length."""
-        if not isinstance(obj.parent, String):
+        if not isinstance(cast(Any, obj).parent, String):
             raise InterpreterError(ErrorCode.INT_OTHER, "length: expected String operand")
-        l = len(obj.value) + 1  # null terminator
-        return Integer(l)
+        leng = len(cast(Any, obj).value) + 1  # null terminator
+        return Integer(leng)
 
 
 class Block_(Object):
     """Block object with inherited methods from parent Object"""
-
-    def __init__(self, func=None):
+    def __init__(self, func: Callable[..., Any] | None = None) -> None:
         """Initialize block with function."""
         if func is None:
-            self.func = lambda: None
+            self.func: Callable[..., Any] = lambda: None
         else:
             self.func = func
 
     @classmethod
-    def new(cls):
+    def new(cls) -> Any:
         """Create new block instance."""
         return cls()
 
-    def value(self, *args):
+    def value(self, *args: Any) -> Any:
         """Execute block with arguments."""
         return self.func(*args)  # idk ci dobre
 
-    def whileTrue(self, body: Block_):
+    def whileTrue(self, body: Block_) -> Any:
         """Execute while condition is true."""
         result = None
         while self.value():
@@ -264,35 +242,30 @@ class Block_(Object):
 class True_(Object):
     """True object with inherited methods from parent Object"""
 
-    def __init__(self, boolean: True):
+    def __init__(self, boolean: bool) -> None:
         """Initialize true boolean."""
         self.boolean = boolean
 
     @classmethod
-    def new(cls):
+    def new(cls) -> Any:
         """Create new instance of String"""
         return cls.boolean
 
-    def asString(self, obj: True_):
+    @override
+    def asString(self) -> str:
         """Convert true to string."""
-        if obj is not None:
-            return "true"
-        return None
+        return "true"
 
-    def not_(self, obj: True_):
+    def not_(self, obj: True_) -> bool:
         """Negate true boolean."""
         return not (obj)
 
-    # def and_(self): ???
-    #     if self.bool is True:
-    #         return
-    def ifTrueIfFalse(self, condition: bool, true_block: Block_, false_block: Block_):
+    def ifTrueIfFalse(self, condition: bool, true_block: Block_, false_block: Block_) -> Any:
         if condition:
             return true_block.value()
         return false_block.value()
 
-
-    def isBoolean(self):
+    def isBoolean(self) -> bool:
         """Check if object is boolean."""
         return True
 
@@ -300,36 +273,35 @@ class True_(Object):
 class False_(Object):
     """False object with inherited methods from parent Object"""
 
-    def __init__(self, boolean: False):
+    def __init__(self, boolean: bool) -> None:
         """Initialize false boolean."""
         self.boolean = boolean
 
     @classmethod
-    def new(cls):
+    def new(cls) -> Any:
         """Create new instance of String"""
         return cls(False)
 
-    def asString(self, obj: False_):
+    @override
+    def asString(self) -> str:
         """Convert false to string."""
-        if obj is not None:
-            return "false"
-        return None
+        return "false"
 
-    def not_(self, obj: False_):
+    def not_(self, obj: False_) -> bool:
         """Negate false boolean."""
         return not (obj)
 
-    def and_(self):
+    def and_(self) -> Any:
         """Logical AND operation."""
-        if self.bool is False:
+        if cast(Any, self).bool is False:
             return False
         return None
-    
-    def ifTrueIfFalse(self, condition: bool, true_block: Block_, false_block: Block_):
+
+    def ifTrueIfFalse(self, condition: bool, true_block: Block_, false_block: Block_) -> Any:
         if condition:
             return true_block.value()
         return false_block.value()
 
-    def isBoolean(self):
+    def isBoolean(self) -> bool:
         """Check if object is boolean."""
         return True

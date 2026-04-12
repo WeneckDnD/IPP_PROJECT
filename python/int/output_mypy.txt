@@ -1,0 +1,555 @@
+src/interpreter/scope.py: note: In member "__init__" of class "Scope":
+src/interpreter/scope.py:12:5: error: The return type of "__init__" must be
+None  [misc]
+        def __init__(self, parent) -> Any:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/scope.py:12:5: error: Function is missing a type annotation for
+one or more arguments  [no-untyped-def]
+        def __init__(self, parent) -> Any:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/scope.py:14:9: error: Need type annotation for "variables"
+(hint: "variables: dict[<type>, <type>] = ...")  [var-annotated]
+            self.variables = {}
+            ^~~~~~~~~~~~~~
+src/interpreter/scope.py: note: In member "set_variable" of class "Scope":
+src/interpreter/scope.py:16:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def set_variable(self, name, value):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/scope.py: note: In member "get_variable" of class "Scope":
+src/interpreter/scope.py:20:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def get_variable(self, name):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/scope.py: note: In member "update_variable" of class "Scope":
+src/interpreter/scope.py:28:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def update_variable(self, name, new):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "__init__" of class "Object":
+src/interpreter/classes.py:13:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def __init__(self, *args):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "new" of class "Object":
+src/interpreter/classes.py:26:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def new(cls, *args):
+        ^~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "equalTo" of class "Object":
+src/interpreter/classes.py:30:28: error: Function "builtins.any" is not valid
+as a type  [valid-type]
+        def equalTo(self, obj: any) -> bool:
+                               ^
+src/interpreter/classes.py:30:28: note: Perhaps you meant "typing.Any" instead of "any"?
+src/interpreter/classes.py:32:41: error: any? has no attribute "value" 
+[attr-defined]
+            print(f"OBJ VALUE FROM equalTo: {obj.value}")
+                                            ^~~~~~~~~~
+src/interpreter/classes.py: note: In class "Nil":
+src/interpreter/classes.py:68:16: error: Call to untyped function "Object" in
+typed context  [no-untyped-call]
+        instance = Object()
+                   ^~~~~~~~
+src/interpreter/classes.py: note: In member "new" of class "Nil":
+src/interpreter/classes.py:80:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def new(cls):
+        ^~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "from_" of class "Nil":
+src/interpreter/classes.py:85:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def from_(cls):
+        ^~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "new" of class "Integer":
+src/interpreter/classes.py:98:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def new(cls, *args):
+        ^~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "equalTo" of class "Integer":
+src/interpreter/classes.py:104:27: error: "Integer" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, Integer):
+                              ^~~~~~~~~~
+src/interpreter/classes.py: note: In member "greaterThan" of class "Integer":
+src/interpreter/classes.py:118:27: error: "Integer" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, Integer):
+                              ^~~~~~~~~~
+src/interpreter/classes.py: note: In member "plus" of class "Integer":
+src/interpreter/classes.py:124:27: error: "Integer" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, Integer):
+                              ^~~~~~~~~~
+src/interpreter/classes.py: note: In member "minus" of class "Integer":
+src/interpreter/classes.py:131:27: error: "Integer" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, Integer):
+                              ^~~~~~~~~~
+src/interpreter/classes.py: note: In member "multiplyBy" of class "Integer":
+src/interpreter/classes.py:137:27: error: "Integer" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, Integer):
+                              ^~~~~~~~~~
+src/interpreter/classes.py: note: In member "divBy" of class "Integer":
+src/interpreter/classes.py:143:27: error: "Integer" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, Integer):
+                              ^~~~~~~~~~
+src/interpreter/classes.py: note: In member "asInteger" of class "Integer":
+src/interpreter/classes.py:151:24: error: Argument 1 to "Integer" has
+incompatible type "Integer"; expected "int"  [arg-type]
+            return Integer(self)
+                           ^~~~
+src/interpreter/classes.py: note: In member "timesRepeat" of class "Integer":
+src/interpreter/classes.py:153:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def timesRepeat(self, n: int, block: Block_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:156:20: error: Call to untyped function "Nil" in
+typed context  [no-untyped-call]
+                return Nil()
+                       ^~~~~
+src/interpreter/classes.py:160:22: error: Call to untyped function "value" in
+typed context  [no-untyped-call]
+                result = block.value(i)
+                         ^~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "new" of class "String":
+src/interpreter/classes.py:172:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def new(cls, *args):
+        ^~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "print" of class "String":
+src/interpreter/classes.py:181:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def print(self):
+        ^~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "equalTo" of class "String":
+src/interpreter/classes.py:188:27: error: "String" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, String):
+                              ^~~~~~~~~~
+src/interpreter/classes.py:190:9: error: Returning Any from function declared
+to return "bool"  [no-any-return]
+            return self.string == obj.value
+            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:190:31: error: "String" has no attribute "value" 
+[attr-defined]
+            return self.string == obj.value
+                                  ^~~~~~~~~
+src/interpreter/classes.py: note: In member "asString" of class "String":
+src/interpreter/classes.py:192:5: error: Return type "String" of "asString"
+incompatible with return type "str" in supertype "Object"  [override]
+        def asString(self) -> String:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:194:23: error: Argument 1 to "String" has
+incompatible type "String"; expected "str"  [arg-type]
+            return String(self)  # ?? String()
+                          ^~~~
+src/interpreter/classes.py: note: In member "asInteger" of class "String":
+src/interpreter/classes.py:200:16: error: Call to untyped function "Nil" in
+typed context  [no-untyped-call]
+            return Nil()
+                   ^~~~~
+src/interpreter/classes.py: note: In member "concatenateWith" of class "String":
+src/interpreter/classes.py:202:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def concatenateWith(self, obj: String):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:210:41: error: "String" has no attribute "value" 
+[attr-defined]
+            print(f"CONCATENATE WITH: {type(obj.value)} {self.string + obj...
+                                            ^~~~~~~~~
+src/interpreter/classes.py:211:37: error: "String" has no attribute "value" 
+[attr-defined]
+            return String(self.string + obj.value)  # ?? String()
+                                        ^~~~~~~~~
+src/interpreter/classes.py: note: In member "startsWithEndsBefore" of class "String":
+src/interpreter/classes.py:216:20: error: Call to untyped function "Nil" in
+typed context  [no-untyped-call]
+                return Nil()  # nil ??
+                       ^~~~~
+src/interpreter/classes.py:216:20: error: Incompatible return value type (got
+"Nil", expected "str")  [return-value]
+                return Nil()  # nil ??
+                       ^~~~~
+src/interpreter/classes.py: note: In member "length" of class "String":
+src/interpreter/classes.py:231:27: error: "String" has no attribute "parent" 
+[attr-defined]
+            if not isinstance(obj.parent, String):
+                              ^~~~~~~~~~
+src/interpreter/classes.py:233:17: error: "String" has no attribute "value" 
+[attr-defined]
+            l = len(obj.value) + 1  # null terminator
+                    ^~~~~~~~~
+src/interpreter/classes.py: note: In member "__init__" of class "Block_":
+src/interpreter/classes.py:240:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def __init__(self, func=None):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "new" of class "Block_":
+src/interpreter/classes.py:248:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def new(cls):
+        ^~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "value" of class "Block_":
+src/interpreter/classes.py:252:5: error: Function is missing a type annotation 
+[no-untyped-def]
+        def value(self, *args):
+        ^~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:254:16: error: Call to untyped function (unknown) in
+typed context  [no-untyped-call]
+            return self.func(*args)  # idk ci dobre
+                   ^~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "whileTrue" of class "Block_":
+src/interpreter/classes.py:256:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def whileTrue(self, body: Block_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:259:15: error: Call to untyped function "value" in
+typed context  [no-untyped-call]
+            while self.value():
+                  ^~~~~~~~~~~~
+src/interpreter/classes.py:260:22: error: Call to untyped function "value" in
+typed context  [no-untyped-call]
+                result = body.value()
+                         ^~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "__init__" of class "True_":
+src/interpreter/classes.py:267: error: Invalid type: try using Literal[True]
+instead?  [valid-type]
+        def __init__(self, boolean: True):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "new" of class "True_":
+src/interpreter/classes.py:272:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def new(cls):
+        ^~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "asString" of class "True_":
+src/interpreter/classes.py:276:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def asString(self, obj: True_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:276:5: error: Signature of "asString" incompatible
+with supertype "Object"  [override]
+        def asString(self, obj: True_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:276:5: note:      Superclass:
+src/interpreter/classes.py:276:5: note:          def asString(self) -> str
+src/interpreter/classes.py:276:5: note:      Subclass:
+src/interpreter/classes.py:276:5: note:          def asString(self, obj: True_) -> Any
+src/interpreter/classes.py: note: In member "not_" of class "True_":
+src/interpreter/classes.py:282:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def not_(self, obj: True_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "ifTrueIfFalse" of class "True_":
+src/interpreter/classes.py:289:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def ifTrueIfFalse(self, condition: bool, true_block: Block_, false...
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/interpreter/classes.py:291:20: error: Call to untyped function "value" in
+typed context  [no-untyped-call]
+                return true_block.value()
+                       ^~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:292:16: error: Call to untyped function "value" in
+typed context  [no-untyped-call]
+            return false_block.value()
+                   ^~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "isBoolean" of class "True_":
+src/interpreter/classes.py:295:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def isBoolean(self):
+        ^~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "__init__" of class "False_":
+src/interpreter/classes.py:303: error: Invalid type: try using Literal[False]
+instead?  [valid-type]
+        def __init__(self, boolean: False):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "new" of class "False_":
+src/interpreter/classes.py:308:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def new(cls):
+        ^~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "asString" of class "False_":
+src/interpreter/classes.py:312:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def asString(self, obj: False_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:312:5: error: Signature of "asString" incompatible
+with supertype "Object"  [override]
+        def asString(self, obj: False_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:312:5: note:      Superclass:
+src/interpreter/classes.py:312:5: note:          def asString(self) -> str
+src/interpreter/classes.py:312:5: note:      Subclass:
+src/interpreter/classes.py:312:5: note:          def asString(self, obj: False_) -> Any
+src/interpreter/classes.py: note: In member "not_" of class "False_":
+src/interpreter/classes.py:318:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def not_(self, obj: False_):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "and_" of class "False_":
+src/interpreter/classes.py:322:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def and_(self):
+        ^~~~~~~~~~~~~~~
+src/interpreter/classes.py:324:12: error: "False_" has no attribute "bool" 
+[attr-defined]
+            if self.bool is False:
+               ^~~~~~~~~
+src/interpreter/classes.py: note: In member "ifTrueIfFalse" of class "False_":
+src/interpreter/classes.py:328:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def ifTrueIfFalse(self, condition: bool, true_block: Block_, false...
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/interpreter/classes.py:330:20: error: Call to untyped function "value" in
+typed context  [no-untyped-call]
+                return true_block.value()
+                       ^~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py:331:16: error: Call to untyped function "value" in
+typed context  [no-untyped-call]
+            return false_block.value()
+                   ^~~~~~~~~~~~~~~~~~~
+src/interpreter/classes.py: note: In member "isBoolean" of class "False_":
+src/interpreter/classes.py:333:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def isBoolean(self):
+        ^~~~~~~~~~~~~~~~~~~~
+src/interpreter/objects.py: note: In member "__init__" of class "NewObject":
+src/interpreter/objects.py:11:5: error: Function is missing a type annotation
+for one or more arguments  [no-untyped-def]
+        def __init__(self, class_def: ClassDef | None, value: any, parent=...
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/interpreter/objects.py:11:59: error: Function "builtins.any" is not valid
+as a type  [valid-type]
+    ...f __init__(self, class_def: ClassDef | None, value: any, parent=None):
+                                                           ^
+src/interpreter/objects.py:11:59: note: Perhaps you meant "typing.Any" instead of "any"?
+src/interpreter/objects.py:14:26: error: Missing type parameters for generic
+type "dict"  [type-arg]
+            self.attributes: dict = {}
+                             ^
+src/interpreter/objects.py: note: In member "set_attribute" of class "NewObject":
+src/interpreter/objects.py:86:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def set_attribute(self, name: str, value: Any):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/objects.py: note: In member "find_parent" of class "NewObject":
+src/interpreter/objects.py:94:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def find_parent(self, parent: str):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/objects.py:96:21: error: Missing positional argument "classes"
+in call to "find_class" of "NewObject"  [call-arg]
+            class_def = self.find_class(parent)
+                        ^~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/objects.py:100:25: error: Missing positional argument "classes"
+in call to "find_class" of "NewObject"  [call-arg]
+                class_def = self.find_class(class_def.parent)
+                            ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/objects.py:101:16: error: Item "None" of "ClassDef | None" has
+no attribute "parent"  [union-attr]
+            return prev_class_def.parent
+                   ^~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "load_program" of class "Interpreter":
+src/interpreter/interpreter.py:62:58: error: Argument 1 to "from_xml_tree" of
+"BaseXmlModel" has incompatible type "_Element"; expected "Element[str]" 
+[arg-type]
+    ...      self.current_program = Program.from_xml_tree(xml_tree.getroot())
+                                                          ^~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "create_parent_by_type" of class "Interpreter":
+src/interpreter/interpreter.py:68:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def create_parent_by_type(self, obj_type: str, value=None) -> Any:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:75:24: error: Call to untyped function "new" of
+"Integer" in typed context  [no-untyped-call]
+                    return Integer.new(value if value is not None else 0)
+                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:77:24: error: Call to untyped function "new" of
+"String" in typed context  [no-untyped-call]
+                    return String.new(value if value is not None else "")
+                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:79:24: error: Call to untyped function "new" of
+"Nil" in typed context  [no-untyped-call]
+                    return Nil.new()
+                           ^~~~~~~~~
+src/interpreter/interpreter.py:82:21: error: Call to untyped function "new" of
+"True_" in typed context  [no-untyped-call]
+                        True_.new()
+                        ^~~~~~~~~~~
+src/interpreter/interpreter.py:84:26: error: Call to untyped function "new" of
+"False_" in typed context  [no-untyped-call]
+                        else False_.new()
+                             ^~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "get_super_class" of class "Interpreter":
+src/interpreter/interpreter.py:95:16: error: Incompatible return value type
+(got "None", expected "NewObject")  [return-value]
+            return None
+                   ^~~~
+src/interpreter/interpreter.py: note: In member "send_message" of class "Interpreter":
+src/interpreter/interpreter.py:97:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def send_message(self, receiver: NewObject, selector: str, args: l...
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~...
+src/interpreter/interpreter.py:97:70: error: Missing type parameters for
+generic type "list"  [type-arg]
+    ...e(self, receiver: NewObject, selector: str, args: list, scope: Scope):
+                                                         ^
+src/interpreter/interpreter.py: note: In member "execute" of class "Interpreter":
+src/interpreter/interpreter.py:182:9: error: No return value expected 
+[return-value]
+            return 0
+            ^~~~~~~~
+src/interpreter/interpreter.py: note: In member "execute_method" of class "Interpreter":
+src/interpreter/interpreter.py:208:73: error: Missing type parameters for
+generic type "list"  [type-arg]
+    ..._method(self, method: Method, parent_scope: Scope, args: list) -> Any:
+                                                                ^
+src/interpreter/interpreter.py: note: In member "execute_block" of class "Interpreter":
+src/interpreter/interpreter.py:218:70: error: Missing type parameters for
+generic type "list"  [type-arg]
+    ...ute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
+                                                                ^
+src/interpreter/interpreter.py:233:13: error: Call to untyped function
+"set_variable" in typed context  [no-untyped-call]
+                current_scope.set_variable(param_name, param_value)
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:247:13: error: Call to untyped function
+"set_variable" in typed context  [no-untyped-call]
+                current_scope.set_variable(assgn_target.name, exp)
+                ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "execute_params" of class "Interpreter":
+src/interpreter/interpreter.py:255:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def execute_params():
+        ^~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:255:5: note: Use "-> None" if function does not return a value
+src/interpreter/interpreter.py:255:5: error: Method must have at least one
+argument. Did you forget the "self" argument?  [misc]
+        def execute_params():
+        ^~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "execute_expression" of class "Interpreter":
+src/interpreter/interpreter.py:270:20: error: Call to untyped function
+"get_variable" in typed context  [no-untyped-call]
+                return current_scope.get_variable(expr.var.name)
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "execute_literal_new" of class "Interpreter":
+src/interpreter/interpreter.py:301:28: error: Call to untyped function "new" of
+"Integer" in typed context  [no-untyped-call]
+                parent_class = Integer.new(value)
+                               ^~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:304:21: error: Incompatible types in assignment
+(expression has type "str", variable has type "int")  [assignment]
+                value = literal.value
+                        ^~~~~~~~~~~~~
+src/interpreter/interpreter.py:305:28: error: Call to untyped function "new" of
+"String" in typed context  [no-untyped-call]
+                parent_class = String.new(value)
+                               ^~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:309:28: error: Call to untyped function "new" of
+"True_" in typed context  [no-untyped-call]
+                parent_class = True_.new()
+                               ^~~~~~~~~~~
+src/interpreter/interpreter.py:313:28: error: Call to untyped function "new" of
+"False_" in typed context  [no-untyped-call]
+                parent_class = False_.new()
+                               ^~~~~~~~~~~~
+src/interpreter/interpreter.py:316:21: error: Incompatible types in assignment
+(expression has type "None", variable has type "int")  [assignment]
+                value = None
+                        ^~~~
+src/interpreter/interpreter.py:317:28: error: Call to untyped function "new" of
+"Nil" in typed context  [no-untyped-call]
+                parent_class = Nil.new()
+                               ^~~~~~~~~
+src/interpreter/interpreter.py: note: In member "execute_literal_new_from" of class "Interpreter":
+src/interpreter/interpreter.py:332:65: error: Function "builtins.any" is not
+valid as a type  [valid-type]
+    ...f execute_literal_new_from(self, literal: Literal, value: any) -> Any:
+                                                                 ^
+src/interpreter/interpreter.py:332:65: note: Perhaps you meant "typing.Any" instead of "any"?
+src/interpreter/interpreter.py: note: In member "create_obj_by_type" of class "Interpreter":
+src/interpreter/interpreter.py:344:5: error: Function is missing a type
+annotation for one or more arguments  [no-untyped-def]
+        def create_obj_by_type(self, obj_type: str, *value) -> any:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:344:5: error: Missing return statement  [return]
+        def create_obj_by_type(self, obj_type: str, *value) -> any:
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:344:60: error: Function "builtins.any" is not
+valid as a type  [valid-type]
+        def create_obj_by_type(self, obj_type: str, *value) -> any:
+                                                               ^
+src/interpreter/interpreter.py:344:60: note: Perhaps you meant "typing.Any" instead of "any"?
+src/interpreter/interpreter.py:349:17: error: Returning Any from function
+declared to return any?  [no-any-return]
+                    return Integer.new(*value)
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:349:24: error: Call to untyped function "new" of
+"Integer" in typed context  [no-untyped-call]
+                    return Integer.new(*value)
+                           ^~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:351:17: error: Returning Any from function
+declared to return any?  [no-any-return]
+                    return String.new(*value)
+                    ^~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:351:24: error: Call to untyped function "new" of
+"String" in typed context  [no-untyped-call]
+                    return String.new(*value)
+                           ^~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:353:17: error: Returning Any from function
+declared to return any?  [no-any-return]
+                    return Nil.new()
+                    ^~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:353:24: error: Call to untyped function "new" of
+"Nil" in typed context  [no-untyped-call]
+                    return Nil.new()
+                           ^~~~~~~~~
+src/interpreter/interpreter.py:355:17: error: Returning Any from function
+declared to return any?  [no-any-return]
+                    return True_.new()
+                    ^~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:355:24: error: Call to untyped function "new" of
+"True_" in typed context  [no-untyped-call]
+                    return True_.new()
+                           ^~~~~~~~~~~
+src/interpreter/interpreter.py:357:17: error: Returning Any from function
+declared to return any?  [no-any-return]
+                    return False_.new()
+                    ^~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:357:24: error: Call to untyped function "new" of
+"False_" in typed context  [no-untyped-call]
+                    return False_.new()
+                           ^~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "find_parent" of class "Interpreter":
+src/interpreter/interpreter.py:359:5: error: Function is missing a return type
+annotation  [no-untyped-def]
+        def find_parent(self, parent: str):
+        ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "find_class" of class "Interpreter":
+src/interpreter/interpreter.py:373:20: error: Item "None" of "Program | None"
+has no attribute "classes"  [union-attr]
+            for cls in self.current_program.classes:
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "execute_send" of class "Interpreter":
+src/interpreter/interpreter.py:388:27: error: Call to untyped function
+"get_variable" in typed context  [no-untyped-call]
+                    exp_arg = current_scope.get_variable("self")
+                              ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py:410:50: error: Argument 1 to
+"execute_literal_new_from" of "Interpreter" has incompatible type
+"Literal | None"; expected "Literal"  [arg-type]
+                return self.execute_literal_new_from(send.receiver.literal...
+                                                     ^~~~~~~~~~~~~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "eval_var" of class "Interpreter":
+src/interpreter/interpreter.py:458:16: error: "Interpreter" has no attribute
+"stack"  [attr-defined]
+            return self.stack.get(var.name)
+                   ^~~~~~~~~~
+src/interpreter/interpreter.py: note: In member "map_objects" of class "Interpreter":
+src/interpreter/interpreter.py:463:20: error: Item "None" of "Program | None"
+has no attribute "classes"  [union-attr]
+            for cls in self.current_program.classes:
+                       ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Found 119 errors in 4 files (checked 9 source files)

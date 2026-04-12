@@ -9,15 +9,15 @@ from interpreter.exceptions import InterpreterError
 class Scope:
     """A scope with a map of names to values and an optional parent scope."""
 
-    def __init__(self, parent) -> Any:
+    def __init__(self, parent: Any) -> None:
         self.parent = parent
-        self.variables = {}
+        self.variables: dict[str, Any] = {}
 
-    def set_variable(self, name, value):
+    def set_variable(self, name: str, value: Any) -> None:
         """Bind ``name`` to ``value`` in this scope."""
         self.variables[name] = value
 
-    def get_variable(self, name):
+    def get_variable(self, name: str) -> Any:
         """Return the value for ``name``, searching this scope then parents."""
         if name in self.variables:
             return self.variables[name]
@@ -25,7 +25,7 @@ class Scope:
             return self.parent.get_variable(name)
         raise InterpreterError(error_code=ErrorCode.INT_OTHER, message="no such variable")
 
-    def update_variable(self, name, new):
+    def update_variable(self, name: str, new: Any) -> None:
         """Set ``name`` to ``new`` in this scope or the nearest defining parent."""
         if name in self.variables:
             self.variables[name] = new
