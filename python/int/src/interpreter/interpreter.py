@@ -65,7 +65,7 @@ class Interpreter:
                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
             ) from e
 
-    def create_parent_by_type(self, obj_type: str, value= None) -> Any:
+    def create_parent_by_type(self, obj_type: str, value=None) -> Any:
         """Wrap a Python value as the corresponding runtime parent object."""
         # print(f'value to create {value}')
         match obj_type:
@@ -93,7 +93,6 @@ class Interpreter:
         elif obj.parent is not None:
             return NewObject(None, None, obj.parent)
         return None
-
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
         """Dispatch a message send to a receiver object."""
@@ -139,7 +138,7 @@ class Interpreter:
             current_self = scope.get_variable("self")
             print(f"Current args: {args}, Selector: {selector}")
             attr_name = selector[:-1]
-            searched_method, _ =receiver.lookup(attr_name, self.current_program.classes)
+            searched_method, _ = receiver.lookup(attr_name, self.current_program.classes)
             if searched_method is not None:
                 raise InterpreterError(
                     error_code=ErrorCode.INT_INST_ATTR,
@@ -178,7 +177,7 @@ class Interpreter:
         # print(main_class_def)
         parent_class_str = self.find_parent(main_class_def.parent)
         parent_class = self.create_obj_by_type(parent_class_str)
-        main_class = NewObject(main_class_def,None, parent_class)
+        main_class = NewObject(main_class_def, None, parent_class)
         self.send_message(main_class, "run", [], scope)
         return 0
 
@@ -255,8 +254,6 @@ class Interpreter:
 
     def execute_params():
         """Placeholder for parameter execution (unused)."""
-
-
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
         """Evaluate an expression in the given scope and return its value."""
@@ -370,7 +367,6 @@ class Interpreter:
         if prev_class_def is not None:
             return prev_class_def.parent
         return parent
-
 
     def find_class(self, class_name: str) -> ClassDef | None:
         """Look up a class definition by name in the loaded program."""

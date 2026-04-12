@@ -40,6 +40,7 @@ class NewObject:
             case _: return function_name
 
         # self.methods: dict = {}
+
     def find_method_in_class_def(self, class_def: ClassDef, selector: str) -> Method | Any:
         """Return a method on ``class_def`` matching ``selector``, or None."""
         for method in class_def.methods:
@@ -98,7 +99,6 @@ class NewObject:
             prev_class_def = class_def
             class_def = self.find_class(class_def.parent)
         return prev_class_def.parent
-
 
     def find_class(self, class_name: str, classes: list[ClassDef]) -> ClassDef | None:
         """Look up a class definition by name in ``classes``."""

@@ -116,9 +116,7 @@ class Integer(Object):
     def greaterThan(self, obj: Integer) -> bool:
         """Check if greater than another integer."""
         if not isinstance(obj.parent, Integer):
-            raise InterpreterError(
-                ErrorCode.INT_OTHER, "greaterThan: expected Integer operand"
-            )
+            raise InterpreterError(ErrorCode.INT_OTHER, "greaterThan: expected Integer operand")
         return self.value > obj.value
 
     def plus(self, obj: Integer) -> int:
@@ -209,7 +207,7 @@ class String(Object):
         #     )
         # if isinstance(obj.parent, String):
         #     return Nil()
-        print(f'CONCATENATE WITH: {type(obj.value)} {self.string + obj.value}')
+        print(f"CONCATENATE WITH: {type(obj.value)} {self.string + obj.value}")
         return String(self.string + obj.value)  # ?? String()
 
     def startsWithEndsBefore(self, index_start: int, index_end: int) -> str:
