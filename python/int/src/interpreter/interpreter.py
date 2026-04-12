@@ -173,7 +173,7 @@ class Interpreter:
         # arity ?
         # find block
         # execute the block (execute_block)
-        # block_arity = method.block.arity # TODO
+        # block_arity = method.block.arity
         if method is not None:
             return self.execute_block(method.block, parent_scope, args)
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
@@ -254,7 +254,7 @@ class Interpreter:
             return False
         if literal.class_id == "class":
             # print(f"CLASS")
-            return self.find_class(literal.value)  # TODO: Error None case
+            return self.find_class(literal.value)
         return None
 
     # value is used in special case for 'from:' selector
@@ -356,9 +356,6 @@ class Interpreter:
 
         # print(f"Executing send: selector={selector}, arguments={arguments}")
 
-        # TODO: Call dedicated methods according to current Class ( Integer, String, Object,
-        # Nil etc )
-        # - function to find out if current selector is build-in or not for the current Parent
         # Class
         if selector == "new":
             # return self.send_message(class_y, selector, arguments, current_scope)

@@ -2,6 +2,9 @@
 
 from typing import Any
 
+from interpreter.error_codes import ErrorCode
+from interpreter.exceptions import InterpreterError
+
 
 class Scope:
     """A scope with a map of names to values and an optional parent scope."""
@@ -20,7 +23,9 @@ class Scope:
             return self.variables[name]
         if self.parent is not None:
             return self.parent.get_variable(name)
-        raise NameError(f"Variable '{name}' not found in scope.")  # TODO use interpreter errors
+        raise InterpreterError(
+            error_code=ErrorCode.INT_OTHER, message="no such variable"
+        )
 
     def update_variable(self, name, new):
         """Set ``name`` to ``new`` in this scope or the nearest defining parent."""
@@ -29,4 +34,6 @@ class Scope:
         elif self.parent is not None:
             self.parent.update_variable(name, new)
         else:
-            raise NameError(f"Variable '{name}' not found in scope.")
+            raise InterpreterError(
+                error_code=ErrorCode.SEM_UNDEF, message="no such variable"
+        )
