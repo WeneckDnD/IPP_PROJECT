@@ -55,7 +55,7 @@ class NewObject:
             # print(f'CLASS DEF PARENT {class_def.parent} METHOD: {method}')
             if method is not None:
                 return method, class_def
-        # print(f'DIR: {dir(self.parent)}')
+        # print(f'DIR: {self.parent.__class__} {dir(self.parent)}')
         for mthd_name in dir(self.parent):
             if selector == mthd_name and selector + ":" not in self.param_foos:
                 # print(mthd_name)

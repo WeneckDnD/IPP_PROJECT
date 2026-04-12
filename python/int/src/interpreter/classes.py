@@ -101,8 +101,8 @@ class Integer(Object):
 
     def equalTo(self, obj: Integer) -> bool:
         """Check if integers are equal."""
-        if not isinstance(obj, Integer):
-            raise InterpreterError(ErrorCode.INT_OTHER, "equalTo: expected Integer operand")
+        if not isinstance(obj.parent, Integer):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "equalTo: expected Integer operand")
         return self.value == obj.value
 
     def asString(self) -> str:
@@ -115,7 +115,7 @@ class Integer(Object):
 
     def greaterThan(self, obj: Integer) -> bool:
         """Check if greater than another integer."""
-        if not isinstance(obj, Integer):
+        if not isinstance(obj.parent, Integer):
             raise InterpreterError(
                 ErrorCode.INT_OTHER, "greaterThan: expected Integer operand"
             )
@@ -188,28 +188,29 @@ class String(Object):
     def equalTo(self, obj: String) -> bool:
         """Check if strings are equal."""
         if not isinstance(obj.parent, String):
-            raise InterpreterError(ErrorCode.INT_OTHER, "equalTo: expected String operand")
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "equalTo: expected String operand")
         return self.string == obj.value
 
     def asString(self) -> String:
         """Convert to string."""
         return String(self)  # ?? String()
 
-    def asInteger(self) -> Nil:
+    def asInteger(self) -> Integer | Nil:
         """Convert string to integer."""
         if self.string.isdigit():
-            return int(self.string)
+            return Integer(int(self.string))
         return Nil()
 
     def concatenateWith(self, obj: String):
         """Concatenate with another string."""
-        if not isinstance(obj.parent, String):
-            raise InterpreterError(
-                ErrorCode.INT_OTHER, "concatenateWith: expected String operand"
-            )
-        if isinstance(obj, String):
-            return Nil()
-        return String(self.string + obj.string)  # ?? String()
+        # if not isinstance(obj.parent, String):
+        #     raise InterpreterError(
+        #         ErrorCode.INT_OTHER, "concatenateWith: expected String operand"
+        #     )
+        # if isinstance(obj.parent, String):
+        #     return Nil()
+        print(f'CONCATENATE WITH: {type(obj.value)} {self.string + obj.value}')
+        return String(self.string + obj.value)  # ?? String()
 
     def startsWithendsWith(self, index_start: int, index_end: int) -> str:
         """Get substring between indices."""
@@ -304,7 +305,7 @@ class False_(Object):
     @classmethod
     def new(cls):
         """Create new instance of String"""
-        return cls.boolean
+        return cls(False)
 
     def asString(self, obj: False_):
         """Convert false to string."""

@@ -15,19 +15,42 @@ class AA : Object {
 
 class BB : AA { "B dědí z A, redefinuje metodu m"
   m: [ 
-    :x | 
-      _ := super m: 'ahyj'.
-      _ := x print. 
+    :x | _ := super m: 'ahoj'.
+    _ := x print. 
   ]
 "super -> použije se implementace z A"
 }
 class CC : BB {
+"self m najde metodu m z nadtřídy B a pošle jí jako argument instanci C (na
+místě argumentu má super stejný význam jako self).
+"
   u [ | _ := self m: super. ]
   print [ | _ :='bar' print. ]
 }
 
 class Main : Object {
   run [|
+    "Bezparametrické selektory"
+    o := B new. "vytvoří instanci B"
+    _ := o foo_2. "metoda se najde v třídě A"
+    _ := o asString. "metoda se najde v třídě Object"
+    _ := o bar: 2. "metoda se nenajde v A ani v Object, neexistuje atribut 'bad' -> CHYBA 51"
+    "Jednoparametrické selektory"
+    _ := o bar: 1. "metoda se najde v třídě A"
+    _ := self bar_3: 5.
+    t := self p: 'hello'.
+    _ := (self p) print.
+    x := String from: 'Test'.
+    _ := x print.
+    r := self attrib: (Integer from: 10).
+    _ := (String from: (self attrib)) print.
+    a := self fooo: 4. "a = instance 14"
+    b := [ :x:y | _ := x plus: y. ]. "b = instance Block"
+    c := b value: 16 value: 99. "c = instance 42"
+    _ := (String from: c) print.
+    d := 'ahoj' print. 
+    z := ((Object new) block: 'RRRR').
+    _ := (z block) print.
     cc := CC new.
     _ := cc m: 'fuu'.
     _ := cc u.

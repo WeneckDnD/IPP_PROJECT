@@ -69,6 +69,8 @@ class Interpreter:
         """Wrap a Python value as the corresponding runtime parent object."""
         # print(f'value to create {value}')
         match obj_type:
+            case "String" | "Integer" | "Nil" | "True" | "False":
+                return value
             case "int":
                 return Integer.new(value if value is not None else 0)
             case "str":
@@ -81,8 +83,7 @@ class Interpreter:
                     if value is not None and (value is True or value == 1)
                     else False_.new()
                 )
-            case _:
-                return None
+
     def get_super_class(self, obj: NewObject) -> NewObject:
         # print(f'GET SUPER CLASS: {obj.class_def} {obj.parent}')
         if obj.class_def is not None:
@@ -96,13 +97,14 @@ class Interpreter:
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
         """Dispatch a message send to a receiver object."""
-        print(f"💬SEND MESSAGE: {selector} {args} {receiver.class_def} {receiver.__class__}")
+        print(selector)
+        # print(f"💬SEND MESSAGE: {selector} {args} {receiver.class_def} {receiver.__class__}")
         # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
         # print(f'❓Receiver: {isinstance(receiver.value, Block)}, Selector: {selector}')
         if isinstance(receiver.value, Block):
             return self.execute_block(receiver.value, scope, args)
         method, class_def = receiver.lookup(selector, self.current_program.classes)
-        # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
+        # print(f'Method: {method}, Selector: {selector}')  
         if method is None:
             # print(f'Selector: {selector}, Receiver: {receiver.attributes}')
             att = receiver.get_attribute(selector)
@@ -124,13 +126,20 @@ class Interpreter:
         if method is None:
             current_self = scope.get_variable("self")
             print(f"Current args: {args}, Selector: {selector}")
-            current_self.set_attribute(selector[:-1], *args)
+            attr_name = selector[:-1]
+            searched_method, _ =receiver.lookup(attr_name, self.current_program.classes)
+            if searched_method is not None:
+                raise InterpreterError(
+                    error_code=ErrorCode.INT_INST_ATTR,
+                    message=f"Attribute '{attr_name}' already exists as method",
+                )
+            current_self.set_attribute(attr_name, *args)
             scope.update_variable("self", current_self)
             return current_self
 
         new_class_scope = Scope(scope)
         if class_def is not None:
-            print(f'CLASS DEF: {class_def.name} {class_def.parent}')
+            # print(f'CLASS DEF: {class_def.name} {class_def.parent}')
             self_receiver = NewObject(class_def, receiver.value, receiver.parent)
             super_receiver = self.get_super_class(self_receiver)
             new_class_scope.set_variable("self", receiver)
@@ -159,6 +168,8 @@ class Interpreter:
         parent_class = self.create_obj_by_type(parent_class_str)
         main_class = NewObject(main_class_def,None, parent_class)
         self.send_message(main_class, "run", [], scope)
+        return 0
+
         # scope.set_variable("self", main_class)
 
         # main_class = None
@@ -194,8 +205,8 @@ class Interpreter:
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
-        # """Evaluate a block: bind parameters, then run assignments in order."""
-        print(f"EXECUTE BLOCK: {block.parameters} {block.assigns}")
+        """Evaluate a block: bind parameters, then run assignments in order."""
+        # print(f"EXECUTE BLOCK: {block.parameters} {block.assigns}")
         if len(args) != block.arity:
             raise InterpreterError(
                 error_code=ErrorCode.SEM_ARITY,
@@ -223,7 +234,8 @@ class Interpreter:
             exp = self.execute_expression(assgn_expr, current_scope)  # NewObject()
             # print(f"Assign expr: {exp}")
             current_scope.set_variable(assgn_target.name, exp)
-            # print(f'💾STORED: {assgn_target.name} {exp}')
+            print(f'💾STORED: {assgn_target.name} {exp}')
+            print(f'EXP: {exp.value}')
             # look_up = exp.lookup("foo")
             # print(look_up)
             # self.execute_block(look_up.block, current_scope)
@@ -305,7 +317,7 @@ class Interpreter:
             #     )
             parent_class_str = self.find_parent(literal.value)
             parent_class = self.create_obj_by_type(parent_class_str)
-            print(parent_class, parent_class_str)
+            # print(parent_class, parent_class_str)
             return NewObject(class_def, None, parent_class)
         return None
 
@@ -323,6 +335,7 @@ class Interpreter:
 
     def create_obj_by_type(self, obj_type: str, *value) -> any:
         """Instantiate a built-in type object by name."""
+        # print(f"CREATE OBJ BY TYPE: {obj_type} {value}")
         match obj_type:
             case "Integer":
                 return Integer.new(*value)
@@ -358,7 +371,7 @@ class Interpreter:
 
     def execute_send(self, send: Send, current_scope: Scope) -> Any:
         """Evaluate arguments and receiver, then perform the message send."""
-        print(f"EXECUTE SEND: {send}")
+        # print(f"EXECUTE SEND: {send}")
         selector = send.selector  # foo
         arguments = []
         for arg in send.args:
@@ -369,7 +382,7 @@ class Interpreter:
             else:
                 exp_arg = self.execute_expression(arg.expr, current_scope)
             arguments.append(exp_arg)
-        print(f"ARGUMETS: {arguments}")
+        # print(f"ARGUMETS: {arguments}")
         class_y = self.execute_expression(send.receiver, current_scope)  # object
 
         # print(f"Executing send: selector={selector}, arguments={arguments}")
