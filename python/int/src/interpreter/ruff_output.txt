@@ -1,1655 +1,613 @@
-D100 Missing docstring in public module
---> classes.py:1:1
-
 N802 Function name `asString` should be lowercase
-  --> classes.py:14:9
+  --> classes.py:17:9
    |
-12 |         self.args = args
-13 |
-14 |     def asString(self) -> str:
+15 |         self.args = args
+16 |
+17 |     def asString(self) -> str:
    |         ^^^^^^^^
-15 |         """Convert object to string representation."""
-16 |         return ""
+18 |         """Convert object to string representation."""
+19 |         return ""
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `identicalTo` should be lowercase
-  --> classes.py:18:9
+  --> classes.py:21:9
    |
-16 |         return ""
-17 |
-18 |     def identicalTo(self, obj: Object) -> bool:
+19 |         return ""
+20 |
+21 |     def identicalTo(self, obj: Object) -> bool:
    |         ^^^^^^^^^^^
-19 |         """Check if objects are identical."""
-20 |         return self is obj
+22 |         """Check if objects are identical."""
+23 |         return self is obj
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `equalTo` should be lowercase
-  --> classes.py:27:9
+  --> classes.py:30:9
    |
-25 |         return cls(*args)
-26 |
-27 |     def equalTo(self, obj: any) -> bool:
+28 |         return cls(*args)
+29 |
+30 |     def equalTo(self, obj: any) -> bool:
    |         ^^^^^^^
-28 |         """Check if objects are equal."""
-29 |         print(f'OBJ VALUE FROM equalTo: {obj.value}')
+31 |         """Check if objects are equal."""
+32 |         print(f"OBJ VALUE FROM equalTo: {obj.value}")
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
-Q000 [*] Single quotes found but double quotes preferred
-  --> classes.py:29:15
-   |
-27 |     def equalTo(self, obj: any) -> bool:
-28 |         """Check if objects are equal."""
-29 |         print(f'OBJ VALUE FROM equalTo: {obj.value}')
-   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-30 |         retVal = self.identicalTo(obj)
-31 |         print(f'RETVAL FROM equalTo: {retVal}')
-   |
-help: Replace single quotes with double quotes
-
-N806 Variable `retVal` in function should be lowercase
-  --> classes.py:30:9
-   |
-28 |         """Check if objects are equal."""
-29 |         print(f'OBJ VALUE FROM equalTo: {obj.value}')
-30 |         retVal = self.identicalTo(obj)
-   |         ^^^^^^
-31 |         print(f'RETVAL FROM equalTo: {retVal}')
-32 |         return retVal
-   |
-
-Q000 [*] Single quotes found but double quotes preferred
-  --> classes.py:31:15
-   |
-29 |         print(f'OBJ VALUE FROM equalTo: {obj.value}')
-30 |         retVal = self.identicalTo(obj)
-31 |         print(f'RETVAL FROM equalTo: {retVal}')
-   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-32 |         return retVal
-33 |         # if obj.attributes == None:
-   |
-help: Replace single quotes with double quotes
-
 N802 Function name `isNumber` should be lowercase
-  --> classes.py:41:9
+  --> classes.py:44:9
    |
-39 |         # return True
-40 |
-41 |     def isNumber(self) -> bool:
+42 |         # return True
+43 |
+44 |     def isNumber(self) -> bool:
    |         ^^^^^^^^
-42 |         """Check if object is a number."""
-43 |         return False
+45 |         """Check if object is a number."""
+46 |         return False
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `isString` should be lowercase
-  --> classes.py:45:9
+  --> classes.py:48:9
    |
-43 |         return False
-44 |
-45 |     def isString(self) -> bool:
+46 |         return False
+47 |
+48 |     def isString(self) -> bool:
    |         ^^^^^^^^
-46 |         """Check if object is a string."""
-47 |         return False
+49 |         """Check if object is a string."""
+50 |         return False
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `isBlock` should be lowercase
-  --> classes.py:49:9
+  --> classes.py:52:9
    |
-47 |         return False
-48 |
-49 |     def isBlock(self) -> bool:
+50 |         return False
+51 |
+52 |     def isBlock(self) -> bool:
    |         ^^^^^^^
-50 |         """Check if object is a block."""
-51 |         return False
+53 |         """Check if object is a block."""
+54 |         return False
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `isNil` should be lowercase
-  --> classes.py:53:9
+  --> classes.py:56:9
    |
-51 |         return False
-52 |
-53 |     def isNil(self) -> bool:
+54 |         return False
+55 |
+56 |     def isNil(self) -> bool:
    |         ^^^^^
-54 |         """Check if object is nil."""
-55 |         return False
+57 |         """Check if object is nil."""
+58 |         return False
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `isBoolean` should be lowercase
-  --> classes.py:57:9
+  --> classes.py:60:9
    |
-55 |         return False
-56 |
-57 |     def isBoolean(self) -> bool:
+58 |         return False
+59 |
+60 |     def isBoolean(self) -> bool:
    |         ^^^^^^^^^
-58 |         """Check if object is boolean."""
-59 |         return False
+61 |         """Check if object is boolean."""
+62 |         return False
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `asString` should be lowercase
-  --> classes.py:72:9
+  --> classes.py:75:9
    |
-70 |     #         self.instance = Object()
-71 |
-72 |     def asString(self) -> str:
+73 |     #         self.instance = Object()
+74 |
+75 |     def asString(self) -> str:
    |         ^^^^^^^^
-73 |         """Return nil as string."""
-74 |         return "nil"
+76 |         """Return nil as string."""
+77 |         return "nil"
    |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `equalTo` should be lowercase
-   --> classes.py:99:9
+   --> classes.py:102:9
     |
- 97 |         return cls(*args)
- 98 |
- 99 |     def equalTo(self, obj: Integer) -> bool:
+100 |         return cls(*args)
+101 |
+102 |     def equalTo(self, obj: Integer) -> bool:
     |         ^^^^^^^
-100 |         """Check if integers are equal."""
-101 |         return self.value == obj.value
+103 |         """Check if integers are equal."""
+104 |         if not isinstance(obj, Integer):
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `asString` should be lowercase
-   --> classes.py:103:9
+   --> classes.py:108:9
     |
-101 |         return self.value == obj.value
-102 |
-103 |     def asString(self) -> str:
+106 |         return self.value == obj.value
+107 |
+108 |     def asString(self) -> str:
     |         ^^^^^^^^
-104 |         """Convert integer to string."""
-105 |         return str(self.value)
+109 |         """Convert integer to string."""
+110 |         return str(self.value)
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `isNumber` should be lowercase
-   --> classes.py:107:9
+   --> classes.py:112:9
     |
-105 |         return str(self.value)
-106 |
-107 |     def isNumber(self) -> bool:
+110 |         return str(self.value)
+111 |
+112 |     def isNumber(self) -> bool:
     |         ^^^^^^^^
-108 |         """Check if object is number."""
-109 |         return True
+113 |         """Check if object is number."""
+114 |         return True
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `greaterThan` should be lowercase
-   --> classes.py:111:9
+   --> classes.py:116:9
     |
-109 |         return True
-110 |
-111 |     def greaterThan(self, obj: Integer) -> bool:
+114 |         return True
+115 |
+116 |     def greaterThan(self, obj: Integer) -> bool:
     |         ^^^^^^^^^^^
-112 |         """Check if greater than another integer."""
-113 |         return self.value > obj.value
+117 |         """Check if greater than another integer."""
+118 |         if not isinstance(obj, Integer):
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
-Q000 [*] Single quotes found but double quotes preferred
-   --> classes.py:117:15
-    |
-115 |     def plus(self, obj: Integer) -> int:
-116 |         """Add two integers."""
-117 |         print(f'PRINT CALLED {self.value} + {obj.value}')
-    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-118 |         return self.value + obj.value
-    |
-help: Replace single quotes with double quotes
-
 N802 Function name `multiplyBy` should be lowercase
-   --> classes.py:124:9
+   --> classes.py:137:9
     |
-122 |         return self.value - obj.value
-123 |
-124 |     def multiplyBy(self, obj: Integer) -> int:
+135 |         return self.value - obj.value
+136 |
+137 |     def multiplyBy(self, obj: Integer) -> int:
     |         ^^^^^^^^^^
-125 |         """Multiply two integers."""
-126 |         return self.value * obj.value
+138 |         """Multiply two integers."""
+139 |         if not isinstance(obj.parent, Integer):
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `divBy` should be lowercase
-   --> classes.py:128:9
+   --> classes.py:143:9
     |
-126 |         return self.value * obj.value
-127 |
-128 |     def divBy(self, obj: Integer) -> int:
+141 |         return self.value * obj.value
+142 |
+143 |     def divBy(self, obj: Integer) -> int:
     |         ^^^^^
-129 |         """Divide two integers."""
-130 |         if obj.value == 0:
+144 |         """Divide two integers."""
+145 |         if not isinstance(obj.parent, Integer):
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `asInteger` should be lowercase
-   --> classes.py:134:9
+   --> classes.py:151:9
     |
-132 |         return self.value // obj.value
-133 |
-134 |     def asInteger(self) -> Integer:
+149 |         return self.value // obj.value
+150 |
+151 |     def asInteger(self) -> Integer:
     |         ^^^^^^^^^
-135 |         """Convert to integer."""
-136 |         return Integer(self)
+152 |         """Convert to integer."""
+153 |         return Integer(self)
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `timesRepeat` should be lowercase
-   --> classes.py:138:9
+   --> classes.py:155:9
     |
-136 |         return Integer(self)
-137 |
-138 |     def timesRepeat(self, n: int, block: Block):
+153 |         return Integer(self)
+154 |
+155 |     def timesRepeat(self, n: int, block: Block):
     |         ^^^^^^^^^^^
-139 |         """Repeat block n times."""
-140 |         if n <= 0:
+156 |         """Repeat block n times."""
+157 |         if n <= 0:
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
-F821 Undefined name `Block`
-   --> classes.py:138:42
-    |
-136 |         return Integer(self)
-137 |
-138 |     def timesRepeat(self, n: int, block: Block):
-    |                                          ^^^^^
-139 |         """Repeat block n times."""
-140 |         if n <= 0:
-    |
-
 N802 Function name `equalTo` should be lowercase
-   --> classes.py:171:9
+   --> classes.py:188:9
     |
-169 |         return self
-170 |
-171 |     def equalTo(self, obj: String) -> bool:
+186 |         return self
+187 |
+188 |     def equalTo(self, obj: String) -> bool:
     |         ^^^^^^^
-172 |         """Check if strings are equal."""
-173 |         return self.string == obj.string
+189 |         """Check if strings are equal."""
+190 |         if not isinstance(obj.parent, String):
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `asString` should be lowercase
-   --> classes.py:175:9
+   --> classes.py:194:9
     |
-173 |         return self.string == obj.string
-174 |
-175 |     def asString(self) -> String:
+192 |         return self.string == obj.value
+193 |
+194 |     def asString(self) -> String:
     |         ^^^^^^^^
-176 |         """Convert to string."""
-177 |         return String(self)  # ?? String()
+195 |         """Convert to string."""
+196 |         return String(self)  # ?? String()
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `asInteger` should be lowercase
-   --> classes.py:179:9
+   --> classes.py:198:9
     |
-177 |         return String(self)  # ?? String()
-178 |
-179 |     def asInteger(self) -> Nil:
+196 |         return String(self)  # ?? String()
+197 |
+198 |     def asInteger(self) -> Nil:
     |         ^^^^^^^^^
-180 |         """Convert string to integer."""
-181 |         if self.string.isdigit():
+199 |         """Convert string to integer."""
+200 |         if self.string.isdigit():
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `concatenateWith` should be lowercase
-   --> classes.py:185:9
+   --> classes.py:204:9
     |
-183 |         return Nil()
-184 |
-185 |     def concatenateWith(self, obj: String):
+202 |         return Nil()
+203 |
+204 |     def concatenateWith(self, obj: String):
     |         ^^^^^^^^^^^^^^^
-186 |         """Concatenate with another string."""
-187 |         if isinstance(obj, String):
+205 |         """Concatenate with another string."""
+206 |         if not isinstance(obj.parent, String):
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `startsWithendsWith` should be lowercase
-   --> classes.py:191:9
+   --> classes.py:214:9
     |
-189 |         return String(self.string + obj.string)  # ?? String()
-190 |
-191 |     def startsWithendsWith(self, index_start: int, index_end: int) -> str:
+212 |         return String(self.string + obj.string)  # ?? String()
+213 |
+214 |     def startsWithendsWith(self, index_start: int, index_end: int) -> str:
     |         ^^^^^^^^^^^^^^^^^^
-192 |         """Get substring between indices."""
-193 |         if isinstance(index_start, int) or isinstance(index_end, int):
+215 |         """Get substring between indices."""
+216 |         if isinstance(index_start, int) or isinstance(index_end, int):
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 E741 Ambiguous variable name: `l`
-   --> classes.py:209:9
+   --> classes.py:234:9
     |
-207 |     def length(self, obj: String) -> Integer:
-208 |         """Get string length."""
-209 |         l = len(obj.string) + 1  # null terminator
+232 |         if not isinstance(obj.parent, String):
+233 |             raise InterpreterError(ErrorCode.INT_OTHER, "length: expected String operand")
+234 |         l = len(obj.value) + 1  # null terminator
     |         ^
-210 |         return Integer(l)
+235 |         return Integer(l)
     |
 
 N801 Class name `Block_` should use CapWords convention
-   --> classes.py:213:7
+   --> classes.py:238:7
     |
-213 | class Block_(Object):
+238 | class Block_(Object):
     |       ^^^^^^
-214 |     """Block object with inherited methods from parent Object"""
+239 |     """Block object with inherited methods from parent Object"""
     |
 
 N802 Function name `whileTrue` should be lowercase
-   --> classes.py:232:9
+   --> classes.py:257:9
     |
-230 |         return self.func(*args)  # idk ci dobre
-231 |
-232 |     def whileTrue(self, body: Block):
+255 |         return self.func(*args)  # idk ci dobre
+256 |
+257 |     def whileTrue(self, body: Block):
     |         ^^^^^^^^^
-233 |         """Execute while condition is true."""
-234 |         result = None
+258 |         """Execute while condition is true."""
+259 |         result = None
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
-F821 Undefined name `Block`
-   --> classes.py:232:31
-    |
-230 |         return self.func(*args)  # idk ci dobre
-231 |
-232 |     def whileTrue(self, body: Block):
-    |                               ^^^^^
-233 |         """Execute while condition is true."""
-234 |         result = None
-    |
-
 N801 Class name `True_` should use CapWords convention
-   --> classes.py:240:7
+   --> classes.py:265:7
     |
-240 | class True_(Object):
+265 | class True_(Object):
     |       ^^^^^
-241 |     """True object with inherited methods from parent Object"""
+266 |     """True object with inherited methods from parent Object"""
     |
 
 N802 Function name `asString` should be lowercase
-   --> classes.py:252:9
+   --> classes.py:277:9
     |
-250 |         return cls.boolean
-251 |
-252 |     def asString(self, obj: True_):
+275 |         return cls.boolean
+276 |
+277 |     def asString(self, obj: True_):
     |         ^^^^^^^^
-253 |         """Convert true to string."""
-254 |         if obj is not None:
+278 |         """Convert true to string."""
+279 |         if obj is not None:
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `isBoolean` should be lowercase
-   --> classes.py:267:9
+   --> classes.py:292:9
     |
-265 |     # def ifTrueifFalse(self, )
-266 |
-267 |     def isBoolean(self):
+290 |     # def ifTrueifFalse(self, )
+291 |
+292 |     def isBoolean(self):
     |         ^^^^^^^^^
-268 |         """Check if object is boolean."""
-269 |         return True
+293 |         """Check if object is boolean."""
+294 |         return True
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N801 Class name `False_` should use CapWords convention
-   --> classes.py:272:7
+   --> classes.py:297:7
     |
-272 | class False_(Object):
+297 | class False_(Object):
     |       ^^^^^^
-273 |     """False object with inherited methods from parent Object"""
+298 |     """False object with inherited methods from parent Object"""
     |
-
-W293 [*] Blank line contains whitespace
-   --> classes.py:283:1
-    |
-281 |         """Create new instance of String"""
-282 |         return cls.boolean
-283 |     
-    | ^^^^
-284 |     def asString(self, obj: False_):
-285 |         """Convert false to string."""
-    |
-help: Remove whitespace from blank line
 
 N802 Function name `asString` should be lowercase
-   --> classes.py:284:9
+   --> classes.py:309:9
     |
-282 |         return cls.boolean
-283 |     
-284 |     def asString(self, obj: False_):
+307 |         return cls.boolean
+308 |
+309 |     def asString(self, obj: False_):
     |         ^^^^^^^^
-285 |         """Convert false to string."""
-286 |         if obj is not None:
+310 |         """Convert false to string."""
+311 |         if obj is not None:
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
 N802 Function name `isBoolean` should be lowercase
-   --> classes.py:300:9
+   --> classes.py:325:9
     |
-298 |         return None
-299 |
-300 |     def isBoolean(self):
+323 |         return None
+324 |
+325 |     def isBoolean(self):
     |         ^^^^^^^^^
-301 |         """Check if object is boolean."""
-302 |         return True
+326 |         """Check if object is boolean."""
+327 |         return True
     |
 help: Consider adding `@typing.override` if this method overrides a method from a superclass
 
-F403 `from interpreter.input_model import *` used; unable to detect undefined names
-  --> interpreter.py:20:1
-   |
-18 | from interpreter.error_codes import ErrorCode
-19 | from interpreter.exceptions import InterpreterError
-20 | from interpreter.input_model import *
-   | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-21 |
-22 | from .classes import *
-   |
-
-F403 `from .classes import *` used; unable to detect undefined names
-  --> interpreter.py:22:1
-   |
-20 | from interpreter.input_model import *
-21 |
-22 | from .classes import *
-   | ^^^^^^^^^^^^^^^^^^^^^^
-23 | from .objects import NewObject
-24 | from .scope import Scope
-   |
-
-F405 `Program` may be undefined, or defined from star imports
-  --> interpreter.py:35:31
-   |
-34 |     def __init__(self) -> None:
-35 |         self.current_program: Program | None = None
-   |                               ^^^^^^^
-36 |
-37 |     def load_program(self, source_file_path: Path) -> None:
-   |
-
-F405 `Program` may be undefined, or defined from star imports
-  --> interpreter.py:53:36
-   |
-51 |             ) from e
-52 |         try:
-53 |             self.current_program = Program.from_xml_tree(xml_tree.getroot())
-   |                                    ^^^^^^^
-54 |         except ValidationError as e:
-55 |             raise InterpreterError(
-   |
-
-W293 [*] Blank line contains whitespace
-  --> interpreter.py:58:1
-   |
-56 |                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
-57 |             ) from e
-58 |     
-   | ^^^^
-59 |     def create_parent_by_type(self, obj_type: str, value= None) -> Any:
-60 |         # print(f'value to create {value}')
-   |
-help: Remove whitespace from blank line
-
-D102 Missing docstring in public method
-  --> interpreter.py:59:9
-   |
-57 |             ) from e
-58 |     
-59 |     def create_parent_by_type(self, obj_type: str, value= None) -> Any:
-   |         ^^^^^^^^^^^^^^^^^^^^^
-60 |         # print(f'value to create {value}')
-61 |         match obj_type:
-   |
-
-F405 `Any` may be undefined, or defined from star imports
-  --> interpreter.py:59:68
-   |
-57 |             ) from e
-58 |     
-59 |     def create_parent_by_type(self, obj_type: str, value= None) -> Any:
-   |                                                                    ^^^
-60 |         # print(f'value to create {value}')
-61 |         match obj_type:
-   |
-
-F405 `Integer` may be undefined, or defined from star imports
-  --> interpreter.py:63:24
-   |
-61 |         match obj_type:
-62 |             case "int":
-63 |                 return Integer.new(value if value is not None else 0)
-   |                        ^^^^^^^
-64 |             case "str":
-65 |                 return String.new(value if value is not None else "")
-   |
-
-F405 `String` may be undefined, or defined from star imports
-  --> interpreter.py:65:24
-   |
-63 |                 return Integer.new(value if value is not None else 0)
-64 |             case "str":
-65 |                 return String.new(value if value is not None else "")
-   |                        ^^^^^^
-66 |             case "None":
-67 |                 return Nil.new()
-   |
-
-F405 `Nil` may be undefined, or defined from star imports
-  --> interpreter.py:67:24
-   |
-65 |                 return String.new(value if value is not None else "")
-66 |             case "None":
-67 |                 return Nil.new()
-   |                        ^^^
-68 |             case "bool":
-69 |                 return True_.new() if value is not None and value == True else False_.new()
-   |
-
-F405 `True_` may be undefined, or defined from star imports
-  --> interpreter.py:69:24
-   |
-67 |                 return Nil.new()
-68 |             case "bool":
-69 |                 return True_.new() if value is not None and value == True else False_.new()
-   |                        ^^^^^
-70 |             case _:
-71 |                 raise InterpreterError(error_code=ErrorCode.INT_DNU, message="Invalid object type")
-   |
-
 E712 Avoid equality comparisons to `True`; use `value:` for truth checks
-  --> interpreter.py:69:61
+  --> interpreter.py:79:61
    |
-67 |                 return Nil.new()
-68 |             case "bool":
-69 |                 return True_.new() if value is not None and value == True else False_.new()
+77 |                 return Nil.new()
+78 |             case "bool":
+79 |                 return True_.new() if value is not None and value == True else False_.new()
    |                                                             ^^^^^^^^^^^^^
-70 |             case _:
-71 |                 raise InterpreterError(error_code=ErrorCode.INT_DNU, message="Invalid object type")
+80 |             case _:
+81 |                 return None
    |
 help: Replace with `value`
 
-F405 `False_` may be undefined, or defined from star imports
-  --> interpreter.py:69:80
-   |
-67 |                 return Nil.new()
-68 |             case "bool":
-69 |                 return True_.new() if value is not None and value == True else False_.new()
-   |                                                                                ^^^^^^
-70 |             case _:
-71 |                 raise InterpreterError(error_code=ErrorCode.INT_DNU, message="Invalid object type")
-   |
-
-D102 Missing docstring in public method
-  --> interpreter.py:73:9
-   |
-71 |                 raise InterpreterError(error_code=ErrorCode.INT_DNU, message="Invalid object type")
-72 |
-73 |     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
-   |         ^^^^^^^^^^^^
-74 |         print(f'💬SEND MESSAGE: {selector} {args} {receiver.__class__}')
-75 |         # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
-   |
-
-Q000 [*] Single quotes found but double quotes preferred
-  --> interpreter.py:74:15
-   |
-73 |     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
-74 |         print(f'💬SEND MESSAGE: {selector} {args} {receiver.__class__}')
-   |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-75 |         # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
-76 |         # print(f'❓Receiver: {isinstance(receiver.value, Block)}, Selector: {selector}')
-   |
-help: Replace single quotes with double quotes
-
-F405 `Block` may be undefined, or defined from star imports
-  --> interpreter.py:77:39
-   |
-75 |         # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
-76 |         # print(f'❓Receiver: {isinstance(receiver.value, Block)}, Selector: {selector}')
-77 |         if isinstance(receiver.value, Block) and selector == "value:":
-   |                                       ^^^^^
-78 |             return self.execute_block(receiver.value, scope, args)
-79 |         method = receiver.lookup(selector, self.current_program.classes)
-   |
-
-W291 [*] Trailing whitespace
-  --> interpreter.py:80:92
-   |
-78 |             return self.execute_block(receiver.value, scope, args)
-79 |         method = receiver.lookup(selector, self.current_program.classes)
-80 |         # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
-   |                                                                                            ^^
-81 |         if method is None:
-82 |             # print(f'Selector: {selector}, Receiver: {receiver.attributes}')
-   |
-help: Remove trailing whitespace
-
-N806 Variable `isParam` in function should be lowercase
-  --> interpreter.py:89:13
-   |
-87 |         # built-in vs user-defined
-88 |         if callable(method):
-89 |             isParam = selector in receiver.param_foos and method is not None
-   |             ^^^^^^^
-90 |             print(f'isParam {isParam}')
-91 |             new_value = method(*args) if isParam else method()
-   |
-
-Q000 [*] Single quotes found but double quotes preferred
-  --> interpreter.py:90:19
-   |
-88 |         if callable(method):
-89 |             isParam = selector in receiver.param_foos and method is not None
-90 |             print(f'isParam {isParam}')
-   |                   ^^^^^^^^^^^^^^^^^^^^
-91 |             new_value = method(*args) if isParam else method()
-92 |             print(f'New value: {new_value}')
-   |
-help: Replace single quotes with double quotes
-
-Q000 [*] Single quotes found but double quotes preferred
-  --> interpreter.py:92:19
-   |
-90 |             print(f'isParam {isParam}')
-91 |             new_value = method(*args) if isParam else method()
-92 |             print(f'New value: {new_value}')
-   |                   ^^^^^^^^^^^^^^^^^^^^^^^^^
-93 |             value_type = type(new_value).__name__
-94 |             # print(f'Value type: {value_type}')
-   |
-help: Replace single quotes with double quotes
-
-RET505 [*] Unnecessary `else` after `return` statement
-   --> interpreter.py:98:9
-    |
- 96 |             # print(f'New parent: {new_parent}')
- 97 |             return NewObject(None, new_value, new_parent)
- 98 |         else:
-    |         ^^^^
- 99 |             print(f'Method: {method}')
-100 |             if method is None:
-    |
-help: Remove unnecessary `else`
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:99:19
-    |
- 97 |             return NewObject(None, new_value, new_parent)
- 98 |         else:
- 99 |             print(f'Method: {method}')
-    |                   ^^^^^^^^^^^^^^^^^^^
-100 |             if method is None:
-101 |                 current_self = scope.get_variable("self")
-    |
-help: Replace single quotes with double quotes
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:102:23
-    |
-100 |             if method is None:
-101 |                 current_self = scope.get_variable("self")
-102 |                 print(f'Current args: {args}, Selector: {selector}')
-    |                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-103 |                 current_self.set_attribute(selector[:-1], *args)
-104 |                 scope.update_variable("self", current_self)
-    |
-help: Replace single quotes with double quotes
-
-D102 Missing docstring in public method
-   --> interpreter.py:149:9
-    |
-147 |         # self.execute_method(run_method, scope, [])
-148 |
-149 |     def execute_method(self, method: Method, parent_scope: Scope, args: list) -> Any:
-    |         ^^^^^^^^^^^^^^
-150 |         # arity ?
-151 |         # find block
-    |
-
-F405 `Method` may be undefined, or defined from star imports
-   --> interpreter.py:149:38
-    |
-147 |         # self.execute_method(run_method, scope, [])
-148 |
-149 |     def execute_method(self, method: Method, parent_scope: Scope, args: list) -> Any:
-    |                                      ^^^^^^
-150 |         # arity ?
-151 |         # find block
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:149:82
-    |
-147 |         # self.execute_method(run_method, scope, [])
-148 |
-149 |     def execute_method(self, method: Method, parent_scope: Scope, args: list) -> Any:
-    |                                                                                  ^^^
-150 |         # arity ?
-151 |         # find block
-    |
-
 FIX002 Line contains TODO, consider resolving the issue
-   --> interpreter.py:153:46
+   --> interpreter.py:172:46
     |
-151 |         # find block
-152 |         # execute the block (execute_block)
-153 |         # block_arity = method.block.arity # TODO
+170 |         # find block
+171 |         # execute the block (execute_block)
+172 |         # block_arity = method.block.arity # TODO
     |                                              ^^^^
-154 |         if method is not None:
-155 |             return self.execute_block(method.block, parent_scope, args)
+173 |         if method is not None:
+174 |             return self.execute_block(method.block, parent_scope, args)
     |
-
-D102 Missing docstring in public method
-   --> interpreter.py:158:9
-    |
-156 |         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
-157 |
-158 |     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
-    |         ^^^^^^^^^^^^^
-159 |         print(f'EXECUTE BLOCK: {block.parameters} {block.assigns}')
-160 |         current_scope = Scope(parent=parent_scope)
-    |
-
-F405 `Block` may be undefined, or defined from star imports
-   --> interpreter.py:158:36
-    |
-156 |         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
-157 |
-158 |     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
-    |                                    ^^^^^
-159 |         print(f'EXECUTE BLOCK: {block.parameters} {block.assigns}')
-160 |         current_scope = Scope(parent=parent_scope)
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:158:79
-    |
-156 |         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
-157 |
-158 |     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
-    |                                                                               ^^^
-159 |         print(f'EXECUTE BLOCK: {block.parameters} {block.assigns}')
-160 |         current_scope = Scope(parent=parent_scope)
-    |
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:159:15
-    |
-158 |     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
-159 |         print(f'EXECUTE BLOCK: {block.parameters} {block.assigns}')
-    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-160 |         current_scope = Scope(parent=parent_scope)
-    |
-help: Replace single quotes with double quotes
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:165:19
-    |
-163 |             param_name = param.name
-164 |             param_value = args[param.order - 1]
-165 |             print(f'PARAM NAME: {param_name} PARAM VALUE: {param_value}')
-    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-166 |             current_scope.set_variable(param_name, param_value)
-167 |         # self.scope.set_variable()
-    |
-help: Replace single quotes with double quotes
-
-N806 Variable `retValue` in function should be lowercase
-   --> interpreter.py:168:9
-    |
-166 |             current_scope.set_variable(param_name, param_value)
-167 |         # self.scope.set_variable()
-168 |         retValue = None
-    |         ^^^^^^^^
-169 |         for assgn in block.assigns:
-170 |             assgn_target = assgn.target  # o
-    |
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:176:19
-    |
-174 |             print(f"Assign expr: {exp}")
-175 |             current_scope.set_variable(assgn_target.name, exp)
-176 |             print(f'💾STORED: {assgn_target.name} {exp}')
-    |                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-177 |             # look_up = exp.lookup("foo")
-178 |             # print(look_up)
-    |
-help: Replace single quotes with double quotes
-
-N806 Variable `retValue` in function should be lowercase
-   --> interpreter.py:180:13
-    |
-178 |             # print(look_up)
-179 |             # self.execute_block(look_up.block, current_scope)
-180 |             retValue = exp
-    |             ^^^^^^^^
-181 |         return retValue
-    |
-
-W293 [*] Blank line contains whitespace
-   --> interpreter.py:182:1
-    |
-180 |             retValue = exp
-181 |         return retValue
-182 |     
-    | ^^^^
-183 |     def execute_params():
-184 |         pass
-    |
-help: Remove whitespace from blank line
-
-D102 Missing docstring in public method
-   --> interpreter.py:183:9
-    |
-181 |         return retValue
-182 |     
-183 |     def execute_params():
-    |         ^^^^^^^^^^^^^^
-184 |         pass
-    |
-
-RET503 Missing explicit `return` at the end of function able to return non-`None` value
-   --> interpreter.py:188:5
-    |
-188 | /     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
-189 | |         print(f'EXECUTE EXPRESSION: {expr}')
-190 | |         if expr.send is not None:
-191 | |             # print(f"SEND")
-192 | |             return self.execute_send(expr.send, current_scope)
-193 | |         if expr.literal is not None:
-194 | |             # print(f"LITERAL")
-195 | |             return self.execute_literal_new(expr.literal)
-196 | |         if expr.var is not None:
-197 | |             # print(f"VARIABLE")
-198 | |             x = current_scope.get_variable(expr.var.name)
-199 | |             # print(f"value: {x}")
-200 | |             return x
-201 | |         if expr.block is not None:
-202 | |             return NewObject(None, expr.block, None)
-203 | |         print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
-    | |_____________________________________________________________^
-204 |
-205 |       def execute_literal(self, literal: Literal) -> Any:
-    |
-help: Add explicit `return` statement
-
-D102 Missing docstring in public method
-   --> interpreter.py:188:9
-    |
-188 |     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
-    |         ^^^^^^^^^^^^^^^^^^
-189 |         print(f'EXECUTE EXPRESSION: {expr}')
-190 |         if expr.send is not None:
-    |
-
-F405 `Expr` may be undefined, or defined from star imports
-   --> interpreter.py:188:40
-    |
-188 |     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
-    |                                        ^^^^
-189 |         print(f'EXECUTE EXPRESSION: {expr}')
-190 |         if expr.send is not None:
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:188:71
-    |
-188 |     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
-    |                                                                       ^^^
-189 |         print(f'EXECUTE EXPRESSION: {expr}')
-190 |         if expr.send is not None:
-    |
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:189:15
-    |
-188 |     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
-189 |         print(f'EXECUTE EXPRESSION: {expr}')
-    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-190 |         if expr.send is not None:
-191 |             # print(f"SEND")
-    |
-help: Replace single quotes with double quotes
 
 RET504 Unnecessary assignment to `x` before `return` statement
-   --> interpreter.py:200:20
-    |
-198 |             x = current_scope.get_variable(expr.var.name)
-199 |             # print(f"value: {x}")
-200 |             return x
-    |                    ^
-201 |         if expr.block is not None:
-202 |             return NewObject(None, expr.block, None)
-    |
-help: Remove unnecessary assignment
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:203:15
-    |
-201 |         if expr.block is not None:
-202 |             return NewObject(None, expr.block, None)
-203 |         print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
-    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-204 |
-205 |     def execute_literal(self, literal: Literal) -> Any:
-    |
-help: Replace single quotes with double quotes
-
-RET503 Missing explicit `return` at the end of function able to return non-`None` value
-   --> interpreter.py:205:5
-    |
-203 |           print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
-204 |
-205 | /     def execute_literal(self, literal: Literal) -> Any:
-206 | |         if literal.class_id == "Integer":
-207 | |             return int(literal.value)
-208 | |         if literal.class_id == "String":
-209 | |             return literal.value
-210 | |         if literal.class_id == "True":
-211 | |             return True
-212 | |         if literal.class_id == "Nil":
-213 | |             return None
-214 | |         if literal.class_id == "False":
-215 | |             return False
-216 | |         if literal.class_id == "class":
-217 | |             # print(f"CLASS")
-218 | |             return self.find_class(literal.value)  # TODO: Error None case
-    | |_________________________________________________^
-219 |
-220 |       # value is used in special case for 'from:' selector
-    |
-help: Add explicit `return` statement
-
-D102 Missing docstring in public method
-   --> interpreter.py:205:9
-    |
-203 |         print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
-204 |
-205 |     def execute_literal(self, literal: Literal) -> Any:
-    |         ^^^^^^^^^^^^^^^
-206 |         if literal.class_id == "Integer":
-207 |             return int(literal.value)
-    |
-
-F405 `Literal` may be undefined, or defined from star imports
-   --> interpreter.py:205:40
-    |
-203 |         print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
-204 |
-205 |     def execute_literal(self, literal: Literal) -> Any:
-    |                                        ^^^^^^^
-206 |         if literal.class_id == "Integer":
-207 |             return int(literal.value)
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:205:52
-    |
-203 |         print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
-204 |
-205 |     def execute_literal(self, literal: Literal) -> Any:
-    |                                                    ^^^
-206 |         if literal.class_id == "Integer":
-207 |             return int(literal.value)
-    |
-
-FIX002 Line contains TODO, consider resolving the issue
-   --> interpreter.py:218:54
-    |
-216 |         if literal.class_id == "class":
-217 |             # print(f"CLASS")
-218 |             return self.find_class(literal.value)  # TODO: Error None case
-    |                                                      ^^^^
-219 |
-220 |     # value is used in special case for 'from:' selector
-    |
-
-RET503 Missing explicit `return` at the end of function able to return non-`None` value
-   --> interpreter.py:221:5
-    |
-220 |       # value is used in special case for 'from:' selector
-221 | /     def execute_literal_new(self, literal: Literal) -> Any:
-222 | |         print(f'EXECUTE LITERAL NEW: {literal}')
-223 | |         if literal.class_id == "Integer":
-224 | |             value = int(literal.value)
-225 | |             parent_class = Integer.new(value)
-226 | |             new_integer_class = NewObject(None, value, parent_class)
-227 | |             return new_integer_class
-228 | |         if literal.class_id == "String":
-229 | |             value = literal.value
-230 | |             parent_class = String.new(value)
-231 | |             new_string_class = NewObject(None, value, parent_class)
-232 | |             return new_string_class
-233 | |         if literal.class_id == "True":
-234 | |             value = True
-235 | |             parent_class = True_.new()
-236 | |             new_true_class = NewObject(None, value, parent_class)
-237 | |             return new_true_class
-238 | |         if literal.class_id == "False":
-239 | |             value = False
-240 | |             parent_class = False_.new()
-241 | |             new_false_class = NewObject(None, value, parent_class)
-242 | |             return new_false_class
-243 | |         if literal.class_id == "Nil":
-244 | |             value = None
-245 | |             parent_class = Nil.new()
-246 | |             new_nil_class = NewObject(None, value, parent_class)
-247 | |             return new_nil_class
-248 | |         if literal.class_id == "class":
-249 | |             class_def = self.find_class(literal.value)
-250 | |             parent_class_str = self.find_parent(literal.value)
-251 | |             parent_class = self.create_obj_by_type(parent_class_str)
-252 | |             print(parent_class, parent_class_str)
-253 | |             new_class = NewObject(class_def, None, parent_class)
-254 | |             return new_class
-    | |____________________________^
-255 |       
-256 |       def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
-    |
-help: Add explicit `return` statement
-
-D102 Missing docstring in public method
-   --> interpreter.py:221:9
-    |
-220 |     # value is used in special case for 'from:' selector
-221 |     def execute_literal_new(self, literal: Literal) -> Any:
-    |         ^^^^^^^^^^^^^^^^^^^
-222 |         print(f'EXECUTE LITERAL NEW: {literal}')
-223 |         if literal.class_id == "Integer":
-    |
-
-F405 `Literal` may be undefined, or defined from star imports
-   --> interpreter.py:221:44
-    |
-220 |     # value is used in special case for 'from:' selector
-221 |     def execute_literal_new(self, literal: Literal) -> Any:
-    |                                            ^^^^^^^
-222 |         print(f'EXECUTE LITERAL NEW: {literal}')
-223 |         if literal.class_id == "Integer":
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:221:56
-    |
-220 |     # value is used in special case for 'from:' selector
-221 |     def execute_literal_new(self, literal: Literal) -> Any:
-    |                                                        ^^^
-222 |         print(f'EXECUTE LITERAL NEW: {literal}')
-223 |         if literal.class_id == "Integer":
-    |
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:222:15
-    |
-220 |     # value is used in special case for 'from:' selector
-221 |     def execute_literal_new(self, literal: Literal) -> Any:
-222 |         print(f'EXECUTE LITERAL NEW: {literal}')
-    |               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-223 |         if literal.class_id == "Integer":
-224 |             value = int(literal.value)
-    |
-help: Replace single quotes with double quotes
-
-F405 `Integer` may be undefined, or defined from star imports
-   --> interpreter.py:225:28
-    |
-223 |         if literal.class_id == "Integer":
-224 |             value = int(literal.value)
-225 |             parent_class = Integer.new(value)
-    |                            ^^^^^^^
-226 |             new_integer_class = NewObject(None, value, parent_class)
-227 |             return new_integer_class
-    |
-
-RET504 Unnecessary assignment to `new_integer_class` before `return` statement
-   --> interpreter.py:227:20
-    |
-225 |             parent_class = Integer.new(value)
-226 |             new_integer_class = NewObject(None, value, parent_class)
-227 |             return new_integer_class
-    |                    ^^^^^^^^^^^^^^^^^
-228 |         if literal.class_id == "String":
-229 |             value = literal.value
-    |
-help: Remove unnecessary assignment
-
-F405 `String` may be undefined, or defined from star imports
-   --> interpreter.py:230:28
-    |
-228 |         if literal.class_id == "String":
-229 |             value = literal.value
-230 |             parent_class = String.new(value)
-    |                            ^^^^^^
-231 |             new_string_class = NewObject(None, value, parent_class)
-232 |             return new_string_class
-    |
-
-RET504 Unnecessary assignment to `new_string_class` before `return` statement
    --> interpreter.py:232:20
     |
-230 |             parent_class = String.new(value)
-231 |             new_string_class = NewObject(None, value, parent_class)
-232 |             return new_string_class
-    |                    ^^^^^^^^^^^^^^^^
-233 |         if literal.class_id == "True":
-234 |             value = True
+230 |             x = current_scope.get_variable(expr.var.name)
+231 |             # print(f"value: {x}")
+232 |             return x
+    |                    ^
+233 |         if expr.block is not None:
+234 |             return NewObject(None, expr.block, None)
     |
 help: Remove unnecessary assignment
 
-F405 `True_` may be undefined, or defined from star imports
-   --> interpreter.py:235:28
+RET503 Missing explicit `return` at the end of function able to return non-`None` value
+   --> interpreter.py:240:5
     |
-233 |         if literal.class_id == "True":
-234 |             value = True
-235 |             parent_class = True_.new()
-    |                            ^^^^^
-236 |             new_true_class = NewObject(None, value, parent_class)
-237 |             return new_true_class
+238 |           )
+239 |
+240 | /     def execute_literal(self, literal: Literal) -> Any:
+241 | |         """Reduce a literal to a plain Python value."""
+242 | |         if literal.class_id == "Integer":
+243 | |             return int(literal.value)
+244 | |         if literal.class_id == "String":
+245 | |             return literal.value
+246 | |         if literal.class_id == "True":
+247 | |             return True
+248 | |         if literal.class_id == "Nil":
+249 | |             return None
+250 | |         if literal.class_id == "False":
+251 | |             return False
+252 | |         if literal.class_id == "class":
+253 | |             # print(f"CLASS")
+254 | |             return self.find_class(literal.value)  # TODO: Error None case
+    | |_________________________________________________^
+255 |
+256 |       # value is used in special case for 'from:' selector
     |
-
-RET504 Unnecessary assignment to `new_true_class` before `return` statement
-   --> interpreter.py:237:20
-    |
-235 |             parent_class = True_.new()
-236 |             new_true_class = NewObject(None, value, parent_class)
-237 |             return new_true_class
-    |                    ^^^^^^^^^^^^^^
-238 |         if literal.class_id == "False":
-239 |             value = False
-    |
-help: Remove unnecessary assignment
-
-F405 `False_` may be undefined, or defined from star imports
-   --> interpreter.py:240:28
-    |
-238 |         if literal.class_id == "False":
-239 |             value = False
-240 |             parent_class = False_.new()
-    |                            ^^^^^^
-241 |             new_false_class = NewObject(None, value, parent_class)
-242 |             return new_false_class
-    |
-
-RET504 Unnecessary assignment to `new_false_class` before `return` statement
-   --> interpreter.py:242:20
-    |
-240 |             parent_class = False_.new()
-241 |             new_false_class = NewObject(None, value, parent_class)
-242 |             return new_false_class
-    |                    ^^^^^^^^^^^^^^^
-243 |         if literal.class_id == "Nil":
-244 |             value = None
-    |
-help: Remove unnecessary assignment
-
-F405 `Nil` may be undefined, or defined from star imports
-   --> interpreter.py:245:28
-    |
-243 |         if literal.class_id == "Nil":
-244 |             value = None
-245 |             parent_class = Nil.new()
-    |                            ^^^
-246 |             new_nil_class = NewObject(None, value, parent_class)
-247 |             return new_nil_class
-    |
-
-RET504 Unnecessary assignment to `new_nil_class` before `return` statement
-   --> interpreter.py:247:20
-    |
-245 |             parent_class = Nil.new()
-246 |             new_nil_class = NewObject(None, value, parent_class)
-247 |             return new_nil_class
-    |                    ^^^^^^^^^^^^^
-248 |         if literal.class_id == "class":
-249 |             class_def = self.find_class(literal.value)
-    |
-help: Remove unnecessary assignment
-
-RET504 Unnecessary assignment to `new_class` before `return` statement
-   --> interpreter.py:254:20
-    |
-252 |             print(parent_class, parent_class_str)
-253 |             new_class = NewObject(class_def, None, parent_class)
-254 |             return new_class
-    |                    ^^^^^^^^^
-255 |     
-256 |     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
-    |
-help: Remove unnecessary assignment
-
-W293 [*] Blank line contains whitespace
-   --> interpreter.py:255:1
-    |
-253 |             new_class = NewObject(class_def, None, parent_class)
-254 |             return new_class
-255 |     
-    | ^^^^
-256 |     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
-257 |         class_def = self.find_class(literal.value)
-    |
-help: Remove whitespace from blank line
-
-D102 Missing docstring in public method
-   --> interpreter.py:256:9
-    |
-254 |             return new_class
-255 |     
-256 |     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
-    |         ^^^^^^^^^^^^^^^^^^^^^^^^
-257 |         class_def = self.find_class(literal.value)
-258 |         parent_class_str = self.find_parent(literal.value)
-    |
-
-F405 `Literal` may be undefined, or defined from star imports
-   --> interpreter.py:256:49
-    |
-254 |             return new_class
-255 |     
-256 |     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
-    |                                                 ^^^^^^^
-257 |         class_def = self.find_class(literal.value)
-258 |         parent_class_str = self.find_parent(literal.value)
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:256:73
-    |
-254 |             return new_class
-255 |     
-256 |     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
-    |                                                                         ^^^
-257 |         class_def = self.find_class(literal.value)
-258 |         parent_class_str = self.find_parent(literal.value)
-    |
-
-RET504 Unnecessary assignment to `new_class` before `return` statement
-   --> interpreter.py:261:16
-    |
-259 |         parent_class = self.create_obj_by_type(parent_class_str, value)
-260 |         new_class = NewObject(class_def, value, parent_class)
-261 |         return new_class
-    |                ^^^^^^^^^
-262 |
-263 |     def create_obj_by_type(self, obj_type: str, *value) -> any:
-    |
-help: Remove unnecessary assignment
-
-D102 Missing docstring in public method
-   --> interpreter.py:263:9
-    |
-261 |         return new_class
-262 |
-263 |     def create_obj_by_type(self, obj_type: str, *value) -> any:
-    |         ^^^^^^^^^^^^^^^^^^
-264 |         match obj_type:
-265 |             case "Integer":
-    |
-
-F405 `Integer` may be undefined, or defined from star imports
-   --> interpreter.py:266:24
-    |
-264 |         match obj_type:
-265 |             case "Integer":
-266 |                 return Integer.new(*value)
-    |                        ^^^^^^^
-267 |             case "String":
-268 |                 return String.new(*value)
-    |
-
-F405 `String` may be undefined, or defined from star imports
-   --> interpreter.py:268:24
-    |
-266 |                 return Integer.new(*value)
-267 |             case "String":
-268 |                 return String.new(*value)
-    |                        ^^^^^^
-269 |             case "Nil":
-270 |                 return Nil.new()
-    |
-
-F405 `Nil` may be undefined, or defined from star imports
-   --> interpreter.py:270:24
-    |
-268 |                 return String.new(*value)
-269 |             case "Nil":
-270 |                 return Nil.new()
-    |                        ^^^
-271 |             case "True":
-272 |                 return True_.new()
-    |
-
-F405 `True_` may be undefined, or defined from star imports
-   --> interpreter.py:272:24
-    |
-270 |                 return Nil.new()
-271 |             case "True":
-272 |                 return True_.new()
-    |                        ^^^^^
-273 |             case "False":
-274 |                 return False_.new()
-    |
-
-F405 `False_` may be undefined, or defined from star imports
-   --> interpreter.py:274:24
-    |
-272 |                 return True_.new()
-273 |             case "False":
-274 |                 return False_.new()
-    |                        ^^^^^^
-275 |                     
-276 |     def find_parent(self, parent: str):
-    |
-
-W293 [*] Blank line contains whitespace
-   --> interpreter.py:275:1
-    |
-273 |             case "False":
-274 |                 return False_.new()
-275 |                     
-    | ^^^^^^^^^^^^^^^^^^^^
-276 |     def find_parent(self, parent: str):
-277 |         class_def = self.find_class(parent)
-    |
-help: Remove whitespace from blank line
-
-D102 Missing docstring in public method
-   --> interpreter.py:276:9
-    |
-274 |                 return False_.new()
-275 |                     
-276 |     def find_parent(self, parent: str):
-    |         ^^^^^^^^^^^
-277 |         class_def = self.find_class(parent)
-278 |         # print(class_def)
-    |
-
-D102 Missing docstring in public method
-   --> interpreter.py:288:9
-    |
-288 |     def find_class(self, class_name: str) -> ClassDef | None:
-    |         ^^^^^^^^^^
-289 |         for cls in self.current_program.classes:
-290 |             if cls.name == class_name:
-    |
-
-F405 `ClassDef` may be undefined, or defined from star imports
-   --> interpreter.py:288:46
-    |
-288 |     def find_class(self, class_name: str) -> ClassDef | None:
-    |                                              ^^^^^^^^
-289 |         for cls in self.current_program.classes:
-290 |             if cls.name == class_name:
-    |
-
-D102 Missing docstring in public method
-   --> interpreter.py:295:9
-    |
-293 |         return None
-294 |
-295 |     def execute_send(self, send: Send, current_scope: Scope) -> Any:
-    |         ^^^^^^^^^^^^
-296 |         print(f'EXECUTE SEND: {send}')
-297 |         selector = send.selector  # foo
-    |
-
-F405 `Send` may be undefined, or defined from star imports
-   --> interpreter.py:295:34
-    |
-293 |         return None
-294 |
-295 |     def execute_send(self, send: Send, current_scope: Scope) -> Any:
-    |                                  ^^^^
-296 |         print(f'EXECUTE SEND: {send}')
-297 |         selector = send.selector  # foo
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:295:65
-    |
-293 |         return None
-294 |
-295 |     def execute_send(self, send: Send, current_scope: Scope) -> Any:
-    |                                                                 ^^^
-296 |         print(f'EXECUTE SEND: {send}')
-297 |         selector = send.selector  # foo
-    |
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:296:15
-    |
-295 |     def execute_send(self, send: Send, current_scope: Scope) -> Any:
-296 |         print(f'EXECUTE SEND: {send}')
-    |               ^^^^^^^^^^^^^^^^^^^^^^^
-297 |         selector = send.selector  # foo
-298 |         arguments = []  
-    |
-help: Replace single quotes with double quotes
-
-W291 [*] Trailing whitespace
-   --> interpreter.py:298:23
-    |
-296 |         print(f'EXECUTE SEND: {send}')
-297 |         selector = send.selector  # foo
-298 |         arguments = []  
-    |                       ^^
-299 |         for arg in send.args:
-300 |             order = arg.order
-    |
-help: Remove trailing whitespace
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:301:19
-    |
-299 |         for arg in send.args:
-300 |             order = arg.order
-301 |             print(f'ORDER: {order}')
-    |                   ^^^^^^^^^^^^^^^^^
-302 |             exp_arg = self.execute_expression(arg.expr, current_scope)
-303 |             arguments.append(exp_arg)
-    |
-help: Replace single quotes with double quotes
-
-Q000 [*] Single quotes found but double quotes preferred
-   --> interpreter.py:304:15
-    |
-302 |             exp_arg = self.execute_expression(arg.expr, current_scope)
-303 |             arguments.append(exp_arg)
-304 |         print(f'ARGUMETS: {arguments}')
-    |               ^^^^^^^^^^^^^^^^^^^^^^^^
-305 |         class_y = self.execute_expression(send.receiver, current_scope)  # object
-    |
-help: Replace single quotes with double quotes
+help: Add explicit `return` statement
 
 FIX002 Line contains TODO, consider resolving the issue
-   --> interpreter.py:309:11
+   --> interpreter.py:254:54
     |
-307 |         # print(f"Executing send: selector={selector}, arguments={arguments}")
-308 |
-309 |         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
+252 |         if literal.class_id == "class":
+253 |             # print(f"CLASS")
+254 |             return self.find_class(literal.value)  # TODO: Error None case
+    |                                                      ^^^^
+255 |
+256 |     # value is used in special case for 'from:' selector
+    |
+
+RET503 Missing explicit `return` at the end of function able to return non-`None` value
+   --> interpreter.py:257:5
+    |
+256 |       # value is used in special case for 'from:' selector
+257 | /     def execute_literal_new(self, literal: Literal) -> Any:
+258 | |         """Build a NewObject wrapper for a literal value."""
+259 | |         print(f"EXECUTE LITERAL NEW: {literal}")
+260 | |         if literal.class_id == "Integer":
+261 | |             value = int(literal.value)
+262 | |             parent_class = Integer.new(value)
+263 | |             new_integer_class = NewObject(None, value, parent_class)
+264 | |             return new_integer_class
+265 | |         if literal.class_id == "String":
+266 | |             value = literal.value
+267 | |             parent_class = String.new(value)
+268 | |             new_string_class = NewObject(None, value, parent_class)
+269 | |             return new_string_class
+270 | |         if literal.class_id == "True":
+271 | |             value = True
+272 | |             parent_class = True_.new()
+273 | |             new_true_class = NewObject(None, value, parent_class)
+274 | |             return new_true_class
+275 | |         if literal.class_id == "False":
+276 | |             value = False
+277 | |             parent_class = False_.new()
+278 | |             new_false_class = NewObject(None, value, parent_class)
+279 | |             return new_false_class
+280 | |         if literal.class_id == "Nil":
+281 | |             value = None
+282 | |             parent_class = Nil.new()
+283 | |             new_nil_class = NewObject(None, value, parent_class)
+284 | |             return new_nil_class
+285 | |         if literal.class_id == "class":
+286 | |             class_def = self.find_class(literal.value)
+287 | |             # if class_def is None:
+288 | |             #     raise InterpreterError(
+289 | |             #         error_code=ErrorCode.SEM_UNDEF,
+290 | |             #         message=f"Undefined class '{literal.value}'",
+291 | |             #     )
+292 | |             parent_class_str = self.find_parent(literal.value)
+293 | |             parent_class = self.create_obj_by_type(parent_class_str)
+294 | |             print(parent_class, parent_class_str)
+295 | |             new_class = NewObject(class_def, None, parent_class)
+296 | |             return new_class
+    | |____________________________^
+297 |
+298 |       def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
+    |
+help: Add explicit `return` statement
+
+RET504 Unnecessary assignment to `new_integer_class` before `return` statement
+   --> interpreter.py:264:20
+    |
+262 |             parent_class = Integer.new(value)
+263 |             new_integer_class = NewObject(None, value, parent_class)
+264 |             return new_integer_class
+    |                    ^^^^^^^^^^^^^^^^^
+265 |         if literal.class_id == "String":
+266 |             value = literal.value
+    |
+help: Remove unnecessary assignment
+
+RET504 Unnecessary assignment to `new_string_class` before `return` statement
+   --> interpreter.py:269:20
+    |
+267 |             parent_class = String.new(value)
+268 |             new_string_class = NewObject(None, value, parent_class)
+269 |             return new_string_class
+    |                    ^^^^^^^^^^^^^^^^
+270 |         if literal.class_id == "True":
+271 |             value = True
+    |
+help: Remove unnecessary assignment
+
+RET504 Unnecessary assignment to `new_true_class` before `return` statement
+   --> interpreter.py:274:20
+    |
+272 |             parent_class = True_.new()
+273 |             new_true_class = NewObject(None, value, parent_class)
+274 |             return new_true_class
+    |                    ^^^^^^^^^^^^^^
+275 |         if literal.class_id == "False":
+276 |             value = False
+    |
+help: Remove unnecessary assignment
+
+RET504 Unnecessary assignment to `new_false_class` before `return` statement
+   --> interpreter.py:279:20
+    |
+277 |             parent_class = False_.new()
+278 |             new_false_class = NewObject(None, value, parent_class)
+279 |             return new_false_class
+    |                    ^^^^^^^^^^^^^^^
+280 |         if literal.class_id == "Nil":
+281 |             value = None
+    |
+help: Remove unnecessary assignment
+
+RET504 Unnecessary assignment to `new_nil_class` before `return` statement
+   --> interpreter.py:284:20
+    |
+282 |             parent_class = Nil.new()
+283 |             new_nil_class = NewObject(None, value, parent_class)
+284 |             return new_nil_class
+    |                    ^^^^^^^^^^^^^
+285 |         if literal.class_id == "class":
+286 |             class_def = self.find_class(literal.value)
+    |
+help: Remove unnecessary assignment
+
+RET504 Unnecessary assignment to `new_class` before `return` statement
+   --> interpreter.py:296:20
+    |
+294 |             print(parent_class, parent_class_str)
+295 |             new_class = NewObject(class_def, None, parent_class)
+296 |             return new_class
+    |                    ^^^^^^^^^
+297 |
+298 |     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
+    |
+help: Remove unnecessary assignment
+
+RET504 Unnecessary assignment to `new_class` before `return` statement
+   --> interpreter.py:309:16
+    |
+307 |         parent_class = self.create_obj_by_type(parent_class_str, value)
+308 |         new_class = NewObject(class_def, value, parent_class)
+309 |         return new_class
+    |                ^^^^^^^^^
+310 |
+311 |     def create_obj_by_type(self, obj_type: str, *value) -> any:
+    |
+help: Remove unnecessary assignment
+
+FIX002 Line contains TODO, consider resolving the issue
+   --> interpreter.py:361:11
+    |
+359 |         # print(f"Executing send: selector={selector}, arguments={arguments}")
+360 |
+361 |         # TODO: Call dedicated methods according to current Class ( Integer, String, Object,
     |           ^^^^
-310 |         # - function to find out if current selector is build-in or not for the current Parent Class
-311 |         if selector == "new":
-    |
-
-E501 Line too long (102 > 99)
-   --> interpreter.py:309:100
-    |
-307 |         # print(f"Executing send: selector={selector}, arguments={arguments}")
-308 |
-309 |         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
-    |                                                                                                    ^^^
-310 |         # - function to find out if current selector is build-in or not for the current Parent Class
-311 |         if selector == "new":
-    |
-
-E501 Line too long (100 > 99)
-   --> interpreter.py:310:100
-    |
-309 |         # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
-310 |         # - function to find out if current selector is build-in or not for the current Parent Class
-    |                                                                                                    ^
-311 |         if selector == "new":
-312 |             class_y = self.execute_expression(send.receiver, current_scope)
+362 |         # Nil etc )
+363 |         # - function to find out if current selector is build-in or not for the current Parent
     |
 
 RET504 Unnecessary assignment to `class_y` before `return` statement
-   --> interpreter.py:317:20
+   --> interpreter.py:371:20
     |
-315 |             # class_object = NewObject(class_y, parent_class)
-316 |             # print(f"Created new object of class with these attributes:{new_object.attributes}")
-317 |             return class_y
+369 |             # class_object = NewObject(class_y, parent_class)
+370 |             # print(f"Created new object of class with these attributes:{new_object.attributes}")
+371 |             return class_y
     |                    ^^^^^^^
-318 |         if selector == "from:":
-319 |             class_y = self.execute_literal_new_from(send.receiver.literal, arguments[0].value)
+372 |         if selector == "from:":
+373 |             if not arguments:
     |
 help: Remove unnecessary assignment
 
 RET504 Unnecessary assignment to `class_y` before `return` statement
-   --> interpreter.py:320:20
+   --> interpreter.py:379:20
     |
-318 |         if selector == "from:":
-319 |             class_y = self.execute_literal_new_from(send.receiver.literal, arguments[0].value)
-320 |             return class_y
+377 |                 )
+378 |             class_y = self.execute_literal_new_from(send.receiver.literal, arguments[0].value)
+379 |             return class_y
     |                    ^^^^^^^
-321 |         # print(f'Arguments for send: {arguments} + Selector: {selector}')
-322 |         # print(f'Class_y value: {class_y.value if "value" in dir(class_y) else class_y}')
+380 |         # print(f'Arguments for send: {arguments} + Selector: {selector}')
+381 |         # print(f'Class_y value: {class_y.value if "value" in dir(class_y) else class_y}')
     |
 help: Remove unnecessary assignment
 
 RET504 Unnecessary assignment to `result` before `return` statement
-   --> interpreter.py:327:16
+   --> interpreter.py:386:16
     |
-325 |         # print(f'method: {method}')
-326 |         # print(f'Result value: {result.value if "value" in dir(result) else result}')
-327 |         return result
+384 |         # print(f'method: {method}')
+385 |         # print(f'Result value: {result.value if "value" in dir(result) else result}')
+386 |         return result
     |                ^^^^^^
-328 |
-329 |     def eval_expr(self, expr: Expr) -> Any:
+387 |
+388 |     def eval_expr(self, expr: Expr) -> Any:
     |
 help: Remove unnecessary assignment
-
-F405 `Expr` may be undefined, or defined from star imports
-   --> interpreter.py:329:31
-    |
-327 |         return result
-328 |
-329 |     def eval_expr(self, expr: Expr) -> Any:
-    |                               ^^^^
-330 |         """
-331 |         Evaluates an expression and returns it
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:329:40
-    |
-327 |         return result
-328 |
-329 |     def eval_expr(self, expr: Expr) -> Any:
-    |                                        ^^^
-330 |         """
-331 |         Evaluates an expression and returns it
-    |
-
-F405 `Send` may be undefined, or defined from star imports
-   --> interpreter.py:344:31
-    |
-342 |         return "Unknown expression type"
-343 |
-344 |     def eval_send(self, send: Send) -> Any:
-    |                               ^^^^
-345 |         """Evaluates send expression and returns a tuple of (receiver, selector, args)."""
-346 |         receiver = self.eval_expr(send.receiver)
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:344:40
-    |
-342 |         return "Unknown expression type"
-343 |
-344 |     def eval_send(self, send: Send) -> Any:
-    |                                        ^^^
-345 |         """Evaluates send expression and returns a tuple of (receiver, selector, args)."""
-346 |         receiver = self.eval_expr(send.receiver)
-    |
-
-F405 `Literal` may be undefined, or defined from star imports
-   --> interpreter.py:352:37
-    |
-350 |         return (receiver, selector, args)
-351 |
-352 |     def eval_literal(self, literal: Literal) -> Any:
-    |                                     ^^^^^^^
-353 |         """Evaluates literal class and returns its associated value."""
-354 |         if literal.class_id == "Integer":
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:352:49
-    |
-350 |         return (receiver, selector, args)
-351 |
-352 |     def eval_literal(self, literal: Literal) -> Any:
-    |                                                 ^^^
-353 |         """Evaluates literal class and returns its associated value."""
-354 |         if literal.class_id == "Integer":
-    |
-
-D102 Missing docstring in public method
-   --> interpreter.py:367:9
-    |
-365 |         return "Unknown literal class: " + literal.class_id
-366 |
-367 |     def eval_var(self, var: Var) -> Any:
-    |         ^^^^^^^^
-368 |         return self.stack.get(var.name)
-    |
-
-F405 `Var` may be undefined, or defined from star imports
-   --> interpreter.py:367:29
-    |
-365 |         return "Unknown literal class: " + literal.class_id
-366 |
-367 |     def eval_var(self, var: Var) -> Any:
-    |                             ^^^
-368 |         return self.stack.get(var.name)
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:367:37
-    |
-365 |         return "Unknown literal class: " + literal.class_id
-366 |
-367 |     def eval_var(self, var: Var) -> Any:
-    |                                     ^^^
-368 |         return self.stack.get(var.name)
-    |
-
-D102 Missing docstring in public method
-   --> interpreter.py:370:9
-    |
-368 |         return self.stack.get(var.name)
-369 |
-370 |     def map_objects(self) -> Any:
-    |         ^^^^^^^^^^^
-371 |         object_map = {}
-372 |         for cls in self.current_program.classes:
-    |
-
-F405 `Any` may be undefined, or defined from star imports
-   --> interpreter.py:370:30
-    |
-368 |         return self.stack.get(var.name)
-369 |
-370 |     def map_objects(self) -> Any:
-    |                              ^^^
-371 |         object_map = {}
-372 |         for cls in self.current_program.classes:
-    |
 
 FIX002 Line contains TODO, consider resolving the issue
   --> interpreter_former_ignore.py:60:11
@@ -1660,184 +618,16 @@ FIX002 Line contains TODO, consider resolving the issue
    |           ^^^^
    |
 
-D100 Missing docstring in public module
---> objects.py:1:1
-
-D101 Missing docstring in public class
- --> objects.py:6:7
-  |
-6 | class NewObject:
-  |       ^^^^^^^^^
-7 |     def __init__(self, class_def: ClassDef | None, value: any, parent=None):
-8 |         self.class_def = class_def
-  |
-
-E501 Line too long (225 > 99)
-  --> objects.py:12:100
-   |
-10 | …
-11 | …
-12 | …tiplyBy:", "divBy:", "timesRepeat:", "concatenateWith:", "startsWith:endsBefore:",  "whileTrue:", "and:", "or:", "ifTrue:ifFalse:"]
-   |       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-13 | …
-14 | …
-   |
-
-D102 Missing docstring in public method
-  --> objects.py:15:9
-   |
-14 |         # self.methods: dict = {}
-15 |     def find_method_in_class_def(self, class_def: ClassDef, selector: str) -> Method | Any:
-   |         ^^^^^^^^^^^^^^^^^^^^^^^^
-16 |         for method in class_def.methods:
-17 |             if method.selector == selector:
-   |
-
-D102 Missing docstring in public method
-  --> objects.py:21:9
-   |
-19 |         return None
-20 |
-21 |     def lookup(self, selector: str, all_classes: list[ClassDef]) -> Method | Any:
-   |         ^^^^^^
-22 |         # print(self.class_def)
-23 |         if self.class_def is not None:
-   |
-
-RET505 [*] Unnecessary `elif` after `return` statement
-  --> objects.py:41:13
-   |
-39 |                 # print(mthd_name)
-40 |                 return getattr(self.parent, mthd_name)
-41 |             elif selector[:-1] == mthd_name and selector in self.param_foos:
-   |             ^^^^
-42 |                 return getattr(self.parent, mthd_name)
-43 |         return None
-   |
-help: Remove unnecessary `elif`
-
-D102 Missing docstring in public method
-  --> objects.py:45:9
-   |
-43 |         return None
-44 |
-45 |     def get_attribute(self, name: str) -> Any:
-   |         ^^^^^^^^^^^^^
-46 |         attr = self.attributes.get(name, None)
-47 |         if attr is not None:
-   |
-
-D102 Missing docstring in public method
-  --> objects.py:51:9
-   |
-49 |         return None
-50 |
-51 |     def set_attribute(self, name: str, value: Any):
-   |         ^^^^^^^^^^^^^
-52 |         self.attributes[name] = value
-   |
-
-D102 Missing docstring in public method
-  --> objects.py:58:9
-   |
-56 |     #     return method(receiver, args)
-57 |
-58 |     def find_parent(self, parent: str):
-   |         ^^^^^^^^^^^
-59 |         class_def = self.find_class(parent)
-60 |         prev_class_def = None
-   |
-
-D102 Missing docstring in public method
-  --> objects.py:67:9
-   |
-67 |     def find_class(self, class_name: str, classes: list[ClassDef]) -> ClassDef | None:
-   |         ^^^^^^^^^^
-68 |         for cls in classes:
-69 |             if cls.name == class_name:
-   |
-
-W292 [*] No newline at end of file
-  --> objects.py:71:20
-   |
-69 |             if cls.name == class_name:
-70 |                 return cls
-71 |         return None
-   |                    ^
-   |
-help: Add trailing newline
-
-F403 `from typing import *` used; unable to detect undefined names
- --> scope.py:1:1
-  |
-1 | from typing import *
-  | ^^^^^^^^^^^^^^^^^^^^
-  |
-
-D100 Missing docstring in public module
---> scope.py:1:1
-
-D101 Missing docstring in public class
- --> scope.py:4:7
-  |
-4 | class Scope:
-  |       ^^^^^
-5 |     def __init__(self, parent) -> Any:
-6 |         self.parent = parent
-  |
-
-F405 `Any` may be undefined, or defined from star imports
- --> scope.py:5:35
-  |
-4 | class Scope:
-5 |     def __init__(self, parent) -> Any:
-  |                                   ^^^
-6 |         self.parent = parent
-7 |         self.variables = {}
-  |
-
-D102 Missing docstring in public method
-  --> scope.py:9:9
-   |
- 7 |         self.variables = {}
- 8 |
- 9 |     def set_variable(self, name, value):
-   |         ^^^^^^^^^^^^
-10 |         self.variables[name] = value
-   |
-
-D102 Missing docstring in public method
-  --> scope.py:12:9
-   |
-10 |         self.variables[name] = value
-11 |
-12 |     def get_variable(self, name):
-   |         ^^^^^^^^^^^^
-13 |         if name in self.variables:
-14 |             return self.variables[name]
-   |
-
 FIX002 Line contains TODO, consider resolving the issue
-  --> scope.py:17:70
+  --> scope.py:23:70
    |
-15 |         if self.parent is not None:
-16 |             return self.parent.get_variable(name)
-17 |         raise NameError(f"Variable '{name}' not found in scope.")  # TODO use interpreter errors
+21 |         if self.parent is not None:
+22 |             return self.parent.get_variable(name)
+23 |         raise NameError(f"Variable '{name}' not found in scope.")  # TODO use interpreter errors
    |                                                                      ^^^^
-18 |
-19 |     def update_variable(self, name, new):
+24 |
+25 |     def update_variable(self, name, new):
    |
 
-D102 Missing docstring in public method
-  --> scope.py:19:9
-   |
-17 |         raise NameError(f"Variable '{name}' not found in scope.")  # TODO use interpreter errors
-18 |
-19 |     def update_variable(self, name, new):
-   |         ^^^^^^^^^^^^^^^
-20 |         if name in self.variables:
-21 |             self.variables[name] = new
-   |
-
-Found 163 errors.
-[*] 27 fixable with the `--fix` option (15 hidden fixes can be enabled with the `--unsafe-fixes` option).
+Found 50 errors.
+No fixes available (14 hidden fixes can be enabled with the `--unsafe-fixes` option).

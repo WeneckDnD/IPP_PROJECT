@@ -17,9 +17,18 @@ from pydantic import ValidationError
 
 from interpreter.error_codes import ErrorCode
 from interpreter.exceptions import InterpreterError
-from interpreter.input_model import *
+from interpreter.input_model import (
+    Block,
+    ClassDef,
+    Expr,
+    Literal,
+    Method,
+    Program,
+    Send,
+    Var,
+)
 
-from .classes import *
+from .classes import False_, Integer, Nil, String, True_
 from .objects import NewObject
 from .scope import Scope
 
@@ -57,6 +66,7 @@ class Interpreter:
             ) from e
 
     def create_parent_by_type(self, obj_type: str, value= None) -> Any:
+        """Wrap a Python value as the corresponding runtime parent object."""
         # print(f'value to create {value}')
         match obj_type:
             case "int":
@@ -71,6 +81,7 @@ class Interpreter:
                 return None
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
+        """Dispatch a message send to a receiver object."""
         print(f"💬SEND MESSAGE: {selector} {args} {receiver.__class__}")
         # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
         # print(f'❓Receiver: {isinstance(receiver.value, Block)}, Selector: {selector}')
@@ -86,9 +97,9 @@ class Interpreter:
                 return att
         # built-in vs user-defined
         if callable(method):
-            isParam = selector in receiver.param_foos and method is not None
-            print(f"isParam {isParam}")
-            new_value = method(*args) if isParam else method()
+            is_param = selector in receiver.param_foos and method is not None
+            print(f"isParam {is_param}")
+            new_value = method(*args) if is_param else method()
             print(f"New value: {new_value}")
             value_type = type(new_value).__name__
             # print(f'Value type: {value_type}')
@@ -154,6 +165,7 @@ class Interpreter:
         # self.execute_method(run_method, scope, [])
 
     def execute_method(self, method: Method, parent_scope: Scope, args: list) -> Any:
+        """Run a user-defined method body with the given arguments."""
         # arity ?
         # find block
         # execute the block (execute_block)
@@ -163,6 +175,7 @@ class Interpreter:
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
+        """Evaluate a block: bind parameters, then run assignments in order."""
         print(f"EXECUTE BLOCK: {block.parameters} {block.assigns}")
         if len(args) != block.arity:
             raise InterpreterError(
@@ -178,7 +191,7 @@ class Interpreter:
             print(f"PARAM NAME: {param_name} PARAM VALUE: {param_value}")
             current_scope.set_variable(param_name, param_value)
         # self.scope.set_variable()
-        retValue = None
+        ret_value = None
         for assgn in block.assigns:
             assgn_target = assgn.target  # o
             if assgn_target.name in param_names:
@@ -195,15 +208,16 @@ class Interpreter:
             # look_up = exp.lookup("foo")
             # print(look_up)
             # self.execute_block(look_up.block, current_scope)
-            retValue = exp
-        return retValue
+            ret_value = exp
+        return ret_value
 
     def execute_params():
-        pass
+        """Placeholder for parameter execution (unused)."""
 
 
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
+        """Evaluate an expression in the given scope and return its value."""
         print(f"EXECUTE EXPRESSION: {expr}")
         if expr.send is not None:
             # print(f"SEND")
@@ -224,6 +238,7 @@ class Interpreter:
         )
 
     def execute_literal(self, literal: Literal) -> Any:
+        """Reduce a literal to a plain Python value."""
         if literal.class_id == "Integer":
             return int(literal.value)
         if literal.class_id == "String":
@@ -240,6 +255,7 @@ class Interpreter:
 
     # value is used in special case for 'from:' selector
     def execute_literal_new(self, literal: Literal) -> Any:
+        """Build a NewObject wrapper for a literal value."""
         print(f"EXECUTE LITERAL NEW: {literal}")
         if literal.class_id == "Integer":
             value = int(literal.value)
@@ -280,6 +296,7 @@ class Interpreter:
             return new_class
 
     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
+        """Construct a class instance from a literal class name and a value."""
         class_def = self.find_class(literal.value)
         # if class_def is None:
         #     raise InterpreterError(
@@ -292,6 +309,7 @@ class Interpreter:
         return new_class
 
     def create_obj_by_type(self, obj_type: str, *value) -> any:
+        """Instantiate a built-in type object by name."""
         match obj_type:
             case "Integer":
                 return Integer.new(*value)
@@ -305,6 +323,7 @@ class Interpreter:
                 return False_.new()
 
     def find_parent(self, parent: str):
+        """Walk the class hierarchy and return the root parent name."""
         class_def = self.find_class(parent)
         # print(class_def)
         prev_class_def = None
@@ -317,6 +336,7 @@ class Interpreter:
 
 
     def find_class(self, class_name: str) -> ClassDef | None:
+        """Look up a class definition by name in the loaded program."""
         for cls in self.current_program.classes:
             if cls.name == class_name:
                 return cls
@@ -324,6 +344,7 @@ class Interpreter:
         return None
 
     def execute_send(self, send: Send, current_scope: Scope) -> Any:
+        """Evaluate arguments and receiver, then perform the message send."""
         print(f"EXECUTE SEND: {send}")
         selector = send.selector  # foo
         arguments = []
@@ -337,8 +358,10 @@ class Interpreter:
 
         # print(f"Executing send: selector={selector}, arguments={arguments}")
 
-        # TODO: Call dedicated methods according to current Class ( Integer, String, Object, Nil etc )
-        # - function to find out if current selector is build-in or not for the current Parent Class
+        # TODO: Call dedicated methods according to current Class ( Integer, String, Object,
+        # Nil etc )
+        # - function to find out if current selector is build-in or not for the current Parent
+        # Class
         if selector == "new":
             class_y = self.execute_expression(send.receiver, current_scope)
             # return self.send_message(class_y, selector, arguments, current_scope)
@@ -401,9 +424,11 @@ class Interpreter:
         return "Unknown literal class: " + literal.class_id
 
     def eval_var(self, var: Var) -> Any:
+        """Resolve a variable name from the evaluation stack."""
         return self.stack.get(var.name)
 
     def map_objects(self) -> Any:
+        """Return a map of class name to class definition for the loaded program."""
         object_map = {}
         for cls in self.current_program.classes:
             object_map[cls.name] = cls

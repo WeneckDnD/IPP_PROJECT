@@ -1,7 +1,10 @@
+"""Runtime object model classes for the SOL interpreter."""
+
 from __future__ import annotations
 
 from interpreter.error_codes import ErrorCode
 from interpreter.exceptions import InterpreterError
+from interpreter.input_model import Block  ## ?
 
 
 class Object:
@@ -27,9 +30,9 @@ class Object:
     def equalTo(self, obj: any) -> bool:
         """Check if objects are equal."""
         print(f"OBJ VALUE FROM equalTo: {obj.value}")
-        retVal = self.identicalTo(obj)
-        print(f"RETVAL FROM equalTo: {retVal}")
-        return retVal
+        ret_val = self.identicalTo(obj)
+        print(f"RETVAL FROM equalTo: {ret_val}")
+        return ret_val
         # if obj.attributes == None:
         #     return self.identicalTo(obj)
         # else:
