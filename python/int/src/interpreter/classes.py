@@ -210,7 +210,7 @@ class String(Object):
         return Integer(l)
 
 
-class Block(Object):
+class Block_(Object):
     """Block object with inherited methods from parent Object"""
 
     def __init__(self, func=None):

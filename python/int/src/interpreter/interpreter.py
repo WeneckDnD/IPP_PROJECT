@@ -70,12 +70,17 @@ class Interpreter:
 
 
     def send_message(self, receiver: NewObject, selector: str, args: list, scope: Scope):
-        # print(f'DIR Receiver: {dir(receiver)}')
-        # print(f'Receiver: {receiver}, Selector: {selector}')
+        print(f'💬SEND MESSAGE: {selector} {args} {receiver.__class__}')
+        # print(f'DIR Receiver: {receiver.parent.__class__} {dir(receiver)}, selector: {selector}')
+        # print(f'❓Receiver: {isinstance(receiver.value, Block)}, Selector: {selector}')
+        if isinstance(receiver.value, Block) and selector == "value:":
+            return self.execute_block(receiver.value, scope, args)
         method = receiver.lookup(selector, self.current_program.classes)
         # print(f'Method: {method}, Selector: {selector}, Receiver: {receiver.attributes}')  
         if method is None:
+            # print(f'Selector: {selector}, Receiver: {receiver.attributes}')
             att = receiver.get_attribute(selector)
+            # print(f'Attribute: {att}')
             if att is not None:
                 return att
         # built-in vs user-defined
@@ -93,7 +98,7 @@ class Interpreter:
             print(f'Method: {method}')
             if method is None:
                 current_self = scope.get_variable("self")
-                print(f'Current args: {args}')
+                print(f'Current args: {args}, Selector: {selector}')
                 current_self.set_attribute(selector[:-1], *args)
                 scope.update_variable("self", current_self)
                 return current_self
@@ -148,6 +153,7 @@ class Interpreter:
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
     def execute_block(self, block: Block, parent_scope: Scope, args: list) -> Any:
+        print(f'EXECUTE BLOCK: {block.parameters} {block.assigns}')
         current_scope = Scope(parent=parent_scope)
 
         for param in block.parameters:
@@ -164,6 +170,7 @@ class Interpreter:
             exp = self.execute_expression(assgn_expr, current_scope)  # NewObject()
             print(f"Assign expr: {exp}")
             current_scope.set_variable(assgn_target.name, exp)
+            print(f'💾STORED: {assgn_target.name} {exp}')
             # look_up = exp.lookup("foo")
             # print(look_up)
             # self.execute_block(look_up.block, current_scope)
@@ -176,6 +183,7 @@ class Interpreter:
 
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
+        print(f'EXECUTE EXPRESSION: {expr}')
         if expr.send is not None:
             # print(f"SEND")
             return self.execute_send(expr.send, current_scope)
@@ -187,6 +195,9 @@ class Interpreter:
             x = current_scope.get_variable(expr.var.name)
             # print(f"value: {x}")
             return x
+        if expr.block is not None:
+            return NewObject(None, expr.block, None)
+        print(f'🛑EXECUTE EXPRESSION: {expr} RETURNING NONE')
 
     def execute_literal(self, literal: Literal) -> Any:
         if literal.class_id == "Integer":
@@ -205,6 +216,7 @@ class Interpreter:
 
     # value is used in special case for 'from:' selector
     def execute_literal_new(self, literal: Literal) -> Any:
+        print(f'EXECUTE LITERAL NEW: {literal}')
         if literal.class_id == "Integer":
             value = int(literal.value)
             parent_class = Integer.new(value)
@@ -278,6 +290,7 @@ class Interpreter:
         return None
 
     def execute_send(self, send: Send, current_scope: Scope) -> Any:
+        print(f'EXECUTE SEND: {send}')
         selector = send.selector  # foo
         arguments = []  
         for arg in send.args:

@@ -18,12 +18,23 @@ class Main : Object {
     "Jednoparametrické selektory"
     _ := o bar: 1. "metoda se najde v třídě A"
     _ := self bar_3: 5.
-    a := self p: 'hello'.
+    t := self p: 'hello'.
     _ := (self p) print.
     x := String from: 'Test'.
     _ := x print.
-    a := self attrib: (Integer from: 10).
-    _ := (self attrib) print.
+    r := self attrib: (Integer from: 10).
+    _ := (String from: (self attrib)) print.
+    a := self fooo: 4. "a = instance 14"
+    b := [ :x | _ := 42. ]. "b = instance Block"
+    c := b value: 16. "c = instance 42"
+    _ := (String from: c) print.
+    d := 'ahoj' print. 
+  ]
+
+  fooo: [ :x |
+  "s proměnnou 'u' se nijak dál nepracuje, ale výsledek zaslání
+  zprávy 'plus:' bude vrácen jako výsledek volání metody 'foo'"
+  u := x plus: 10.
   ]
 
   bar_3: [ :x | r := ( x plus: 1 ) plus: 3. ]

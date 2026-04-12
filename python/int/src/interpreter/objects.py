@@ -43,8 +43,10 @@ class NewObject:
         return None
 
     def get_attribute(self, name: str) -> Any:
-        if name in self.attributes:
-            return self.attributes.get(name, None)
+        attr = self.attributes.get(name, None)
+        if attr is not None:
+            return attr
+        return None
 
     def set_attribute(self, name: str, value: Any):
         self.attributes[name] = value

@@ -129,7 +129,7 @@
           </expr>
         </assign>
         <assign order="7">
-          <var name="a"/>
+          <var name="t"/>
           <expr>
             <send selector="p:">
               <expr>
@@ -183,7 +183,7 @@
           </expr>
         </assign>
         <assign order="11">
-          <var name="a"/>
+          <var name="r"/>
           <expr>
             <send selector="attrib:">
               <expr>
@@ -211,12 +211,114 @@
           <expr>
             <send selector="print">
               <expr>
-                <send selector="attrib">
+                <send selector="from:">
                   <expr>
-                    <var name="self"/>
+                    <literal class="class" value="String"/>
                   </expr>
+                  <arg order="1">
+                    <expr>
+                      <send selector="attrib">
+                        <expr>
+                          <var name="self"/>
+                        </expr>
+                      </send>
+                    </expr>
+                  </arg>
                 </send>
               </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="13">
+          <var name="a"/>
+          <expr>
+            <send selector="fooo:">
+              <expr>
+                <var name="self"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="4"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="14">
+          <var name="b"/>
+          <expr>
+            <block arity="1">
+              <parameter order="1" name="x"/>
+              <assign order="1">
+                <var name="_"/>
+                <expr>
+                  <literal class="Integer" value="42"/>
+                </expr>
+              </assign>
+            </block>
+          </expr>
+        </assign>
+        <assign order="15">
+          <var name="c"/>
+          <expr>
+            <send selector="value:">
+              <expr>
+                <var name="b"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="16"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="16">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="from:">
+                  <expr>
+                    <literal class="class" value="String"/>
+                  </expr>
+                  <arg order="1">
+                    <expr>
+                      <var name="c"/>
+                    </expr>
+                  </arg>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="17">
+          <var name="d"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value="ahoj"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+    <method selector="fooo:">
+      <block arity="1">
+        <parameter order="1" name="x"/>
+        <assign order="1">
+          <var name="u"/>
+          <expr>
+            <send selector="plus:">
+              <expr>
+                <var name="x"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="10"/>
+                </expr>
+              </arg>
             </send>
           </expr>
         </assign>
