@@ -76,7 +76,11 @@ class Interpreter:
             case "None":
                 return Nil.new()
             case "bool":
-                return True_.new() if value is not None and value == True else False_.new()
+                return (
+                    True_.new()
+                    if value is not None and (value is True or value == 1)
+                    else False_.new()
+                )
             case _:
                 return None
 
@@ -227,9 +231,8 @@ class Interpreter:
             return self.execute_literal_new(expr.literal)
         if expr.var is not None:
             # print(f"VARIABLE")
-            x = current_scope.get_variable(expr.var.name)
             # print(f"value: {x}")
-            return x
+            return current_scope.get_variable(expr.var.name)
         if expr.block is not None:
             return NewObject(None, expr.block, None)
         print(f"🛑EXECUTE EXPRESSION: {expr} RETURNING NONE")
@@ -252,6 +255,7 @@ class Interpreter:
         if literal.class_id == "class":
             # print(f"CLASS")
             return self.find_class(literal.value)  # TODO: Error None case
+        return None
 
     # value is used in special case for 'from:' selector
     def execute_literal_new(self, literal: Literal) -> Any:
@@ -260,28 +264,23 @@ class Interpreter:
         if literal.class_id == "Integer":
             value = int(literal.value)
             parent_class = Integer.new(value)
-            new_integer_class = NewObject(None, value, parent_class)
-            return new_integer_class
+            return NewObject(None, value, parent_class)
         if literal.class_id == "String":
             value = literal.value
             parent_class = String.new(value)
-            new_string_class = NewObject(None, value, parent_class)
-            return new_string_class
+            return NewObject(None, value, parent_class)
         if literal.class_id == "True":
             value = True
             parent_class = True_.new()
-            new_true_class = NewObject(None, value, parent_class)
-            return new_true_class
+            return NewObject(None, value, parent_class)
         if literal.class_id == "False":
             value = False
             parent_class = False_.new()
-            new_false_class = NewObject(None, value, parent_class)
-            return new_false_class
+            return NewObject(None, value, parent_class)
         if literal.class_id == "Nil":
             value = None
             parent_class = Nil.new()
-            new_nil_class = NewObject(None, value, parent_class)
-            return new_nil_class
+            return NewObject(None, value, parent_class)
         if literal.class_id == "class":
             class_def = self.find_class(literal.value)
             # if class_def is None:
@@ -292,8 +291,8 @@ class Interpreter:
             parent_class_str = self.find_parent(literal.value)
             parent_class = self.create_obj_by_type(parent_class_str)
             print(parent_class, parent_class_str)
-            new_class = NewObject(class_def, None, parent_class)
-            return new_class
+            return NewObject(class_def, None, parent_class)
+        return None
 
     def execute_literal_new_from(self, literal: Literal, value: any) -> Any:
         """Construct a class instance from a literal class name and a value."""
@@ -305,8 +304,7 @@ class Interpreter:
         #     )
         parent_class_str = self.find_parent(literal.value)
         parent_class = self.create_obj_by_type(parent_class_str, value)
-        new_class = NewObject(class_def, value, parent_class)
-        return new_class
+        return NewObject(class_def, value, parent_class)
 
     def create_obj_by_type(self, obj_type: str, *value) -> any:
         """Instantiate a built-in type object by name."""
@@ -363,27 +361,24 @@ class Interpreter:
         # - function to find out if current selector is build-in or not for the current Parent
         # Class
         if selector == "new":
-            class_y = self.execute_expression(send.receiver, current_scope)
             # return self.send_message(class_y, selector, arguments, current_scope)
             # parent_class = Object.new(class_y.parent)
             # class_object = NewObject(class_y, parent_class)
             # print(f"Created new object of class with these attributes:{new_object.attributes}")
-            return class_y
+            return self.execute_expression(send.receiver, current_scope)
         if selector == "from:":
             if not arguments:
                 raise InterpreterError(
                     error_code=ErrorCode.INT_INVALID_ARG,
                     message="from: requires a value argument",
                 )
-            class_y = self.execute_literal_new_from(send.receiver.literal, arguments[0].value)
-            return class_y
+            return self.execute_literal_new_from(send.receiver.literal, arguments[0].value)
         # print(f'Arguments for send: {arguments} + Selector: {selector}')
         # print(f'Class_y value: {class_y.value if "value" in dir(class_y) else class_y}')
-        result = self.send_message(class_y, selector, arguments, current_scope)
         # method = class_y.lookup(selector)
         # print(f'method: {method}')
         # print(f'Result value: {result.value if "value" in dir(result) else result}')
-        return result
+        return self.send_message(class_y, selector, arguments, current_scope)
 
     def eval_expr(self, expr: Expr) -> Any:
         """
