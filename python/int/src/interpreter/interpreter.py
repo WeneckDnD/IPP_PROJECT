@@ -119,29 +119,31 @@ class Interpreter:
         # print(main_class_def)
         parent_class_str = self.find_parent(main_class_def.parent)
         parent_class = self.create_obj_by_type(parent_class_str)
-        scope.set_variable("self", NewObject(main_class_def,None, parent_class))
+        main_class = NewObject(main_class_def,None, parent_class)
+        self.send_message(main_class, "run", [], scope)
+        # scope.set_variable("self", main_class)
 
-        main_class = None
-        for cls in self.current_program.classes:
-            if cls.name == "Main":
-                main_class = cls
-                break
-        if not main_class:
-            raise InterpreterError(
-                error_code=ErrorCode.SEM_MAIN, message="No Main class found in the program"
-            )
+        # main_class = None
+        # for cls in self.current_program.classes:
+        #     if cls.name == "Main":
+        #         main_class = cls
+        #         break
+        # if not main_class:
+        #     raise InterpreterError(
+        #         error_code=ErrorCode.SEM_MAIN, message="No Main class found in the program"
+        #     )
 
-        run_method = None
-        for mthd in main_class.methods:
-            if mthd.selector == "run":
-                run_method = mthd
-                break
-        if not run_method:
-            raise InterpreterError(
-                error_code=ErrorCode.SEM_MAIN, message="No run method found in the Main class"
-            )
+        # run_method = None
+        # for mthd in main_class.methods:
+        #     if mthd.selector == "run":
+        #         run_method = mthd
+        #         break
+        # if not run_method:
+        #     raise InterpreterError(
+        #         error_code=ErrorCode.SEM_MAIN, message="No run method found in the Main class"
+        #     )
 
-        self.execute_method(run_method, scope, [])
+        # self.execute_method(run_method, scope, [])
 
     def execute_method(self, method: Method, parent_scope: Scope, args: list) -> Any:
         # arity ?
