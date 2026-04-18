@@ -1,0 +1,6 @@
+class Main : String {
+  run [|
+    "ur keyboard input"
+    _ := (String read) print.
+  ]
+}

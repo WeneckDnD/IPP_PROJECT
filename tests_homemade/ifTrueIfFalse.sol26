@@ -1,0 +1,10 @@
+class Main : Integer {
+  run [|
+    "T"
+    r := true ifTrue: [ | r := 'T'. ] ifFalse: [ | r := 'F'. ].
+    _ := (r asString) print.
+    "F"
+    r := false ifTrue: [ | r := 'T'. ] ifFalse: [ | r := 'F'. ].
+    _ := (r asString) print.
+  ]
+}

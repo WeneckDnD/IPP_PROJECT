@@ -1,0 +1,19 @@
+class Box : Integer {
+}
+class Main : Integer {
+  run [|
+    "5"
+    _ := (5 asString) print.
+    "hello"
+    _ := ('hello' asString) print.
+    ""
+    _ := (nil asString) print.
+    "true"
+    _ := (true asString) print.
+    "false"
+    _ := (false asString) print.
+    "0"
+    o := Box new.
+    _ := (o asString) print.
+  ]
+}

@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="SOL26" description="false">
+  <class name="Box" parent="Integer"/>
+  <class name="Main" parent="Integer">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="r"/>
+          <expr>
+            <send selector="isString">
+              <expr>
+                <literal class="Integer" value="0"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="2">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="3">
+          <var name="r"/>
+          <expr>
+            <send selector="isString">
+              <expr>
+                <literal class="String" value=""/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="4">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="5">
+          <var name="r"/>
+          <expr>
+            <send selector="isString">
+              <expr>
+                <literal class="Nil" value="nil"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="6">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="7">
+          <var name="r"/>
+          <expr>
+            <send selector="isString">
+              <expr>
+                <literal class="True" value="true"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="8">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="9">
+          <var name="r"/>
+          <expr>
+            <send selector="isString">
+              <expr>
+                <literal class="False" value="false"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="10">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="11">
+          <var name="o"/>
+          <expr>
+            <send selector="new">
+              <expr>
+                <literal class="class" value="Box"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="12">
+          <var name="r"/>
+          <expr>
+            <send selector="isString">
+              <expr>
+                <var name="o"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="13">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+</program>

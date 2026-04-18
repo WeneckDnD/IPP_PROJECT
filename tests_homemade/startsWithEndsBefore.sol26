@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "bcd"
+    r := 'abcdef' startsWith: 2 endsBefore: 5.
+    _ := (r asString) print.
+  ]
+}

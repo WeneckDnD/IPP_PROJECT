@@ -1,0 +1,10 @@
+class Main : Integer {
+  run [|
+    "123"
+    r := 100 plus: 23.
+    _ := (r asString) print.
+    "0"
+    r := 0 plus: 0.
+    _ := (r asString) print.
+  ]
+}

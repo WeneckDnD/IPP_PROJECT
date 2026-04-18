@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "42"
+    r := 6 multiplyBy: 7.
+    _ := (r asString) print.
+  ]
+}

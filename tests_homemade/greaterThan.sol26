@@ -1,0 +1,10 @@
+class Main : Integer {
+  run [|
+    "true"
+    r := 10 greaterThan: 3.
+    _ := (r asString) print.
+    "false"
+    r := 3 greaterThan: 10.
+    _ := (r asString) print.
+  ]
+}

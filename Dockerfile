@@ -13,7 +13,6 @@ ARG NODE_SETUP_MAJOR=24
 # ─────────────────────────────────────────
 FROM python:3.14-slim AS check
 
-# Python závislosti pre interpreter + nástroje statickej kontroly
 COPY python/int/requirements.txt /tmp/requirements.txt
 COPY python/int/requirements-dev.txt /tmp/requirements-dev.txt
 RUN pip install --no-cache-dir -r /tmp/requirements.txt -r /tmp/requirements-dev.txt \
@@ -27,6 +26,12 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /src
+
+# Zadanie: spustiteľné wrappery cez ./ruff a ./mypy
+RUN printf '%s\n' '#!/bin/sh' 'set -eu' 'cd /src/int' 'if [ "$#" -eq 0 ]; then exec ruff check src; fi' 'exec ruff "$@"' > /src/ruff \
+    && chmod +x /src/ruff \
+    && printf '%s\n' '#!/bin/sh' 'set -eu' 'cd /src/int' 'if [ "$#" -eq 0 ]; then exec mypy src; fi' 'exec mypy "$@"' > /src/mypy \
+    && chmod +x /src/mypy
 
 # Adresáre budú pripojené ako bind mount za behu:
 #   --mount type=bind,source=./python/int,target=/src/int

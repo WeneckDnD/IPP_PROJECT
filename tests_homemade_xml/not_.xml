@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="SOL26" description="not_skipped">
+  <class name="Main" parent="Integer">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <literal class="String" value="not_skipped"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+</program>

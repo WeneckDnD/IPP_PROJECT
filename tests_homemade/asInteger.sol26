@@ -1,0 +1,13 @@
+class Main : Integer {
+  run [|
+    "240"
+    r := '240' asInteger.
+    _ := (r asString) print.
+    "nil"
+    r := 'nope' asInteger.
+    _ := (r asString) print.
+    "Integer"
+    r := 99 asInteger.
+    _ := (r asString) print.
+  ]
+}

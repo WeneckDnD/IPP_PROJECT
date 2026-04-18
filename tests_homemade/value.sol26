@@ -1,0 +1,8 @@
+class Main : Integer {
+  run [|
+    "42"
+    b := [ :x:y | r := x plus: y. ].
+    c := b value: 11 value: 31.
+    _ := (c asString) print.
+  ]
+}

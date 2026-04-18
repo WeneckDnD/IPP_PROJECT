@@ -1,0 +1,35 @@
+class Box : Integer {
+}
+class Main : Integer {
+  run [|
+    "false"
+    x := 9.
+    r := x identicalTo: x.
+    _ := (r asString) print.
+    "false"
+    y := 9.
+    r := x identicalTo: y.
+    _ := (r asString) print.
+    "false"
+    s := 'z'.
+    r := s identicalTo: s.
+    _ := (r asString) print.
+    "false"
+    r := nil identicalTo: nil.
+    _ := (r asString) print.
+    "false"
+    o := Box new.
+    r := o identicalTo: o.
+    _ := (r asString) print.
+    "false"
+    p := Box new.
+    r := o identicalTo: p.
+    _ := (r asString) print.
+    "false"
+    r := true identicalTo: true.
+    _ := (r asString) print.
+    "false"
+    r := false identicalTo: false.
+    _ := (r asString) print.
+  ]
+}

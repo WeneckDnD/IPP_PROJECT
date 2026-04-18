@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "11"
+    r := 100 divBy: 9.
+    _ := (r asString) print.
+  ]
+}

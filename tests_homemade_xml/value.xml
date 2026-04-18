@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="SOL26" description="42">
+  <class name="Main" parent="Integer">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="b"/>
+          <expr>
+            <block arity="2">
+              <parameter order="1" name="x"/>
+              <parameter order="2" name="y"/>
+              <assign order="1">
+                <var name="r"/>
+                <expr>
+                  <send selector="plus:">
+                    <expr>
+                      <var name="x"/>
+                    </expr>
+                    <arg order="1">
+                      <expr>
+                        <var name="y"/>
+                      </expr>
+                    </arg>
+                  </send>
+                </expr>
+              </assign>
+            </block>
+          </expr>
+        </assign>
+        <assign order="2">
+          <var name="c"/>
+          <expr>
+            <send selector="value:value:">
+              <expr>
+                <var name="b"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="11"/>
+                </expr>
+              </arg>
+              <arg order="2">
+                <expr>
+                  <literal class="Integer" value="31"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="3">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="c"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+</program>

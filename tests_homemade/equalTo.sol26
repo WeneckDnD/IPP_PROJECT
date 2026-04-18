@@ -1,0 +1,35 @@
+class Box : Integer {
+}
+class Main : Integer {
+  run [|
+    "true"
+    r := 42 equalTo: 42.
+    _ := (r asString) print.
+    "false"
+    r := 42 equalTo: 7.
+    _ := (r asString) print.
+    "true"
+    r := 'sol' equalTo: 'sol'.
+    _ := (r asString) print.
+    "false"
+    r := 'sol' equalTo: 'nos'.
+    _ := (r asString) print.
+    "false"
+    a := Box new.
+    b := Box new.
+    r := a equalTo: b.
+    _ := (r asString) print.
+    "false"
+    r := a equalTo: a.
+    _ := (r asString) print.
+    "false"
+    r := nil equalTo: nil.
+    _ := (r asString) print.
+    "false"
+    r := true equalTo: true.
+    _ := (r asString) print.
+    "false"
+    r := false equalTo: false.
+    _ := (r asString) print.
+  ]
+}

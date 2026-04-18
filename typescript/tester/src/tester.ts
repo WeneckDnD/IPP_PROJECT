@@ -41,8 +41,6 @@ import {
 } from "./models.js";
 import { pino } from "pino";
 
-type JsonLike = string | number | boolean | null | JsonLike[] | { [k: string]: JsonLike };
-
 interface CliArguments {
   tests_dir: string;
   recursive: boolean;
@@ -60,7 +58,8 @@ interface CliArguments {
 
 interface TestCaseExecutionInfo {
   definition: TestCaseDefinition;
-  source_file: string | null;
+  source_code: string;
+  source_is_xml: boolean;
 }
 
 interface ProcessResult {
@@ -280,131 +279,116 @@ function discoverTestFiles(testsDir: string, recursive: boolean): string[] {
   return discovered;
 }
 
-function parseSimpleLiteral(raw: string): JsonLike {
-  const trimmed = raw.trim();
-  if (trimmed === "null") {
-    return null;
-  }
-  if (trimmed === "true") {
-    return true;
-  }
-  if (trimmed === "false") {
-    return false;
-  }
-  if (/^-?\d+$/.test(trimmed)) {
-    return Number(trimmed);
-  }
-  if (
-    (trimmed.startsWith('"') && trimmed.endsWith('"')) ||
-    (trimmed.startsWith("'") && trimmed.endsWith("'"))
-  ) {
-    return trimmed.slice(1, -1);
-  }
-  if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
-    const inner = trimmed.slice(1, -1).trim();
-    if (inner.length === 0) {
-      return [];
-    }
-    return inner.split(",").map((item) => parseSimpleLiteral(item));
-  }
-  return trimmed;
+interface ParsedSoltest {
+  description: string | null;
+  category: string;
+  points: number;
+  expected_parser_exit_codes: number[] | null;
+  expected_interpreter_exit_codes: number[] | null;
+  source_code: string;
+  source_is_xml: boolean;
 }
 
-function parseSimpleKeyValue(content: string): Record<string, JsonLike> {
-  const result: Record<string, JsonLike> = {};
+function parseExitCode(raw: string, prefix: string): number {
+  const value = Number(raw.trim());
+  if (!Number.isInteger(value)) {
+    throw new Error(`malformed_test_case: invalid ${prefix} exit code '${raw.trim()}'`);
+  }
+  return value;
+}
+
+function parseSoltest(content: string): ParsedSoltest {
   const lines = content.split(/\r?\n/u);
-  for (const line of lines) {
-    const trimmed = line.trim();
-    if (trimmed.length === 0 || trimmed.startsWith("#") || trimmed.startsWith("//")) {
+  const separatorIdx = lines.findIndex((line) => line.trim().length === 0);
+  if (separatorIdx < 0) {
+    throw new Error("malformed_test_case: missing blank line before source code");
+  }
+
+  const header = lines.slice(0, separatorIdx);
+  const sourceLines = lines.slice(separatorIdx + 1);
+  const sourceCode = sourceLines.join("\n").trimEnd();
+  if (sourceCode.trim().length === 0) {
+    throw new Error("malformed_test_case: missing source code");
+  }
+
+  let description: string | null = null;
+  let category: string | null = null;
+  let points: number | null = null;
+  const parserCodes: number[] = [];
+  const interpreterCodes: number[] = [];
+
+  for (const rawLine of header) {
+    const line = rawLine.trim();
+    if (line.startsWith("***")) {
+      description = line.slice(3).trim();
+      if (description.length === 0) {
+        description = null;
+      }
       continue;
     }
-    const match = trimmed.match(/^([A-Za-z_][A-Za-z0-9_-]*)\s*[:=]\s*(.+)$/u);
-    if (match === null) {
-      throw new Error(`Cannot parse line: ${line}`);
-    }
-    const key = match[1];
-    const valueRaw = match[2];
-    if (key === undefined || valueRaw === undefined) {
-      throw new Error(`Cannot parse line: ${line}`);
-    }
-    result[key] = parseSimpleLiteral(valueRaw);
-  }
-  return result;
-}
-
-function parseTestFileRaw(filePath: string): Record<string, JsonLike> {
-  const content = readFileSync(filePath, "utf8");
-  try {
-    const parsed = JSON.parse(content) as unknown;
-    if (parsed === null || typeof parsed !== "object" || Array.isArray(parsed)) {
-      throw new Error("JSON root must be an object.");
-    }
-    return parsed as Record<string, JsonLike>;
-  } catch {
-    return parseSimpleKeyValue(content);
-  }
-}
-
-function asString(value: JsonLike | undefined): string | null {
-  return typeof value === "string" ? value : null;
-}
-
-function asNumberArray(value: JsonLike | undefined): number[] | null {
-  if (value === undefined || value === null) {
-    return null;
-  }
-  if (typeof value === "number") {
-    return [value];
-  }
-  if (Array.isArray(value)) {
-    const mapped = value.map((item) => {
-      if (typeof item !== "number") {
-        throw new Error("Exit code array contains a non-number value.");
+    if (line.startsWith("+++")) {
+      const value = line.slice(3).trim();
+      if (value.length === 0) {
+        throw new Error("malformed_test_case: empty category");
       }
-      return item;
-    });
-    return mapped;
+      category = value;
+      continue;
+    }
+    if (line.startsWith("!C!")) {
+      parserCodes.push(parseExitCode(line.slice(3), "parser"));
+      continue;
+    }
+    if (line.startsWith("!I!")) {
+      interpreterCodes.push(parseExitCode(line.slice(3), "interpreter"));
+      continue;
+    }
+    if (line.startsWith(">>>")) {
+      const parsedPoints = parseExitCode(line.slice(3), "points");
+      if (parsedPoints <= 0) {
+        throw new Error("malformed_test_case: points must be > 0");
+      }
+      points = parsedPoints;
+      continue;
+    }
+    throw new Error(`malformed_test_case: unknown header line '${line}'`);
   }
-  throw new Error("Expected an exit code list or number.");
+
+  if (category === null) {
+    throw new Error("malformed_test_case: missing category");
+  }
+  if (points === null) {
+    throw new Error("malformed_test_case: missing points");
+  }
+
+  const sourceIsXml = sourceCode.trimStart().startsWith("<");
+  const expectedParser = parserCodes.length > 0 ? parserCodes : null;
+  const expectedInterpreter = interpreterCodes.length > 0 ? interpreterCodes : null;
+
+  if (sourceIsXml) {
+    if (expectedParser !== null) {
+      throw new Error("cannot_determine_type");
+    }
+    if (expectedInterpreter === null) {
+      throw new Error("malformed_test_case: missing interpreter exit codes for XML source");
+    }
+  } else if (expectedParser === null) {
+    throw new Error("malformed_test_case: missing parser exit codes for SOL source");
+  }
+
+  return {
+    description,
+    category,
+    points,
+    expected_parser_exit_codes: expectedParser,
+    expected_interpreter_exit_codes: expectedInterpreter,
+    source_code: sourceCode,
+    source_is_xml: sourceIsXml,
+  };
 }
 
-function mapTestType(value: JsonLike | undefined): TestCaseType | null {
-  if (value === undefined || value === null) {
-    return null;
-  }
-  if (typeof value === "number") {
-    if (value === TestCaseType.PARSE_ONLY) {
-      return TestCaseType.PARSE_ONLY;
-    }
-    if (value === TestCaseType.EXECUTE_ONLY) {
-      return TestCaseType.EXECUTE_ONLY;
-    }
-    if (value === TestCaseType.COMBINED) {
-      return TestCaseType.COMBINED;
-    }
-    throw new Error(`Unknown numeric test type: ${value}`);
-  }
-  if (typeof value !== "string") {
-    throw new Error("Invalid test_type value.");
-  }
-
-  const normalized = value.toLowerCase();
-  if (normalized === "parse_only" || normalized === "parse" || normalized === "parser") {
-    return TestCaseType.PARSE_ONLY;
-  }
-  if (
-    normalized === "execute_only" ||
-    normalized === "execute" ||
-    normalized === "interpreter" ||
-    normalized === "int"
-  ) {
-    return TestCaseType.EXECUTE_ONLY;
-  }
-  if (normalized === "combined" || normalized === "both") {
-    return TestCaseType.COMBINED;
-  }
-
-  throw new Error(`Unknown test_type: ${value}`);
+function parseTestFileRaw(filePath: string): ParsedSoltest {
+  const content = readFileSync(filePath, "utf8");
+  return parseSoltest(content);
 }
 
 function joinMessage(message: string, details: string): string {
@@ -414,94 +398,21 @@ function joinMessage(message: string, details: string): string {
   return `${message}: ${details}`;
 }
 
-function inferTypeFromFields(
-  parserCodes: number[] | null,
-  interpreterCodes: number[] | null,
-  sourceFile: string | null
-): TestCaseType | null {
-  const hasParser = parserCodes !== null;
-  const hasInterpreter = interpreterCodes !== null;
-  if (hasParser && !hasInterpreter) {
-    return TestCaseType.PARSE_ONLY;
-  }
-  if (!hasParser && hasInterpreter) {
-    if (sourceFile !== null) {
-      const extension = extname(sourceFile).toLowerCase();
-      if (extension === ".xml") {
-        return TestCaseType.EXECUTE_ONLY;
-      }
-      if (extension === ".sol26" || extension === ".sol") {
-        return TestCaseType.COMBINED;
-      }
-    }
-    return null;
-  }
-  if (hasParser && hasInterpreter) {
-    if (parserCodes.length === 1 && parserCodes[0] === 0) {
-      return TestCaseType.COMBINED;
-    }
-    return null;
-  }
-  return null;
-}
-
-function firstExistingPath(paths: string[]): string | null {
-  for (const filePath of paths) {
-    if (existsSync(filePath)) {
-      return filePath;
-    }
-  }
-  return null;
-}
-
-function resolveSourceFile(
-  raw: Record<string, JsonLike>,
-  testFilePath: string,
-  testType: TestCaseType | null
-): string | null {
-  const explicitSource =
-    asString(raw["source"]) ?? asString(raw["source_file"]) ?? asString(raw["program"]);
-  if (explicitSource !== null) {
-    return resolve(dirname(testFilePath), explicitSource);
-  }
-
-  const stem = testFilePath.slice(0, -extname(testFilePath).length);
-  const solCandidates = [`${stem}.sol26`, `${stem}.sol`];
-  const xmlCandidate = `${stem}.xml`;
-
-  if (testType === TestCaseType.EXECUTE_ONLY) {
-    return firstExistingPath([xmlCandidate]);
-  }
-  if (testType === TestCaseType.PARSE_ONLY || testType === TestCaseType.COMBINED) {
-    return firstExistingPath(solCandidates);
-  }
-
-  return firstExistingPath([xmlCandidate, ...solCandidates]);
-}
-
 function parseTestDefinition(filePath: string): TestCaseExecutionInfo {
   const raw = parseTestFileRaw(filePath);
 
-  const parserCodes = asNumberArray(raw["expected_parser_exit_codes"] ?? raw["parser_exit_codes"]);
-  const interpreterCodes = asNumberArray(
-    raw["expected_interpreter_exit_codes"] ?? raw["interpreter_exit_codes"]
-  );
-  let testType = mapTestType(raw["test_type"]);
-  const sourceBeforeInfer = resolveSourceFile(raw, filePath, testType);
-
-  if (testType === null) {
-    testType = inferTypeFromFields(parserCodes, interpreterCodes, sourceBeforeInfer);
-    if (testType === null) {
-      throw new Error("cannot_determine_type");
-    }
-  }
-
-  const sourceFile = sourceBeforeInfer ?? resolveSourceFile(raw, filePath, testType);
   const testName = basename(filePath, ".test");
   const stdinPath = `${filePath.slice(0, -5)}.in`;
   const stdoutPath = `${filePath.slice(0, -5)}.out`;
 
-  const points = typeof raw["points"] === "number" ? raw["points"] : null;
+  let testType: TestCaseType;
+  if (raw.source_is_xml) {
+    testType = TestCaseType.EXECUTE_ONLY;
+  } else if (raw.expected_interpreter_exit_codes === null) {
+    testType = TestCaseType.PARSE_ONLY;
+  } else {
+    testType = TestCaseType.COMBINED;
+  }
 
   const definition = new TestCaseDefinition({
     name: testName,
@@ -509,14 +420,14 @@ function parseTestDefinition(filePath: string): TestCaseExecutionInfo {
     stdin_file: existsSync(stdinPath) ? stdinPath : null,
     expected_stdout_file: existsSync(stdoutPath) ? stdoutPath : null,
     test_type: testType,
-    description: asString(raw["description"]),
-    category: asString(raw["category"]) ?? "default",
-    ...(points !== null ? { points } : {}),
-    expected_parser_exit_codes: parserCodes,
-    expected_interpreter_exit_codes: interpreterCodes,
+    description: raw.description,
+    category: raw.category,
+    points: raw.points,
+    expected_parser_exit_codes: raw.expected_parser_exit_codes,
+    expected_interpreter_exit_codes: raw.expected_interpreter_exit_codes,
   });
 
-  return { definition, source_file: sourceFile };
+  return { definition, source_code: raw.source_code, source_is_xml: raw.source_is_xml };
 }
 
 function isMatch(value: string, filters: string[] | null, useRegex: boolean): boolean {
@@ -580,29 +491,32 @@ function expectedCodesContains(actualCode: number | null, expectedCodes: number[
   return expectedCodes.includes(actualCode);
 }
 
-function makeSimpleDiff(expected: string, actual: string): string {
-  if (expected === actual) {
-    return "";
-  }
-  const expectedLines = expected.split(/\r?\n/u);
-  const actualLines = actual.split(/\r?\n/u);
-  const maxLen = Math.max(expectedLines.length, actualLines.length);
+function runDiff(expectedStdoutPath: string, actualStdout: string): {
+  same: boolean;
+  output: string | null;
+} {
+  const tempDirectory = mkdtempSync(join(tmpdir(), "sol26-diff-"));
+  const actualPath = join(tempDirectory, "actual.out");
+  writeFileSync(actualPath, actualStdout, "utf8");
 
-  const output: string[] = [];
-  for (let index = 0; index < maxLen; index += 1) {
-    const expectedLine = expectedLines[index];
-    const actualLine = actualLines[index];
-    if (expectedLine === actualLine) {
-      continue;
+  try {
+    const diffResult = runProcess("diff", [expectedStdoutPath, actualPath], null);
+    if (diffResult.cannotExecute) {
+      return { same: false, output: joinMessage("Cannot execute diff", diffResult.stderr) };
     }
-    output.push(`- ${expectedLine ?? ""}`);
-    output.push(`+ ${actualLine ?? ""}`);
-    if (output.length >= 20) {
-      output.push("... (diff truncated)");
-      break;
+    if (diffResult.exitCode === 0) {
+      return { same: true, output: null };
     }
+    if (diffResult.exitCode === 1) {
+      return { same: false, output: diffResult.stdout };
+    }
+    return {
+      same: false,
+      output: joinMessage("diff failed", `${diffResult.stdout}\n${diffResult.stderr}`.trim()),
+    };
+  } finally {
+    rmSync(tempDirectory, { recursive: true, force: true });
   }
-  return output.join("\n");
 }
 
 function withTemporaryXmlFile(xmlContent: string, callback: (path: string) => TestCaseReport): TestCaseReport {
@@ -656,9 +570,9 @@ function executeInterpreter(
     );
   }
 
-  if (expectedStdoutPath !== null) {
-    const expectedStdout = readFileSync(expectedStdoutPath, "utf8");
-    if (expectedStdout !== interpreter.stdout) {
+  if (expectedStdoutPath !== null && interpreter.exitCode === 0) {
+    const diff = runDiff(expectedStdoutPath, interpreter.stdout);
+    if (!diff.same) {
       return new TestCaseReport(
         TestResult.INTERPRETER_RESULT_DIFFERS,
         null,
@@ -667,7 +581,7 @@ function executeInterpreter(
         null,
         interpreter.stdout,
         interpreter.stderr,
-        makeSimpleDiff(expectedStdout, interpreter.stdout)
+        diff.output
       );
     }
   }
@@ -688,79 +602,80 @@ function executeTestCase(
   testCase: TestCaseExecutionInfo,
   toolPaths: ReturnType<typeof resolveToolPaths>
 ): TestCaseReport | UnexecutedReason {
-  const { definition, source_file: sourceFile } = testCase;
-  if (sourceFile === null || !existsSync(sourceFile)) {
-    return new UnexecutedReason(
-      UnexecutedReasonCode.CANNOT_EXECUTE,
-      "Missing source file for the test case."
+  const { definition } = testCase;
+  const tempDirectory = mkdtempSync(join(tmpdir(), "sol26-source-"));
+  const sourcePath = join(tempDirectory, testCase.source_is_xml ? "source.xml" : "source.sol26");
+  writeFileSync(sourcePath, testCase.source_code, "utf8");
+
+  try {
+    if (definition.test_type === TestCaseType.PARSE_ONLY || definition.test_type === TestCaseType.COMBINED) {
+      const parser = runProcess(toolPaths.pythonExecutable, [toolPaths.parserScript, sourcePath], null);
+      if (parser.cannotExecute) {
+        return new UnexecutedReason(
+          UnexecutedReasonCode.CANNOT_EXECUTE,
+          joinMessage("Cannot execute parser", parser.stderr)
+        );
+      }
+
+      if (!expectedCodesContains(parser.exitCode, definition.expected_parser_exit_codes)) {
+        return new TestCaseReport(
+          TestResult.UNEXPECTED_PARSER_EXIT_CODE,
+          parser.exitCode,
+          null,
+          parser.stdout,
+          parser.stderr,
+          null,
+          null,
+          null
+        );
+      }
+
+      if (definition.test_type === TestCaseType.PARSE_ONLY) {
+        return new TestCaseReport(
+          TestResult.PASSED,
+          parser.exitCode,
+          null,
+          parser.stdout,
+          parser.stderr,
+          null,
+          null,
+          null
+        );
+      }
+
+      return withTemporaryXmlFile(parser.stdout, (xmlPath) => {
+        const interpreterResult = executeInterpreter(
+          toolPaths.pythonExecutable,
+          toolPaths.interpreterScript,
+          xmlPath,
+          definition.stdin_file,
+          definition.expected_interpreter_exit_codes,
+          definition.expected_stdout_file
+        );
+        return new TestCaseReport(
+          interpreterResult.result,
+          parser.exitCode,
+          interpreterResult.interpreter_exit_code,
+          parser.stdout,
+          parser.stderr,
+          interpreterResult.interpreter_stdout,
+          interpreterResult.interpreter_stderr,
+          interpreterResult.diff_output
+        );
+      });
+    }
+
+    return executeInterpreter(
+      toolPaths.pythonExecutable,
+      toolPaths.interpreterScript,
+      sourcePath,
+      definition.stdin_file,
+      definition.expected_interpreter_exit_codes,
+      definition.expected_stdout_file
     );
+  } finally {
+    rmSync(tempDirectory, { recursive: true, force: true });
   }
-
-  if (definition.test_type === TestCaseType.PARSE_ONLY || definition.test_type === TestCaseType.COMBINED) {
-    const parser = runProcess(toolPaths.pythonExecutable, [toolPaths.parserScript, sourceFile], null);
-    if (parser.cannotExecute) {
-      return new UnexecutedReason(
-        UnexecutedReasonCode.CANNOT_EXECUTE,
-        joinMessage("Cannot execute parser", parser.stderr)
-      );
-    }
-
-    if (!expectedCodesContains(parser.exitCode, definition.expected_parser_exit_codes)) {
-      return new TestCaseReport(
-        TestResult.UNEXPECTED_PARSER_EXIT_CODE,
-        parser.exitCode,
-        null,
-        parser.stdout,
-        parser.stderr,
-        null,
-        null,
-        null
-      );
-    }
-
-    if (definition.test_type === TestCaseType.PARSE_ONLY) {
-      return new TestCaseReport(
-        TestResult.PASSED,
-        parser.exitCode,
-        null,
-        parser.stdout,
-        parser.stderr,
-        null,
-        null,
-        null
-      );
-    }
-
-    return withTemporaryXmlFile(parser.stdout, (xmlPath) => {
-      const interpreterResult = executeInterpreter(
-        toolPaths.pythonExecutable,
-        toolPaths.interpreterScript,
-        xmlPath,
-        definition.stdin_file,
-        definition.expected_interpreter_exit_codes,
-        definition.expected_stdout_file
-      );
-      return new TestCaseReport(
-        interpreterResult.result,
-        parser.exitCode,
-        interpreterResult.interpreter_exit_code,
-        parser.stdout,
-        parser.stderr,
-        interpreterResult.interpreter_stdout,
-        interpreterResult.interpreter_stderr,
-        interpreterResult.diff_output
-      );
-    });
-  }
-
-  return executeInterpreter(
-    toolPaths.pythonExecutable,
-    toolPaths.interpreterScript,
-    sourceFile,
-    definition.stdin_file,
-    definition.expected_interpreter_exit_codes,
-    definition.expected_stdout_file
-  );
 }
 
 function main(): void {

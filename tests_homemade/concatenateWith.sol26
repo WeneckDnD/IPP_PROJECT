@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "foobar"
+    r := 'foo' concatenateWith: 'bar'.
+    _ := (r asString) print.
+  ]
+}

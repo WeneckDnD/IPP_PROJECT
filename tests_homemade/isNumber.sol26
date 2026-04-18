@@ -1,0 +1,25 @@
+class Box : Integer {
+}
+class Main : Integer {
+  run [|
+    "true"
+    r := 0 isNumber.
+    _ := (r asString) print.
+    "false"
+    r := 'nope' isNumber.
+    _ := (r asString) print.
+    "false"
+    r := nil isNumber.
+    _ := (r asString) print.
+    "false"
+    r := true isNumber.
+    _ := (r asString) print.
+    "false"
+    r := false isNumber.
+    _ := (r asString) print.
+    "true"
+    o := Box new.
+    r := o isNumber.
+    _ := (r asString) print.
+  ]
+}

@@ -1,0 +1,91 @@
+Testovací nástroj bude program, který na základě parametrů příkazové řádky:
+
+1. načte z požadovaného adresáře definice testů (ve formátu popsaném níže),
+2. vybere jejich podmnožinu podle požadovaných filtrů,
+3. pro testy, které to vyžadují, spustí dodaný překladač SOL2XML,
+4. provede kód pomocí vašeho interpretu,
+5. srovná očekávané návratové kódy a případně výstupy,
+6. a uloží strukturovaný report o výsledcích testování ve formátu JSON.
+
+Struktura testu:
+
+Test je definován následujícími položkami:
+	• název (implicitní – název souboru bez přípony),
+	• krátký popis (nepovinné),
+	• kategorie (povinná),
+	• bodová váha testu (povinné),
+	• zdrojový kód v jazyce SOL26 nebo XML (povinné),
+	• obsah standardního vstupu pro interpretaci (nepovinné),
+	• očekávaný obsah standardního výstupu interpretu (nepovinné),
+	• očekávané návratové kódy překladače SOL2XML (povinné, pokud je zdrojový kód v jazyce SOL26),
+	• očekávané návratové kódy interpretu (povinné, pokud je zdrojový kód v jazyce XML),
+	• typ testu – pouze překlad pomocí SOL2XML/pouze interpretaci/překlad následovaný interpretací
+	(implicitní, musíte vhodně rozpoznat podle obsahu testu a/nebo ne/přítomnosti očekávaných 
+	návratových kódů a/nebo souborů s očekávaným vstupem/výstupem).
+	
+Test je zadán textovým souborem s příponou .test, který má následující formát (označme jej názvem SOLtest):
+*** [kratky popis]
++++ [kategorie]
+!C! [navratovy kod prekladace]
+!I! [navratovy kod interpetu]
+>>> [bodova vaha]
+[prazdny radek]
+[zdrojovy kod]
+
+Všechny položky nad zdrojovým kódem se mohou vyskytovat v libovolném pořadí a ty, které podporují
+více hodnot, se mohou opakovat vícekrát. 
+Příklad (kategorie BASIC, povolené návratové kódy intepretu 0 a 42, bodová váha 2):
++++ BASIC
+*** Test jednoducheho programu
+!C! 0
+!I! 0
+!I! 42
+>>> 2
+class Main : Object {
+run [ | ]
+}
+
+Pokud má být interpretovanému programu předán nějaký vstup, je nutné, aby vedle souboru s po-
+pisem testu existoval také stejně pojmenovaný soubor s příponou .in, jehož obsah bude použit.
+Pokud soubor neexistuje, není interpretovanému programu předán žádný vstup.
+
+Výstupní report obsahuje:
+	• seznam všech načtených testů, kde je každý reprezentován objektem obsahujícím načtená me-
+	tadata testu (pokud se povedlo jej načíst),
+	• slovník všech nespuštěných testů s informací, proč nebyl spuštěn,
+	• slovník kategorií, kde každá položka obsahuje celkový počet bodů za kategorii, získaný počet
+	bodů a slovník všech výsledků spuštěných testů, kde je každý reprezentován objektem obsahujícím:
+– výsledek testu,
+– návratové kódy překladače/interpretu
+– zachycený standardní výstup i standardní chybový výstup překladače/interpretu a případně
+standardní výstup nástroje diff.
+
+Kontrola standardního výstupu interpretovaného programu:
+V případě, kdy vedle souboru s popisem testu existuje také soubor s příponou .out, provádí tes-
+tovací nástroj v případě úspěšného dokončení intepretovaného programu (návratový kód 0) také
+kontrolu shody standardního výstupu programu. Ten je proveden pomocí nástroje GNU diff7 bez
+dalších parametrů. Nástroj diff po spuštění vypisuje rozdíly v souborech a jeho návratový kód ur-
+čuje, zda se soubory lišily, nebo ne. Pokud se lišily, testovací případ se považuje za nesplněný
+a rozdíl (tedy výstup nástroje diff) je uložen do reportu (viz dále).
+Pokud soubor s příponou .out neexistuje, standardní výstup se nekontroluje (ale stále se ukládá
+do reportu, viz dále).
+Poznámka: U testů, které testují pouze překlad ze SOL do XML, není možné ověřovat shodu
+výstupu, provádí se zde pouze kontrola návratového kódu.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

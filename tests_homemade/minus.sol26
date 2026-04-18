@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "42"
+    r := 50 minus: 8.
+    _ := (r asString) print.
+  ]
+}

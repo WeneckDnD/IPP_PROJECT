@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "0"
+    r := false and: true.
+    _ := (r asString) print.
+  ]
+}

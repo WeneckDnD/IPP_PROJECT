@@ -1,0 +1,6 @@
+class Main : Integer {
+  run [|
+    "skipped"
+    _ := ('skipped' asString) print.
+  ]
+}
