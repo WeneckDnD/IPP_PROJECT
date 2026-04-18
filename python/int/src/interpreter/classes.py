@@ -8,6 +8,11 @@ from typing import Any, cast, override
 from interpreter.error_codes import ErrorCode
 from interpreter.exceptions import InterpreterError
 
+# class BaseObject:
+#     """base class for all objects"""
+#     def __init__(self, *args: Any) -> None:
+#         """Initialize object with arguments."""
+#         self.args = args
 
 class Object:
     """main class object"""
@@ -29,7 +34,7 @@ class Object:
         """Create new instance of class."""
         return cls(*args)
 
-    def equalTo(self, obj: Any) -> bool:
+    def equal_to(self, obj: Any) -> bool:
         """Check if objects are equal."""
         ret_val = self.identicalTo(obj)
         return ret_val
@@ -158,10 +163,17 @@ class String(Object):
         self.string = string
 
     @classmethod
-    def new(cls, *args: Any) -> Any:
+    def new(cls, string: str) -> Any:
         """Create new instance of String"""
-        return cls(*args)
-
+        print('new String')
+        return cls(string)
+    @classmethod
+    def new(cls, string: Integer) -> Any:
+        return cls(str(string.value))
+    @classmethod
+    def new(cls, string: String) -> Any:
+        print('new String from String')
+        return cls(string.string)
     @classmethod
     def read(cls) -> String:
         """Read string from input."""
