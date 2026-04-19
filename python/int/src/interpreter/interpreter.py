@@ -9,7 +9,6 @@ Author: Tadeas Bujdoso <xbjdot00>
 
 import logging
 from pathlib import Path
-import re
 from typing import Any, TextIO, cast
 
 from lxml import etree
@@ -26,34 +25,80 @@ from interpreter.input_model import (
     Method,
     Program,
     Send,
-    Var,
 )
 
-from .classes import False_, Integer, Nil, String, True_, Object
+from .classes import BlockClass, FalseR, Integer, Nil, Object, String, TrueR
+
 # from .objects import NewObject
 from .scope import Scope
 
 logger = logging.getLogger(__name__)
 
-type base_class_type = Object | Integer | String | Nil | True_ | False_
+type base_class_type = Object | Integer | String | Nil | TrueR | FalseR
 
-CLASS_REGISTRY: dict[str, base_class_type | Any] = {
+CLASS_REGISTRY: dict[str, type[Any]] = {
   "Object": Object,
   "Integer": Integer,
   "String": String,
   "Nil": Nil,
-  "True": True_,
-  "False": False_,
+  "True": TrueR,
+  "False": FalseR,
 }
 
 
-def update_built_in_classes():
+def update_built_in_classes() -> None:
     # equalTo:
     setattr(CLASS_REGISTRY["Object"], "equalTo:", Object.equal_to)
+    setattr(CLASS_REGISTRY["Object"], "asString:", Object.as_string)
+    setattr(CLASS_REGISTRY["Object"], "identicalTo:", Object.identical_to)
+    setattr(CLASS_REGISTRY["Object"], "new:", Object.new)
+    setattr(CLASS_REGISTRY["Object"], "isNumber:", Object.is_number)
+    setattr(CLASS_REGISTRY["Object"], "isString:", Object.is_string)
+    setattr(CLASS_REGISTRY["Object"], "isBlock:", Object.is_block)
+    setattr(CLASS_REGISTRY["Object"], "isNil:", Object.is_nil)
+    setattr(CLASS_REGISTRY["Object"], "isBoolean:", Object.is_boolean)
 
+    setattr(CLASS_REGISTRY["Integer"], "equalTo:", Integer.equal_to)
+    setattr(CLASS_REGISTRY["Integer"], "asString:", Integer.as_string)
+    setattr(CLASS_REGISTRY["Integer"], "new:", Integer.new)
+    setattr(CLASS_REGISTRY["Integer"], "isNumber:", Integer.is_number)
+    setattr(CLASS_REGISTRY["Integer"], "greaterThan:", Integer.greater_than)
+    setattr(CLASS_REGISTRY["Integer"], "plus:", Integer.plus)
+    setattr(CLASS_REGISTRY["Integer"], "minus:", Integer.minus)
+    setattr(CLASS_REGISTRY["Integer"], "multiplyBy:", Integer.multiply_by)
+    setattr(CLASS_REGISTRY["Integer"], "divBy:", Integer.div_by)
+    setattr(CLASS_REGISTRY["Integer"], "asInteger:", Integer.as_integer)
+    setattr(CLASS_REGISTRY["Integer"], "timesRepeat:", Integer.times_repeat)
 
+    setattr(CLASS_REGISTRY["String"], "equalTo:", String.equal_to)
+    setattr(CLASS_REGISTRY["String"], "asString:", String.as_string)
+    setattr(CLASS_REGISTRY["String"], "concatenateWith:", String.concatenate_with)
+    setattr(CLASS_REGISTRY["String"], "new:", String.new)
+    setattr(CLASS_REGISTRY["String"], "startsWithEndsWith:", String.starts_with_ends_before)
+    setattr(CLASS_REGISTRY["String"], "length:", String.length)
+    setattr(CLASS_REGISTRY["String"], "read:", String.read)
+    setattr(CLASS_REGISTRY["String"], "print:", String.print)
+    setattr(CLASS_REGISTRY["String"], "asInteger:", String.as_integer)
 
+    setattr(CLASS_REGISTRY["Nil"], "new:", Nil.new)
+    setattr(CLASS_REGISTRY["Nil"], "from_:", Nil.from_)
 
+    setattr(CLASS_REGISTRY["True"], "new:", TrueR.new)
+    setattr(CLASS_REGISTRY["True"], "not_:", TrueR.not_)
+    setattr(CLASS_REGISTRY["True"], "ifTrueIfFalse:", TrueR.if_true_if_false)
+    setattr(CLASS_REGISTRY["True"], "isBoolean:", TrueR.is_boolean)
+    setattr(CLASS_REGISTRY["True"], "asString:", TrueR.as_string)
+
+    setattr(CLASS_REGISTRY["False"], "new:", FalseR.new)
+    setattr(CLASS_REGISTRY["False"], "not:", FalseR.not_)
+    setattr(CLASS_REGISTRY["False"], "ifTrueIfFalse:", FalseR.if_true_if_false)
+    setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
+    setattr(CLASS_REGISTRY["False"], "asString:", FalseR.as_string)
+    setattr(CLASS_REGISTRY["False"], "and:", FalseR.and_)
+
+    setattr(CLASS_REGISTRY["Block"], "new:", BlockClass.new)
+    setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
+    setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
 
 
 class Interpreter:
@@ -85,27 +130,30 @@ class Interpreter:
             raise InterpreterError(
                 error_code=ErrorCode.INT_STRUCTURE, message="Invalid SOL-XML structure"
             ) from e
-    
-    def define_new_class(self, name, base_class_name, methods):
+
+    def define_new_class(self, name: str, base_class_name: str, methods: list[Method]) -> Any:
+        """Define new class."""
         # Získame rodičovskú triedu z registra (napr. Object)
-        parent_cls = CLASS_REGISTRY.get(base_class_name, None)
+        parent_cls = CLASS_REGISTRY.get(base_class_name)
         if parent_cls is None:
             parent_class_def = self.find_class(base_class_name)
             if parent_class_def is None:
-                self.define_new_class(base_class_name, "Object", {})
+                self.define_new_class(base_class_name, "Object", []) # zmenene z {} na [ ]
             else:
-                self.define_new_class(base_class_name, parent_class_def.parent, parent_class_def.methods)
-            parent_cls = CLASS_REGISTRY.get(base_class_name, None)
+                self.define_new_class(base_class_name, parent_class_def.parent,
+                parent_class_def.methods
+                )
+            parent_cls = CLASS_REGISTRY.get(base_class_name)
             if parent_cls is None:
                 raise InterpreterError(
                     error_code=ErrorCode.SEM_UNDEF,
                     message=f"Undefined class '{base_class_name}'",
                 )
-        
+
         all_methods = {}
         for method in methods:
             all_methods[method.selector] = method
-        
+
         # Dynamicky vytvoríme novú triedu
         # type(meno, (rodičia,), {atribúty/metódy})
         new_cls = type(name, (parent_cls,), all_methods)
@@ -164,20 +212,22 @@ class Interpreter:
     #         new_class_scope.set_variable("self", receiver)
     #         new_class_scope.set_variable("super", super_receiver)
     #     return self.execute_method(method, new_class_scope, args)
-    
-    def send_message2(self, receiver: type[CLASS_REGISTRY[str]], selector: str, args: list[Any], scope: Scope) -> Any:
-        print('selector',receiver.__class__.__name__, selector )
+
+        # from type[CLASS_REG] -> type
+    def send_message2(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
+        """Send message to receiver."""
+        print("selector",receiver.__class__.__name__, selector )
         method = getattr(receiver, selector, None) ## test the inherited methods
         # parent_name = receiver.__class__.__bases__[0].__name__
 
-        if method is None and selector[-1] == ':':
+        if method is None and selector[-1] == ":":
             check_method = getattr(receiver, selector[:-1], None)
             if check_method is not None:
                 raise InterpreterError(
                     error_code=ErrorCode.INT_INST_ATTR,
-                    message=f"Method '{selector[:-1]}' already exists as attribute in class {receiver.__class__.__name__}",
+                    message=f"Method already exists in class {receiver.__class__.__name__}",
                 )
-            setattr(receiver, selector[:-1], args[0]) ## TODO !!!!! check more args 
+            setattr(receiver, selector[:-1], args[0]) ## TODO !!!!! check more args
             return args[0]
 
         if method is None:
@@ -186,16 +236,16 @@ class Interpreter:
                 error_code=ErrorCode.INT_DNU,
                 message=f"Method '{selector}' not found in class {receiver.__class__.__name__}",
             )
-        
+
         if callable(method):
             return method(*args)
-        
+
         if isinstance(method, Method):
             new_class_scope = Scope(scope)
             new_class_scope.set_variable("self", receiver)
             return self.execute_method(method, new_class_scope, args)
         return method
-        
+
 
 
     def execute(self, input_io: TextIO) -> None:
@@ -211,7 +261,7 @@ class Interpreter:
             self.define_new_class(class_def.name, class_def.parent, class_def.methods)
 
         scope = Scope(parent=None)
-  
+
         main_class_def = self.find_class("Main")
         if main_class_def is None:
             raise InterpreterError(
@@ -221,10 +271,10 @@ class Interpreter:
             raise InterpreterError(
                 error_code=ErrorCode.SEM_MAIN, message="No run method found in the Main class"
             )
-        
+
         main_class = CLASS_REGISTRY["Main"]()
         ret = self.send_message2(main_class, "run", [], scope)
-        print('end of program, ret',ret)
+        print("end of program, ret",ret)
 
     def execute_method(self, method: Method | Any, parent_scope: Scope, args: list[Any]) -> Any:
         """Run a user-defined method body with the given arguments."""
@@ -283,7 +333,7 @@ class Interpreter:
         """Build a class instance for a literal value."""
         if literal.class_id == "class":
             return CLASS_REGISTRY[literal.value]()
-        
+
         return CLASS_REGISTRY[literal.class_id](literal.value)
 
 
