@@ -220,7 +220,7 @@ class Interpreter:
     # from type[CLASS_REG] -> type
     def send_message2(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
         """Send message to receiver."""
-        # print("selector",receiver.__class__.__name__, selector ) COMMENTED
+        print("selector",receiver.__class__.__name__, selector )
         method = getattr(receiver, selector, None)  ## test the inherited methods
         # parent_name = receiver.__class__.__bases__[0].__name__
 

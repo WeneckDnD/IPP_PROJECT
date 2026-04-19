@@ -96,7 +96,7 @@ class Integer(Object):
 
     def equal_to(self, obj: Integer) -> Any:
         """Check if integers are equal."""
-        if not isinstance(cast(Any, obj).parent, Integer):
+        if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "equalTo: expected Integer operand")
         return self.value == obj.value
 
@@ -111,35 +111,35 @@ class Integer(Object):
 
     def greater_than(self, obj: Integer) -> Any:
         """Check if greater than another integer."""
-        if not isinstance(cast(Any, obj).parent, Integer):
+        if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "greaterThan: expected Integer operand")
         return self.value > obj.value
 
     def plus(self, obj: Integer) -> int:
         """Add two integers."""
-        if not isinstance(cast(Any, obj).parent, Integer):
+        if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "plus: expected Integer operand")
-        return int(self.value + obj.value)
+        return int(int(self.value) + int(obj.value))
 
     def minus(self, obj: Integer) -> int:
         """Subtract two integers."""
-        if not isinstance(cast(Any, obj).parent, Integer):
+        if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "minus: expected Integer operand")
-        return int(self.value - obj.value)
+        return int(int(self.value) - int(obj.value))
 
     def multiply_by(self, obj: Integer) -> int:
         """Multiply two integers."""
-        if not isinstance(cast(Any, obj).parent, Integer):
+        if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "multiplyBy: expected Integer operand")
-        return int(self.value * obj.value)
+        return int(int(self.value) * int(obj.value))
 
     def div_by(self, obj: Integer) -> int:
         """Divide two integers."""
-        if not isinstance(cast(Any, obj).parent, Integer):
+        if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "divBy: expected Integer operand")
         if obj.value == 0:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "Division by zero is not allowed.")
-        return int(self.value // obj.value)
+        return int(int(self.value) // int(obj.value))
 
     def as_integer(self) -> Any:
         """Convert to integer."""
@@ -206,19 +206,19 @@ class String(Object):
 
     def concatenate_with(self, obj: String) -> Any:
         """Concatenate with another string."""
-        return String(self.string + cast(Any, obj).value)  # ?? String()
+        return String(self.string + cast(Any, obj).string)  # ?? String()
 
-    def starts_with_ends_before(self, index_start: int, index_end: int) -> Any:
+    def starts_with_ends_before(self, index_start: Integer, index_end: Integer) -> Any:
         """Get substring between indices."""
-        if index_start <= 0 or index_end <= 0:
+        if int(index_start.value) <= 0 or int(index_end.value) <= 0:
             return Nil()
-        if index_start < 1:
+        if int(index_start.value) < 1:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "indexing from 1")
-        if (index_start - index_end) >= 0:
+        if (int(index_start.value) - int(index_end.value)) >= 0:
             return ""
-        if index_end > len(self.string):
-            return self.string[index_start - 1 :]
-        return self.string[index_start - 1 : index_end - 1]
+        if int(index_end.value) > len(self.string):
+            return self.string[int(index_start.value) - 1 :]
+        return self.string[int(index_start.value) - 1 : int(index_end.value) - 1]
 
     def length(self, obj: String) -> Integer:
         """Get string length."""
@@ -290,7 +290,9 @@ class TrueR(Object):
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        return bool(self.boolean is True and obj.boolean is True)
+        if self.boolean is True and obj.boolean is True:
+            return TrueR(True)
+        return FalseR(False)
 
     def or_(self, obj: Any) -> Any:
         """Logical OR operation."""
@@ -320,7 +322,10 @@ class FalseR(Object):
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        return bool(self.boolean is True and obj.boolean is True)
+        if self.boolean is True and obj.boolean is True:
+            return TrueR(True)
+        return FalseR(False)
+
 
     def if_true_if_false(
         self, condition: bool, true_block: BlockClass, false_block: BlockClass
