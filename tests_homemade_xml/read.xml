@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<program language="SOL26" description="read_skipped">
+<program language="SOL26" description="ur keyboard input">
   <class name="Main" parent="String">
     <method selector="run">
       <block arity="0">

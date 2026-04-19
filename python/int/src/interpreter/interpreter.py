@@ -37,68 +37,72 @@ logger = logging.getLogger(__name__)
 type base_class_type = Object | Integer | String | Nil | TrueR | FalseR
 
 CLASS_REGISTRY: dict[str, type[Any]] = {
-  "Object": Object,
-  "Integer": Integer,
-  "String": String,
-  "Nil": Nil,
-  "True": TrueR,
-  "False": FalseR,
+    "Object": Object,
+    "Integer": Integer,
+    "String": String,
+    "Nil": Nil,
+    "True": TrueR,
+    "False": FalseR,
+    "Block": BlockClass,
 }
 
 
 def update_built_in_classes() -> None:
     # equalTo:
     setattr(CLASS_REGISTRY["Object"], "equalTo:", Object.equal_to)
-    setattr(CLASS_REGISTRY["Object"], "asString:", Object.as_string)
+    CLASS_REGISTRY["Object"].asString = Object.as_string
     setattr(CLASS_REGISTRY["Object"], "identicalTo:", Object.identical_to)
     setattr(CLASS_REGISTRY["Object"], "new:", Object.new)
-    setattr(CLASS_REGISTRY["Object"], "isNumber:", Object.is_number)
-    setattr(CLASS_REGISTRY["Object"], "isString:", Object.is_string)
-    setattr(CLASS_REGISTRY["Object"], "isBlock:", Object.is_block)
-    setattr(CLASS_REGISTRY["Object"], "isNil:", Object.is_nil)
-    setattr(CLASS_REGISTRY["Object"], "isBoolean:", Object.is_boolean)
+    CLASS_REGISTRY["Object"].isNumber = Object.is_number
+    CLASS_REGISTRY["Object"].isString = Object.is_string
+    CLASS_REGISTRY["Object"].isBlock = Object.is_block
+    CLASS_REGISTRY["Object"].isNil = Object.is_nil
+    CLASS_REGISTRY["Object"].isBoolean = Object.is_boolean
 
     setattr(CLASS_REGISTRY["Integer"], "equalTo:", Integer.equal_to)
-    setattr(CLASS_REGISTRY["Integer"], "asString:", Integer.as_string)
+    CLASS_REGISTRY["Integer"].asString = Integer.as_string
     setattr(CLASS_REGISTRY["Integer"], "new:", Integer.new)
-    setattr(CLASS_REGISTRY["Integer"], "isNumber:", Integer.is_number)
+    CLASS_REGISTRY["Integer"].isNumber = Integer.is_number
     setattr(CLASS_REGISTRY["Integer"], "greaterThan:", Integer.greater_than)
     setattr(CLASS_REGISTRY["Integer"], "plus:", Integer.plus)
     setattr(CLASS_REGISTRY["Integer"], "minus:", Integer.minus)
     setattr(CLASS_REGISTRY["Integer"], "multiplyBy:", Integer.multiply_by)
     setattr(CLASS_REGISTRY["Integer"], "divBy:", Integer.div_by)
-    setattr(CLASS_REGISTRY["Integer"], "asInteger:", Integer.as_integer)
+    CLASS_REGISTRY["Integer"].asInteger = Integer.as_integer
     setattr(CLASS_REGISTRY["Integer"], "timesRepeat:", Integer.times_repeat)
 
+    CLASS_REGISTRY["String"].read = String.read
+    CLASS_REGISTRY["String"].print = String.print
     setattr(CLASS_REGISTRY["String"], "equalTo:", String.equal_to)
-    setattr(CLASS_REGISTRY["String"], "asString:", String.as_string)
+    CLASS_REGISTRY["String"].asString = String.as_string
+    CLASS_REGISTRY["String"].asInteger = String.as_integer
     setattr(CLASS_REGISTRY["String"], "concatenateWith:", String.concatenate_with)
-    setattr(CLASS_REGISTRY["String"], "new:", String.new)
-    setattr(CLASS_REGISTRY["String"], "startsWithEndsWith:", String.starts_with_ends_before)
-    setattr(CLASS_REGISTRY["String"], "length:", String.length)
-    setattr(CLASS_REGISTRY["String"], "read:", String.read)
-    setattr(CLASS_REGISTRY["String"], "print:", String.print)
-    setattr(CLASS_REGISTRY["String"], "asInteger:", String.as_integer)
+    setattr(CLASS_REGISTRY["String"], "startsWith:endsBefore:", String.starts_with_ends_before)
+    CLASS_REGISTRY["String"].length = String.length
+    CLASS_REGISTRY["String"].new = String.new
 
     setattr(CLASS_REGISTRY["Nil"], "new:", Nil.new)
     setattr(CLASS_REGISTRY["Nil"], "from_:", Nil.from_)
 
-    setattr(CLASS_REGISTRY["True"], "new:", TrueR.new)
-    setattr(CLASS_REGISTRY["True"], "not_:", TrueR.not_)
-    setattr(CLASS_REGISTRY["True"], "ifTrueIfFalse:", TrueR.if_true_if_false)
+    setattr(CLASS_REGISTRY["True"], "not", TrueR.not_)
+    setattr(CLASS_REGISTRY["True"], "and:", TrueR.and_)
+    setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
     setattr(CLASS_REGISTRY["True"], "isBoolean:", TrueR.is_boolean)
     setattr(CLASS_REGISTRY["True"], "asString:", TrueR.as_string)
+    setattr(CLASS_REGISTRY["True"], "or:", TrueR.or_)
+    CLASS_REGISTRY["True"].new = TrueR.new
 
-    setattr(CLASS_REGISTRY["False"], "new:", FalseR.new)
     setattr(CLASS_REGISTRY["False"], "not:", FalseR.not_)
     setattr(CLASS_REGISTRY["False"], "ifTrueIfFalse:", FalseR.if_true_if_false)
     setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
     setattr(CLASS_REGISTRY["False"], "asString:", FalseR.as_string)
     setattr(CLASS_REGISTRY["False"], "and:", FalseR.and_)
+    setattr(CLASS_REGISTRY["False"], "or:", FalseR.or_)
+    CLASS_REGISTRY["False"].new = FalseR.new
 
-    setattr(CLASS_REGISTRY["Block"], "new:", BlockClass.new)
     setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
+    CLASS_REGISTRY["Block"].new = BlockClass.new
 
 
 class Interpreter:
@@ -138,10 +142,10 @@ class Interpreter:
         if parent_cls is None:
             parent_class_def = self.find_class(base_class_name)
             if parent_class_def is None:
-                self.define_new_class(base_class_name, "Object", []) # zmenene z {} na [ ]
+                self.define_new_class(base_class_name, "Object", [])  # zmenene z {} na [ ]
             else:
-                self.define_new_class(base_class_name, parent_class_def.parent,
-                parent_class_def.methods
+                self.define_new_class(
+                    base_class_name, parent_class_def.parent, parent_class_def.methods
                 )
             parent_cls = CLASS_REGISTRY.get(base_class_name)
             if parent_cls is None:
@@ -213,11 +217,11 @@ class Interpreter:
     #         new_class_scope.set_variable("super", super_receiver)
     #     return self.execute_method(method, new_class_scope, args)
 
-        # from type[CLASS_REG] -> type
+    # from type[CLASS_REG] -> type
     def send_message2(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
         """Send message to receiver."""
-        print("selector",receiver.__class__.__name__, selector )
-        method = getattr(receiver, selector, None) ## test the inherited methods
+        # print("selector",receiver.__class__.__name__, selector ) COMMENTED
+        method = getattr(receiver, selector, None)  ## test the inherited methods
         # parent_name = receiver.__class__.__bases__[0].__name__
 
         if method is None and selector[-1] == ":":
@@ -227,11 +231,11 @@ class Interpreter:
                     error_code=ErrorCode.INT_INST_ATTR,
                     message=f"Method already exists in class {receiver.__class__.__name__}",
                 )
-            setattr(receiver, selector[:-1], args[0]) ## TODO !!!!! check more args
+            setattr(receiver, selector[:-1], args[0])  ## TODO !!!!! check more args
             return args[0]
 
         if method is None:
-            print(dir(receiver))
+            # print(dir(receiver)) COMMENTED
             raise InterpreterError(
                 error_code=ErrorCode.INT_DNU,
                 message=f"Method '{selector}' not found in class {receiver.__class__.__name__}",
@@ -245,8 +249,6 @@ class Interpreter:
             new_class_scope.set_variable("self", receiver)
             return self.execute_method(method, new_class_scope, args)
         return method
-
-
 
     def execute(self, input_io: TextIO) -> None:
         """
@@ -273,8 +275,8 @@ class Interpreter:
             )
 
         main_class = CLASS_REGISTRY["Main"]()
-        ret = self.send_message2(main_class, "run", [], scope)
-        print("end of program, ret",ret)
+        self.send_message2(main_class, "run", [], scope)
+        # print("end of program, ret",ret) COMMENTED
 
     def execute_method(self, method: Method | Any, parent_scope: Scope, args: list[Any]) -> Any:
         """Run a user-defined method body with the given arguments."""
@@ -327,7 +329,6 @@ class Interpreter:
             error_code=ErrorCode.INT_OTHER, message="Invalid or unsupported expression"
         )
 
-
     # value is used in special case for 'from:' selector
     def execute_literal(self, literal: Literal) -> base_class_type | Any:
         """Build a class instance for a literal value."""
@@ -335,7 +336,6 @@ class Interpreter:
             return CLASS_REGISTRY[literal.value]()
 
         return CLASS_REGISTRY[literal.class_id](literal.value)
-
 
     # def find_parent(self, parent: str) -> str:
     #     """Walk the class hierarchy and return the root parent name."""
@@ -376,4 +376,3 @@ class Interpreter:
 
             return self.send_message2(class_y, "new", arguments, current_scope)
         return self.send_message2(class_y, selector, arguments, current_scope)
-

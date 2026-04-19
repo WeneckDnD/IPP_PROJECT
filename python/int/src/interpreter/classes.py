@@ -14,6 +14,7 @@ from interpreter.exceptions import InterpreterError
 #         """Initialize object with arguments."""
 #         self.args = args
 
+
 class Object:
     """main class object"""
 
@@ -36,7 +37,7 @@ class Object:
 
     def equal_to(self, obj: Any) -> bool:
         """Check if objects are equal."""
-        #removed ret_val
+        # removed ret_val
         return self.identical_to(obj)
 
     def is_number(self) -> bool:
@@ -175,6 +176,7 @@ class String(Object):
         """Create new instance of String from String."""
         print("new String from String")
         return cls(string.string)
+
     @classmethod
     def read(cls) -> String:
         """Read string from input."""
@@ -228,6 +230,7 @@ class String(Object):
 
 class BlockClass(Object):
     """Block object with inherited methods from parent Object"""
+
     def __init__(self, func: Callable[..., Any] | None = None) -> None:
         """Initialize block with function."""
         if func is None:
@@ -273,8 +276,9 @@ class TrueR(Object):
         """Negate true boolean."""
         return not (obj)
 
-    def if_true_if_false(self, condition: bool, true_block: BlockClass,
-     false_block: BlockClass) -> Any:
+    def if_true_if_false(
+        self, condition: bool, true_block: BlockClass, false_block: BlockClass
+    ) -> Any:
         """Execute if true or false block."""
         if condition:
             return true_block.value()
@@ -283,6 +287,14 @@ class TrueR(Object):
     def is_boolean(self) -> bool:
         """Check if object is boolean."""
         return True
+
+    def and_(self, obj: Any) -> Any:
+        """Logical AND operation."""
+        return bool(self.boolean is True and obj.boolean is True)
+
+    def or_(self, obj: Any) -> Any:
+        """Logical OR operation."""
+        return bool(self.boolean is True or obj.boolean is True)
 
 
 class FalseR(Object):
@@ -306,15 +318,13 @@ class FalseR(Object):
         """Negate false boolean."""
         return not (obj)
 
-    def and_(self) -> Any:
+    def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        if cast(Any, self).bool is False:
-            return False
-        return None
+        return bool(self.boolean is True and obj.boolean is True)
 
-    def if_true_if_false(self, condition: bool, true_block:
-         BlockClass, false_block: BlockClass
-     ) -> Any:
+    def if_true_if_false(
+        self, condition: bool, true_block: BlockClass, false_block: BlockClass
+    ) -> Any:
         """Execute if true or false block."""
         if condition:
             return true_block.value()
@@ -323,3 +333,7 @@ class FalseR(Object):
     def is_boolean(self) -> bool:
         """Check if object is boolean."""
         return True
+
+    def or_(self, obj: Any) -> Any:
+        """Logical OR operation."""
+        return bool(self.boolean is True or obj.boolean is True)
