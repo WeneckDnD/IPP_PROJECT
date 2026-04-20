@@ -104,8 +104,6 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
     setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
 
-
-
 class Interpreter:
     """
     The main interpreter class, responsible for loading the source file and executing the program.

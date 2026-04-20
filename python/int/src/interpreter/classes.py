@@ -287,10 +287,10 @@ class TrueR(Object):
         return FalseR(False)
 
     def if_true_if_false(
-        self, condition: bool, true_block: BlockClass, false_block: BlockClass
+        self, true_block: BlockClass, false_block: BlockClass
     ) -> Any:
         """Execute if true or false block."""
-        if condition:
+        if self.boolean is True:
             return true_block.value()
         return false_block.value()
 
@@ -339,10 +339,10 @@ class FalseR(Object):
 
 
     def if_true_if_false(
-        self, condition: bool, true_block: BlockClass, false_block: BlockClass
+        self, true_block: BlockClass, false_block: BlockClass
     ) -> Any:
         """Execute if true or false block."""
-        if condition:
+        if self.boolean is True:
             return true_block.value()
         return false_block.value()
 
