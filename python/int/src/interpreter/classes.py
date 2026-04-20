@@ -123,7 +123,6 @@ class Integer(Object):
     @override
     def as_string(self) -> String:
         """Convert integer to string."""
-        print(f"self.value: {self.value}, type: {type(self.value)}")
         return String(self.value)
 
     def is_number(self) -> bool:

@@ -6,7 +6,7 @@ class Main : Integer {
     _ := (5 asString) print.
     "hello"
     _ := ('hello' asString) print.
-    ""
+    "nil"
     _ := (nil asString) print.
     "true"
     _ := (true asString) print.
