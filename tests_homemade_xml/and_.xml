@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<program language="SOL26" description="0">
+<program language="SOL26" description="0 ???">
   <class name="Main" parent="Integer">
     <method selector="run">
       <block arity="0">
@@ -8,11 +8,11 @@
           <expr>
             <send selector="and:">
               <expr>
-                <literal class="False" value="false"/>
+                <literal class="Integer" value="5"/>
               </expr>
               <arg order="1">
                 <expr>
-                  <literal class="True" value="true"/>
+                  <literal class="Integer" value="5"/>
                 </expr>
               </arg>
             </send>

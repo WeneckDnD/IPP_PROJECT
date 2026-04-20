@@ -4,10 +4,11 @@ class Main : Integer {
     r := '240' asInteger.
     _ := (r asString) print.
     "nil"
-    r := 'nope' asInteger.
-    _ := (r asString) print.
-    "Integer"
-    r := 99 asInteger.
-    _ := (r asString) print.
+    t := 'nope' asInteger.
+    _ := (t asString) print.
+    "specific object"
+    y := 99 asInteger.
+    _ := ( 'Object: ' asString ) print.
+    _ := (y asString) print.
   ]
 }

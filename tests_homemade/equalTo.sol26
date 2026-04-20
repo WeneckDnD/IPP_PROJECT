@@ -14,12 +14,12 @@ class Main : Integer {
     "false"
     r := 'sol' equalTo: 'nos'.
     _ := (r asString) print.
-    "false"
+    "false ???" 
     a := Box new.
     b := Box new.
     r := a equalTo: b.
     _ := (r asString) print.
-    "false"
+    "false ???"
     r := a equalTo: a.
     _ := (r asString) print.
     "false"

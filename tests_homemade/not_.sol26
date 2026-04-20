@@ -1,6 +1,6 @@
 class Main : Integer {
   run [|
-    "not_skipped"
-    _ := ('not_skipped' asString) print.
+    r := true.
+    _ := (r not: asString) print.
   ]
 }

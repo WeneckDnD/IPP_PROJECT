@@ -22,13 +22,13 @@ class Object:
         """Initialize object with arguments."""
         self.args = args
 
-    def as_string(self) -> Any:
+    def as_string(self) -> String:
         """Convert object to string representation."""
-        return ""
+        return String("a")
 
     def identical_to(self, obj: Object) -> bool:
         """Check if objects are identical."""
-        return self is obj
+        return TrueR(True) if self is obj else FalseR(False)
 
     @classmethod
     def new(cls, *args: Any) -> Any:
@@ -40,25 +40,25 @@ class Object:
         # removed ret_val
         return self.identical_to(obj)
 
-    def is_number(self) -> bool:
+    def is_number(self) -> FalseR:
         """Check if object is a number."""
-        return False
+        return TrueR(True) if isinstance(self, Integer) else FalseR(False)
 
-    def is_string(self) -> bool:
+    def is_string(self) -> FalseR:
         """Check if object is a string."""
-        return False
+        return TrueR(True) if isinstance(self, String) else FalseR(False)
 
-    def is_block(self) -> bool:
+    def is_block(self) -> FalseR:
         """Check if object is a block."""
-        return False
+        return TrueR(True) if isinstance(self, BlockClass) else FalseR(False)
 
-    def is_nil(self) -> bool:
+    def is_nil(self) -> FalseR:
         """Check if object is nil."""
-        return False
+        return TrueR(True) if isinstance(self, Nil) else FalseR(False)
 
-    def is_boolean(self) -> bool:
+    def is_boolean(self) -> FalseR:
         """Check if object is boolean."""
-        return False
+        return TrueR(True) if isinstance(self, TrueR | FalseR) else FalseR(False)
 
 
 class Nil(Object):
@@ -67,9 +67,9 @@ class Nil(Object):
     instance = Object()
 
     @override
-    def as_string(self) -> str:
+    def as_string(self) -> String:
         """Return nil as string."""
-        return "nil"
+        return String("nil")
 
     @classmethod
     def new(cls) -> Any:
@@ -98,40 +98,40 @@ class Integer(Object):
         """Check if integers are equal."""
         if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "equalTo: expected Integer operand")
-        return self.value == obj.value
+        return TrueR(True) if int(self.value) == int(obj.value) else FalseR(False)
 
     @override
-    def as_string(self) -> str:
+    def as_string(self) -> String:
         """Convert integer to string."""
-        return str(self.value)
+        return String(self.value)
 
     def is_number(self) -> bool:
         """Check if object is number."""
-        return True
+        return TrueR(True)
 
     def greater_than(self, obj: Integer) -> Any:
         """Check if greater than another integer."""
         if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "greaterThan: expected Integer operand")
-        return self.value > obj.value
+        return TrueR(True) if int(self.value) > int(obj.value) else FalseR(False)
 
-    def plus(self, obj: Integer) -> int:
+    def plus(self, obj: Integer) -> Integer:
         """Add two integers."""
         if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "plus: expected Integer operand")
-        return int(int(self.value) + int(obj.value))
+        return Integer(int(int(self.value) + int(obj.value)))
 
-    def minus(self, obj: Integer) -> int:
+    def minus(self, obj: Integer) -> Integer:
         """Subtract two integers."""
         if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "minus: expected Integer operand")
-        return int(int(self.value) - int(obj.value))
+        return Integer(int(self.value) - int(obj.value))
 
-    def multiply_by(self, obj: Integer) -> int:
+    def multiply_by(self, obj: Integer) -> Integer:
         """Multiply two integers."""
         if not isinstance(cast(Any, obj), Integer):
             raise InterpreterError(ErrorCode.INT_OTHER, "multiplyBy: expected Integer operand")
-        return int(int(self.value) * int(obj.value))
+        return Integer(int(self.value) * int(obj.value))
 
     def div_by(self, obj: Integer) -> int:
         """Divide two integers."""
@@ -139,7 +139,14 @@ class Integer(Object):
             raise InterpreterError(ErrorCode.INT_OTHER, "divBy: expected Integer operand")
         if obj.value == 0:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "Division by zero is not allowed.")
-        return int(int(self.value) // int(obj.value))
+        return Integer(int(self.value) // int(obj.value))
+
+        #Processing: divBy.sol26
+        # selector Main run
+        # selector Integer divBy:
+        # get_variable r {'r': 11}
+        # selector int asString
+        # Error 51: Method 'asString' not found in class int
 
     def as_integer(self) -> Any:
         """Convert to integer."""
@@ -174,7 +181,7 @@ class String(Object):
     @classmethod
     def new(cls, string: String) -> Any:
         """Create new instance of String from String."""
-        print("new String from String")
+        # print("new String from String")
         return cls(string.string)
 
     @classmethod
@@ -189,14 +196,14 @@ class String(Object):
 
     def equal_to(self, obj: String) -> bool:
         """Check if strings are equal."""
-        if not isinstance(cast(Any, obj).parent, String):
+        if not isinstance(cast(Any, obj), String):
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "equalTo: expected String operand")
-        return bool(self.string == cast(Any, obj).value)
+        return TrueR(True) if self.string == cast(Any, obj).string else FalseR(False)
 
     @override
-    def as_string(self) -> str:
+    def as_string(self) -> String:
         """Convert to string."""
-        return str(self.string)
+        return String(self.string)
 
     def as_integer(self) -> Integer | Nil:
         """Convert string to integer."""
@@ -208,23 +215,23 @@ class String(Object):
         """Concatenate with another string."""
         return String(self.string + cast(Any, obj).string)  # ?? String()
 
-    def starts_with_ends_before(self, index_start: Integer, index_end: Integer) -> Any:
+    def starts_with_ends_before(self, index_start: Integer, index_end: Integer) -> String:
         """Get substring between indices."""
         if int(index_start.value) <= 0 or int(index_end.value) <= 0:
             return Nil()
         if int(index_start.value) < 1:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "indexing from 1")
         if (int(index_start.value) - int(index_end.value)) >= 0:
-            return ""
+            return String("")
         if int(index_end.value) > len(self.string):
-            return self.string[int(index_start.value) - 1 :]
-        return self.string[int(index_start.value) - 1 : int(index_end.value) - 1]
+            return String(self.string[int(index_start.value) - 1 :])
+        return String(self.string[int(index_start.value) - 1 : int(index_end.value) - 1])
 
-    def length(self, obj: String) -> Integer:
+    def length(self) -> Integer:
         """Get string length."""
-        if not isinstance(cast(Any, obj).parent, String):
+        if not isinstance(cast(Any, self), String):
             raise InterpreterError(ErrorCode.INT_OTHER, "length: expected String operand")
-        leng = len(cast(Any, obj).value) + 1  # null terminator
+        leng = len(cast(Any, self).string) + 1  # null terminator
         return Integer(leng)
 
 
@@ -268,9 +275,9 @@ class TrueR(Object):
         return cls.boolean
 
     @override
-    def as_string(self) -> str:
+    def as_string(self) -> String:
         """Convert true to string."""
-        return "true"
+        return String("true")
 
     def not_(self, obj: TrueR) -> bool:
         """Negate true boolean."""
@@ -286,10 +293,11 @@ class TrueR(Object):
 
     def is_boolean(self) -> bool:
         """Check if object is boolean."""
-        return True
+        return TrueR(True)
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
+        print(f"self.boolean: {self.boolean}, obj.boolean: {obj.boolean}")
         if self.boolean is True and obj.boolean is True:
             return TrueR(True)
         return FalseR(False)
@@ -312,9 +320,9 @@ class FalseR(Object):
         return cls(False)
 
     @override
-    def as_string(self) -> str:
+    def as_string(self) -> String:
         """Convert false to string."""
-        return "false"
+        return String("false")
 
     def not_(self, obj: FalseR) -> bool:
         """Negate false boolean."""
@@ -322,6 +330,8 @@ class FalseR(Object):
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
+        print(f"self.boolean: {self.boolean}, obj.boolean: {obj.boolean}")
+
         if self.boolean is True and obj.boolean is True:
             return TrueR(True)
         return FalseR(False)

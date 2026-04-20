@@ -19,7 +19,7 @@ class Scope:
 
     def get_variable(self, name: str) -> Any:
         """Return the value for ``name``, searching this scope then parents."""
-        print("get_variable", name, self.variables)
+        # print("get_variable", name, self.variables)
         if name in self.variables:
             return self.variables[name]
         if self.parent is not None:

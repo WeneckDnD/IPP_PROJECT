@@ -1,7 +1,7 @@
 class Main : Integer {
   run [|
-    "0"
-    r := false and: true.
+    "0 ???"
+    r := 5 and: 5.
     _ := (r asString) print.
   ]
 }

@@ -49,60 +49,60 @@ CLASS_REGISTRY: dict[str, type[Any]] = {
 
 def update_built_in_classes() -> None:
     # equalTo:
-    setattr(CLASS_REGISTRY["Object"], "equalTo:", Object.equal_to)
-    CLASS_REGISTRY["Object"].asString = Object.as_string
     setattr(CLASS_REGISTRY["Object"], "identicalTo:", Object.identical_to)
+    setattr(CLASS_REGISTRY["Object"], "equalTo:", Object.equal_to)
+    setattr(CLASS_REGISTRY["Object"], "asString", Object.as_string)
+    setattr(CLASS_REGISTRY["Object"], "isNumber", Object.is_number)
+    setattr(CLASS_REGISTRY["Object"], "isString", Object.is_string)
+    setattr(CLASS_REGISTRY["Object"], "isBlock", Object.is_block)
+    setattr(CLASS_REGISTRY["Object"], "isNil", Object.is_nil)
+    setattr(CLASS_REGISTRY["Object"], "isBoolean", Object.is_boolean)
     setattr(CLASS_REGISTRY["Object"], "new:", Object.new)
-    CLASS_REGISTRY["Object"].isNumber = Object.is_number
-    CLASS_REGISTRY["Object"].isString = Object.is_string
-    CLASS_REGISTRY["Object"].isBlock = Object.is_block
-    CLASS_REGISTRY["Object"].isNil = Object.is_nil
-    CLASS_REGISTRY["Object"].isBoolean = Object.is_boolean
 
     setattr(CLASS_REGISTRY["Integer"], "equalTo:", Integer.equal_to)
-    CLASS_REGISTRY["Integer"].asString = Integer.as_string
-    setattr(CLASS_REGISTRY["Integer"], "new:", Integer.new)
-    CLASS_REGISTRY["Integer"].isNumber = Integer.is_number
     setattr(CLASS_REGISTRY["Integer"], "greaterThan:", Integer.greater_than)
     setattr(CLASS_REGISTRY["Integer"], "plus:", Integer.plus)
     setattr(CLASS_REGISTRY["Integer"], "minus:", Integer.minus)
     setattr(CLASS_REGISTRY["Integer"], "multiplyBy:", Integer.multiply_by)
     setattr(CLASS_REGISTRY["Integer"], "divBy:", Integer.div_by)
-    CLASS_REGISTRY["Integer"].asInteger = Integer.as_integer
+    setattr(CLASS_REGISTRY["Integer"], "asString", Integer.as_string)
+    setattr(CLASS_REGISTRY["Integer"], "asInteger", Integer.as_integer)
     setattr(CLASS_REGISTRY["Integer"], "timesRepeat:", Integer.times_repeat)
+    setattr(CLASS_REGISTRY["Integer"], "new:", Integer.new)
 
-    CLASS_REGISTRY["String"].read = String.read
-    CLASS_REGISTRY["String"].print = String.print
+    setattr(CLASS_REGISTRY["String"], "read", String.read)
+    setattr(CLASS_REGISTRY["String"], "print", String.print)
     setattr(CLASS_REGISTRY["String"], "equalTo:", String.equal_to)
-    CLASS_REGISTRY["String"].asString = String.as_string
-    CLASS_REGISTRY["String"].asInteger = String.as_integer
+    setattr(CLASS_REGISTRY["String"], "asString", String.as_string)
+    setattr(CLASS_REGISTRY["String"], "asInteger", String.as_integer)
     setattr(CLASS_REGISTRY["String"], "concatenateWith:", String.concatenate_with)
     setattr(CLASS_REGISTRY["String"], "startsWith:endsBefore:", String.starts_with_ends_before)
-    CLASS_REGISTRY["String"].length = String.length
-    CLASS_REGISTRY["String"].new = String.new
+    setattr(CLASS_REGISTRY["String"], "length", String.length)
+    setattr(CLASS_REGISTRY["String"], "new", String.new)
 
-    setattr(CLASS_REGISTRY["Nil"], "new:", Nil.new)
-    setattr(CLASS_REGISTRY["Nil"], "from_:", Nil.from_)
+    setattr(CLASS_REGISTRY["Nil"], "new", Nil.new)
+    setattr(CLASS_REGISTRY["Nil"], "from:", Nil.from_)
+    setattr(CLASS_REGISTRY["Nil"], "asString", Nil.as_string)
 
+    setattr(CLASS_REGISTRY["True"], "asString", TrueR.as_string)
     setattr(CLASS_REGISTRY["True"], "not", TrueR.not_)
     setattr(CLASS_REGISTRY["True"], "and:", TrueR.and_)
-    setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
-    setattr(CLASS_REGISTRY["True"], "isBoolean:", TrueR.is_boolean)
-    setattr(CLASS_REGISTRY["True"], "asString:", TrueR.as_string)
     setattr(CLASS_REGISTRY["True"], "or:", TrueR.or_)
-    CLASS_REGISTRY["True"].new = TrueR.new
+    setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
+    setattr(CLASS_REGISTRY["True"], "isBoolean", TrueR.is_boolean)
+    setattr(CLASS_REGISTRY["True"], "new", TrueR.new)
 
-    setattr(CLASS_REGISTRY["False"], "not:", FalseR.not_)
-    setattr(CLASS_REGISTRY["False"], "ifTrueIfFalse:", FalseR.if_true_if_false)
-    setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
-    setattr(CLASS_REGISTRY["False"], "asString:", FalseR.as_string)
+    setattr(CLASS_REGISTRY["False"], "asString", FalseR.as_string)
+    setattr(CLASS_REGISTRY["False"], "not", FalseR.not_)
     setattr(CLASS_REGISTRY["False"], "and:", FalseR.and_)
     setattr(CLASS_REGISTRY["False"], "or:", FalseR.or_)
-    CLASS_REGISTRY["False"].new = FalseR.new
+    setattr(CLASS_REGISTRY["False"], "ifTrue:ifFalse:", FalseR.if_true_if_false)
+    setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
+    setattr(CLASS_REGISTRY["False"], "new", FalseR.new)
 
     setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
-    CLASS_REGISTRY["Block"].new = BlockClass.new
+    setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
 
 
 class Interpreter:
@@ -220,7 +220,7 @@ class Interpreter:
     # from type[CLASS_REG] -> type
     def send_message2(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
         """Send message to receiver."""
-        print("selector",receiver.__class__.__name__, selector )
+        # print("selector",receiver.__class__.__name__, selector )
         method = getattr(receiver, selector, None)  ## test the inherited methods
         # parent_name = receiver.__class__.__bases__[0].__name__
 

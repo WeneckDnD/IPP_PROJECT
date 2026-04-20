@@ -1,8 +1,7 @@
 class Main : Integer {
   run [|
     "30"
-    s := 'abc'.
-    n := s length: 'ignored_operand_in_classes_py'.
+    n := 'ignored_operand_in_classes_py' length.
     _ := (n asString) print.
   ]
 }

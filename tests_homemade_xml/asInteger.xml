@@ -28,7 +28,7 @@
           </expr>
         </assign>
         <assign order="3">
-          <var name="r"/>
+          <var name="t"/>
           <expr>
             <send selector="asInteger">
               <expr>
@@ -44,7 +44,7 @@
               <expr>
                 <send selector="asString">
                   <expr>
-                    <var name="r"/>
+                    <var name="t"/>
                   </expr>
                 </send>
               </expr>
@@ -52,7 +52,7 @@
           </expr>
         </assign>
         <assign order="5">
-          <var name="r"/>
+          <var name="y"/>
           <expr>
             <send selector="asInteger">
               <expr>
@@ -68,7 +68,21 @@
               <expr>
                 <send selector="asString">
                   <expr>
-                    <var name="r"/>
+                    <literal class="String" value="Object: "/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="7">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="y"/>
                   </expr>
                 </send>
               </expr>

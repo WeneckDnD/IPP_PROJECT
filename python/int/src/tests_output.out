@@ -1,0 +1,171 @@
+[H[2J[3JProcessing: and_.sol26
+a
+---
+Processing: asInteger.sol26
+240
+a
+<interpreter.classes.Integer object at 0x7311951ead80>
+---
+Processing: asString.sol26
+5
+hello
+a
+true
+a
+0
+---
+Processing: concatenateWith.sol26
+foobar
+---
+Processing: divBy.sol26
+11
+---
+Processing: equalTo.sol26
+Error 51: Method 'asString' not found in class bool
+true
+a
+true
+a
+true
+true
+---
+Processing: greaterThan.sol26
+a
+true
+---
+Processing: identicalTo.sol26
+Error 51: Method 'asString' not found in class bool
+---
+Processing: ifTrueIfFalse.sol26
+Error 52: Invalid or unsupported expression
+---
+Processing: isBlock.sol26
+a
+a
+a
+a
+a
+a
+---
+Processing: isBoolean.sol26
+a
+a
+a
+true
+true
+a
+---
+Processing: isNil.sol26
+a
+a
+true
+a
+a
+a
+---
+Processing: isNumber.sol26
+true
+a
+a
+a
+a
+true
+---
+Processing: isString.sol26
+a
+true
+a
+a
+a
+a
+---
+Processing: length.sol26
+2026-04-20 15:23:39,485 ERROR [main][solint.py:112] Unhandled exception during interpretation
+Traceback (most recent call last):
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/solint.py", line 101, in main
+    interpreter.execute(StringIO())
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 278, in execute
+    self.send_message2(main_class, "run", [], scope)
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 250, in send_message2
+    return self.execute_method(method, new_class_scope, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 284, in execute_method
+    return self.execute_block(method.block, parent_scope, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 310, in execute_block
+    exp = self.execute_expression(assgn_expr, current_scope)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 321, in execute_expression
+    return self.execute_send(expr.send, current_scope)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 378, in execute_send
+    return self.send_message2(class_y, selector, arguments, current_scope)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 245, in send_message2
+    return method(*args)
+           ^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/classes.py", line 234, in length
+    leng = len(cast(Any, obj).value) + 1  # null terminator
+               ^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'String' object has no attribute 'value'
+Error 99: 'String' object has no attribute 'value'
+---
+Processing: minus.sol26
+42
+---
+Processing: multiplyBy.sol26
+42
+---
+Processing: not_.sol26
+Error 52: no such variable
+---
+Processing: plus.sol26
+123
+0
+---
+Processing: print.sol26
+line-a
+line-a
+line-b
+line-b
+---
+Processing: read.sol26
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/solint.py", line 18, in <module>
+    from interpreter.interpreter import Interpreter
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 16, in <module>
+    from pydantic import ValidationError
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/venv/lib/python3.12/site-packages/pydantic/__init__.py", line 5, in <module>
+    from ._migration import getattr_migration
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/venv/lib/python3.12/site-packages/pydantic/_migration.py", line 4, in <module>
+    from pydantic.warnings import PydanticDeprecatedSince20
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/venv/lib/python3.12/site-packages/pydantic/warnings.py", line 5, in <module>
+    from .version import version_short
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/venv/lib/python3.12/site-packages/pydantic/version.py", line 7, in <module>
+    from pydantic_core import __version__ as __pydantic_core_version__
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/venv/lib/python3.12/site-packages/pydantic_core/__init__.py", line 31, in <module>
+    from .core_schema import CoreConfig, CoreSchema, CoreSchemaType, ErrorType
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/venv/lib/python3.12/site-packages/pydantic_core/core_schema.py", line 4341, in <module>
+    @deprecated('`field_before_validator_function` is deprecated, use `with_info_before_validator_function` instead.')
+     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/venv/lib/python3.12/site-packages/typing_extensions.py", line 2997, in __call__
+    import asyncio.coroutines
+  File "/usr/lib/python3.12/asyncio/__init__.py", line 8, in <module>
+    from .base_events import *
+  File "/usr/lib/python3.12/asyncio/base_events.py", line 26, in <module>
+    import subprocess
+  File "/usr/lib/python3.12/subprocess.py", line 49, in <module>
+    import signal
+  File "/usr/lib/python3.12/signal.py", line 7, in <module>
+    _IntEnum._convert_(
+  File "/usr/lib/python3.12/enum.py", line 949, in _convert_
+    cls = _simple_enum(etype=cls, boundary=boundary or KEEP)(tmp_cls)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/enum.py", line 1747, in convert_class
+    if _is_dunder(name) or _is_private(cls_name, name) or _is_sunder(name) or _is_descriptor(obj):
+                                                                              ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/enum.py", line 45, in _is_descriptor
+    hasattr(obj, '__delete__')
+KeyboardInterrupt

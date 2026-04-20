@@ -4,27 +4,16 @@
     <method selector="run">
       <block arity="0">
         <assign order="1">
-          <var name="s"/>
-          <expr>
-            <literal class="String" value="abc"/>
-          </expr>
-        </assign>
-        <assign order="2">
           <var name="n"/>
           <expr>
-            <send selector="length:">
+            <send selector="length">
               <expr>
-                <var name="s"/>
+                <literal class="String" value="ignored_operand_in_classes_py"/>
               </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="String" value="ignored_operand_in_classes_py"/>
-                </expr>
-              </arg>
             </send>
           </expr>
         </assign>
-        <assign order="3">
+        <assign order="2">
           <var name="_"/>
           <expr>
             <send selector="print">
