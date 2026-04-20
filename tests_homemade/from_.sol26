@@ -1,0 +1,15 @@
+class Main : Integer {
+  run [|
+    "123"
+    i := Integer from: 123.
+    _ := (i asString) print.
+
+    "456"
+    s := String from: '456'.
+    _ := s print.
+
+    "nil"
+    n := Nil from: 7.
+    _ := (n asString) print.
+  ]
+}

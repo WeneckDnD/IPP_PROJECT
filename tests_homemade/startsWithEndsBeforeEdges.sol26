@@ -1,0 +1,15 @@
+class Main : Integer {
+  run [|
+    "nil"
+    r := 'abcdef' startsWith: 0 endsBefore: 3.
+    _ := (r asString) print.
+
+    ""
+    r := 'abcdef' startsWith: 3 endsBefore: 3.
+    _ := r print.
+
+    "def"
+    r := 'abcdef' startsWith: 4 endsBefore: 99.
+    _ := r print.
+  ]
+}

@@ -1,6 +1,9 @@
 class Main : Integer {
   run [|
-    "skipped"
-    _ := ('skipped' asString) print.
+    "3"
+    _ := self cnt: 3.
+    _ := [| c := (self cnt) greaterThan: 0. ] whileTrue: [
+      | _ := ((self cnt) asString) print.
+         _ := self cnt: ((self cnt) minus: 1). ].
   ]
 }

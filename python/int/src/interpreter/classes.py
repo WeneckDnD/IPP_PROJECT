@@ -24,7 +24,7 @@ class Object:
 
     def as_string(self) -> String:
         """Convert object to string representation."""
-        return String("a")
+        return String("")
 
     def identical_to(self, obj: Object) -> bool:
         """Check if objects are identical."""
@@ -76,10 +76,10 @@ class Nil(Object):
         """Get nil instance."""
         return cls.instance
 
-    @classmethod
-    def from_(cls) -> Any:
-        """Get nil instance from class."""
-        return cls.instance
+    # @classmethod
+    # def from_(cls) -> Any:
+    #     """Get nil instance from class."""
+    #     return cls.instance
 
 
 class Integer(Object):
@@ -103,6 +103,7 @@ class Integer(Object):
     @override
     def as_string(self) -> String:
         """Convert integer to string."""
+        print(f"self.value: {self.value}, type: {type(self.value)}")
         return String(self.value)
 
     def is_number(self) -> bool:

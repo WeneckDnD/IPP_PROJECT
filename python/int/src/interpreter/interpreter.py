@@ -81,7 +81,7 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["String"], "new", String.new)
 
     setattr(CLASS_REGISTRY["Nil"], "new", Nil.new)
-    setattr(CLASS_REGISTRY["Nil"], "from:", Nil.from_)
+    # setattr(CLASS_REGISTRY["Nil"], "from:", Nil.from_)
     setattr(CLASS_REGISTRY["Nil"], "asString", Nil.as_string)
 
     setattr(CLASS_REGISTRY["True"], "asString", TrueR.as_string)
