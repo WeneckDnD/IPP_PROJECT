@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<program language="SOL26" description="false">
+<program language="SOL26" description="true">
   <class name="Box" parent="Integer"/>
   <class name="Main" parent="Integer">
     <method selector="run">

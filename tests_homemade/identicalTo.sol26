@@ -2,7 +2,7 @@ class Box : Integer {
 }
 class Main : Integer {
   run [|
-    "false"
+    "true"
     x := 9.
     r := x identicalTo: x.
     _ := (r asString) print.
@@ -10,14 +10,14 @@ class Main : Integer {
     y := 9.
     r := x identicalTo: y.
     _ := (r asString) print.
-    "false"
+    "true"
     s := 'z'.
     r := s identicalTo: s.
     _ := (r asString) print.
-    "false"
+    "true TODO: FIX now false"
     r := nil identicalTo: nil.
     _ := (r asString) print.
-    "false"
+    "true"
     o := Box new.
     r := o identicalTo: o.
     _ := (r asString) print.
@@ -25,10 +25,10 @@ class Main : Integer {
     p := Box new.
     r := o identicalTo: p.
     _ := (r asString) print.
-    "false"
+    "TODO FIX: now false"
     r := true identicalTo: true.
     _ := (r asString) print.
-    "false"
+    "TODO FIX: now false"
     r := false identicalTo: false.
     _ := (r asString) print.
   ]

@@ -58,7 +58,7 @@ class Object:
 
     def is_boolean(self) -> FalseR:
         """Check if object is boolean."""
-        return TrueR(True) if isinstance(self, TrueR | FalseR) else FalseR(False)
+        return FalseR(False)
 
 
 class Nil(Object):
@@ -267,7 +267,7 @@ class TrueR(Object):
 
     def __init__(self, boolean: bool) -> None:
         """Initialize true boolean."""
-        self.boolean = boolean
+        self.boolean = bool(boolean)
 
     @classmethod
     def new(cls) -> Any:
@@ -291,14 +291,14 @@ class TrueR(Object):
             return true_block.value()
         return false_block.value()
 
-    def is_boolean(self) -> bool:
+    def is_boolean(self) -> TrueR:
         """Check if object is boolean."""
         return TrueR(True)
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
         print(f"self.boolean: {self.boolean}, obj.boolean: {obj.boolean}")
-        if self.boolean is True and obj.boolean is True:
+        if obj.boolean is True:
             return TrueR(True)
         return FalseR(False)
 
@@ -330,10 +330,8 @@ class FalseR(Object):
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        print(f"self.boolean: {self.boolean}, obj.boolean: {obj.boolean}")
+        print(f"self.boolean: {type(self.boolean)}, obj.boolean: {type(obj.boolean)}")
 
-        if self.boolean is True and obj.boolean is True:
-            return TrueR(True)
         return FalseR(False)
 
 
@@ -347,7 +345,7 @@ class FalseR(Object):
 
     def is_boolean(self) -> bool:
         """Check if object is boolean."""
-        return True
+        return TrueR(True)
 
     def or_(self, obj: Any) -> Any:
         """Logical OR operation."""

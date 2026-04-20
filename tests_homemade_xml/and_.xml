@@ -8,17 +8,45 @@
           <expr>
             <send selector="and:">
               <expr>
-                <literal class="Integer" value="5"/>
+                <literal class="True" value="true"/>
               </expr>
               <arg order="1">
                 <expr>
-                  <literal class="Integer" value="5"/>
+                  <send selector="equalTo:">
+                    <expr>
+                      <literal class="Integer" value="5"/>
+                    </expr>
+                    <arg order="1">
+                      <expr>
+                        <literal class="Integer" value="5"/>
+                      </expr>
+                    </arg>
+                  </send>
                 </expr>
               </arg>
             </send>
           </expr>
         </assign>
         <assign order="2">
+          <var name="t"/>
+          <expr>
+            <send selector="isBoolean">
+              <expr>
+                <send selector="equalTo:">
+                  <expr>
+                    <literal class="Integer" value="5"/>
+                  </expr>
+                  <arg order="1">
+                    <expr>
+                      <literal class="Integer" value="5"/>
+                    </expr>
+                  </arg>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="3">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -26,6 +54,20 @@
                 <send selector="asString">
                   <expr>
                     <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="4">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="t"/>
                   </expr>
                 </send>
               </expr>
