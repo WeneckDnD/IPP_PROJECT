@@ -104,12 +104,7 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
     setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
 
-def call_block(interpreter: Interpreter, block: Block, scope: Scope) -> Any:
-    """Call a block with the given arguments."""
-    def execute_block_class(*args: Any) -> Any:
-        """Execute a block with the given arguments."""
-        return interpreter.execute_block(block, scope, args)
-    return execute_block_class
+
 
 class Interpreter:
     """
@@ -391,3 +386,10 @@ class Interpreter:
 
             return self.send_message2(class_y, "new", arguments, current_scope)
         return self.send_message2(class_y, selector, arguments, current_scope)
+
+def call_block(interpreter: Interpreter, block: Block, scope: Scope) -> Any:
+    """Call a block with the given arguments."""
+    def execute_block_class(*args: Any) -> Any:
+        """Execute a block with the given arguments."""
+        return interpreter.execute_block(block, scope, args)
+    return execute_block_class

@@ -1,18 +1,14 @@
 [H[2J[3JProcessing: and_.sol26
-self.boolean: True, obj.boolean: True
 true
-self.boolean: <class 'str'>, obj.boolean: <class 'str'>
 false
-self.boolean: <class 'str'>, obj.boolean: <class 'bool'>
 false
-self.boolean: True, obj.boolean: True
 true
 ---
 Processing: asInteger.sol26
 240
 nil
 Object: 
-<interpreter.classes.Integer object at 0x707d701687d0>
+<interpreter.classes.Integer object at 0x78d197cb2180>
 ---
 Processing: asString.sol26
 5
@@ -52,3 +48,117 @@ true
 false
 false
 false
+---
+Processing: ifTrueIfFalse.sol26
+2026-04-20 19:09:51,028 ERROR [main][solint.py:112] Unhandled exception during interpretation
+Traceback (most recent call last):
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/solint.py", line 101, in main
+    interpreter.execute(StringIO())
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 283, in execute
+    self.send_message2(main_class, "run", [], scope)
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 255, in send_message2
+    return self.execute_method(method, new_class_scope, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 289, in execute_method
+    return self.execute_block(method.block, parent_scope, args)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 315, in execute_block
+    exp = self.execute_expression(assgn_expr, current_scope)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 326, in execute_expression
+    return self.execute_send(expr.send, current_scope)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 388, in execute_send
+    return self.send_message2(class_y, selector, arguments, current_scope)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/weneck/school/IPP_latest/ipp26-project-templates-main/python/int/src/interpreter/interpreter.py", line 250, in send_message2
+    return method(*args)
+           ^^^^^^^^^^^^^
+TypeError: TrueR.if_true_if_false() missing 1 required positional argument: 'false_block'
+Error 99: TrueR.if_true_if_false() missing 1 required positional argument: 'false_block'
+---
+Processing: isBlock.sol26
+false
+false
+false
+false
+false
+false
+---
+Processing: isBoolean.sol26
+false
+false
+false
+true
+false
+false
+---
+Processing: isNil.sol26
+false
+false
+true
+false
+false
+false
+---
+Processing: isNumber.sol26
+true
+false
+false
+false
+false
+true
+---
+Processing: isString.sol26
+false
+true
+false
+false
+false
+false
+---
+Processing: length.sol26
+30
+---
+Processing: minus.sol26
+42
+---
+Processing: multiplyBy.sol26
+42
+---
+Processing: not_.sol26
+true
+---
+Processing: or_.sol26
+true
+---
+Processing: plus.sol26
+123
+0
+---
+Processing: print.sol26
+line-a
+line-a
+line-b
+line-b
+---
+Processing: read.sol26
+7
+---
+Processing: startsWithEndsBefore.sol26
+bcd
+---
+Processing: timesRepeat.sol26
+skipped
+---
+Processing: value.sol26
+42
+bl: True, type: <class 'bool'>
+4
+3
+2
+1
+---
+Processing: whileTrue.sol26
+skipped
+---
