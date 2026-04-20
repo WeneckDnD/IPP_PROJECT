@@ -8,12 +8,6 @@ from typing import Any, cast, override
 from interpreter.error_codes import ErrorCode
 from interpreter.exceptions import InterpreterError
 
-# class BaseObject:
-#     """base class for all objects"""
-#     def __init__(self, *args: Any) -> None:
-#         """Initialize object with arguments."""
-#         self.args = args
-
 
 class Object:
     """main class object"""
@@ -100,6 +94,8 @@ class Integer(Object):
         """Initialize integer with value."""
         if type(value) is str:
             value = int(value)
+        elif type(value) is String:
+            value = int(value.string)
         elif type(value) is Integer:
             value = value.value
         elif type(value) is TrueR:
@@ -191,6 +187,8 @@ class String(Object):
         """Initialize string with value."""
         if type(value) is Integer:
             value = str(value.value)
+        elif type(value) is int:
+            value = str(value)
         elif type(value) is String:
             value = value.string
         elif type(value) is Nil:

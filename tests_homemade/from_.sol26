@@ -1,7 +1,7 @@
 class Main : Integer {
   run [|
     "123"
-    i := Integer from: 123.
+    i := Integer from: -123.
     _ := (i asString) print.
 
     "456"
