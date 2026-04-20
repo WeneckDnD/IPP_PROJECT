@@ -11,5 +11,9 @@ class Main : Integer {
     "nil"
     n := Nil from: 7.
     _ := (n asString) print.
+
+    "false"
+    b := n identicalTo: 3.
+    _ := (b asString) print.
   ]
 }

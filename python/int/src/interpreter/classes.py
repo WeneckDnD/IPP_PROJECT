@@ -61,10 +61,11 @@ class Object:
         return FalseR(False)
 
 
+nil = Object()
 class Nil(Object):
     """Nil object with inherited methods from parent Object"""
 
-    instance = Object()
+    instance = nil
 
     @override
     def as_string(self) -> String:
@@ -75,7 +76,16 @@ class Nil(Object):
     def new(cls) -> Any:
         """Get nil instance."""
         return cls.instance
+    @classmethod
+    def new(cls, value: Any) -> Any:
+        """Create new nil instance from value."""
+        return cls()
 
+    def identical_to(self, obj: any) -> bool:
+        """Check if objects are identical."""
+        if isinstance(obj, Nil):
+            return TrueR(True)
+        return FalseR(False)
     # @classmethod
     # def from_(cls) -> Any:
     #     """Get nil instance from class."""
@@ -87,6 +97,16 @@ class Integer(Object):
 
     def __init__(self, value: Any = 0):
         """Initialize integer with value."""
+        if type(value) is str:
+            value = int(value)
+        elif type(value) is Integer:
+            value = value.value
+        elif type(value) is TrueR:
+            value = 1
+        elif type(value) is FalseR:
+            value = 0
+        elif type(value) is Nil:
+            value = 0
         self.value = value
 
     @classmethod
@@ -167,23 +187,24 @@ class Integer(Object):
 class String(Object):
     """String object with inherited methods from parent Object"""
 
-    def __init__(self, string: str = ""):
+    def __init__(self, value: Any = ""):
         """Initialize string with value."""
-        self.string = string
+        if type(value) is Integer:
+            value = str(value.value)
+        elif type(value) is String:
+            value = value.string
+        elif type(value) is Nil:
+            value = ""
+        elif type(value) is TrueR:
+            value = "true"
+        elif type(value) is FalseR:
+            value = "false"
+        self.string = value
 
     @classmethod
-    # def new(cls, string: str) -> Any:
-    #     """Create new instance of String"""
-    #     print("new String")
-    #     return cls(string)
-    # # @classmethod
-    # def new(cls, string: Integer) -> Any:
-    #     return cls(str(string.value))
-    @classmethod
-    def new(cls, string: String) -> Any:
-        """Create new instance of String from String."""
-        # print("new String from String")
-        return cls(string.string)
+    def new(cls, *args: Any) -> Any:
+        """Create new instance of String"""
+        return cls(*args)
 
     @classmethod
     def read(cls) -> String:
