@@ -1,11 +1,25 @@
 class Main : Integer {
   run [|
-    "0 ???"
+    "true"
     r := true and: (5 equalTo: 5).
-    t := (5 equalTo: 5) isBoolean.
     _ := (r asString) print.
-    _ := (t asString) print.
-    
+
+    "false"
+    r := false and: false.
+    _ := (r asString) print.
+
+    "false"
+    r := false and: (5 equalTo: 5).
+    _ := (r asString) print.
+
+    "true"
+    r := (5 equalTo: 5) and: (5 equalTo: 5).
+    _ := (r asString) print.
+
+
+
+
+
 
   ]
 }

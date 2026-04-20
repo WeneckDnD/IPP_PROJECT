@@ -1,13 +1,18 @@
 [H[2J[3JProcessing: and_.sol26
 self.boolean: True, obj.boolean: True
 true
+self.boolean: <class 'str'>, obj.boolean: <class 'str'>
+false
+self.boolean: <class 'str'>, obj.boolean: <class 'bool'>
+false
+self.boolean: True, obj.boolean: True
 true
 ---
 Processing: asInteger.sol26
 240
 nil
 Object: 
-<interpreter.classes.Integer object at 0x70617a3e2fc0>
+<interpreter.classes.Integer object at 0x707d701687d0>
 ---
 Processing: asString.sol26
 5
@@ -47,84 +52,3 @@ true
 false
 false
 false
----
-Processing: ifTrueIfFalse.sol26
-Error 52: Invalid or unsupported expression
----
-Processing: isBlock.sol26
-false
-false
-false
-false
-false
-false
----
-Processing: isBoolean.sol26
-false
-false
-false
-true
-false
-false
----
-Processing: isNil.sol26
-false
-false
-true
-false
-false
-false
----
-Processing: isNumber.sol26
-true
-false
-false
-false
-false
-true
----
-Processing: isString.sol26
-false
-true
-false
-false
-false
-false
----
-Processing: length.sol26
-30
----
-Processing: minus.sol26
-42
----
-Processing: multiplyBy.sol26
-42
----
-Processing: not_.sol26
-Error 52: no such variable
----
-Processing: plus.sol26
-123
-0
----
-Processing: print.sol26
-line-a
-line-a
-line-b
-line-b
----
-Processing: read.sol26
-7
----
-Processing: startsWithEndsBefore.sol26
-bcd
----
-Processing: timesRepeat.sol26
-skipped
----
-Processing: value.sol26
-Error 52: Invalid or unsupported expression
----
-Processing: whileTrue.sol26
-skipped
----

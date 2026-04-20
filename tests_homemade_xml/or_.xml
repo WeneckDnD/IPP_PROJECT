@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <program language="SOL26">
-  <class name="Main" parent="Integer">
+  <class name="Main" parent="Object">
     <method selector="run">
       <block arity="0">
         <assign order="1">
@@ -10,23 +10,34 @@
           </expr>
         </assign>
         <assign order="2">
-          <var name="r"/>
+          <var name="t"/>
           <expr>
-            <send selector="not">
-              <expr>
-                <var name="r"/>
-              </expr>
-            </send>
+            <literal class="True" value="true"/>
           </expr>
         </assign>
         <assign order="3">
+          <var name="h"/>
+          <expr>
+            <send selector="or:">
+              <expr>
+                <var name="r"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <var name="t"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="4">
           <var name="_"/>
           <expr>
             <send selector="print">
               <expr>
                 <send selector="asString">
                   <expr>
-                    <var name="r"/>
+                    <var name="h"/>
                   </expr>
                 </send>
               </expr>

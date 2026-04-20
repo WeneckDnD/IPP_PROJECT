@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<program language="SOL26" description="0 ???">
+<program language="SOL26" description="true">
   <class name="Main" parent="Integer">
     <method selector="run">
       <block arity="0">
@@ -28,25 +28,6 @@
           </expr>
         </assign>
         <assign order="2">
-          <var name="t"/>
-          <expr>
-            <send selector="isBoolean">
-              <expr>
-                <send selector="equalTo:">
-                  <expr>
-                    <literal class="Integer" value="5"/>
-                  </expr>
-                  <arg order="1">
-                    <expr>
-                      <literal class="Integer" value="5"/>
-                    </expr>
-                  </arg>
-                </send>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="3">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -60,6 +41,21 @@
             </send>
           </expr>
         </assign>
+        <assign order="3">
+          <var name="r"/>
+          <expr>
+            <send selector="and:">
+              <expr>
+                <literal class="False" value="false"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="False" value="false"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
         <assign order="4">
           <var name="_"/>
           <expr>
@@ -67,7 +63,92 @@
               <expr>
                 <send selector="asString">
                   <expr>
-                    <var name="t"/>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="5">
+          <var name="r"/>
+          <expr>
+            <send selector="and:">
+              <expr>
+                <literal class="False" value="false"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <send selector="equalTo:">
+                    <expr>
+                      <literal class="Integer" value="5"/>
+                    </expr>
+                    <arg order="1">
+                      <expr>
+                        <literal class="Integer" value="5"/>
+                      </expr>
+                    </arg>
+                  </send>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="6">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="7">
+          <var name="r"/>
+          <expr>
+            <send selector="and:">
+              <expr>
+                <send selector="equalTo:">
+                  <expr>
+                    <literal class="Integer" value="5"/>
+                  </expr>
+                  <arg order="1">
+                    <expr>
+                      <literal class="Integer" value="5"/>
+                    </expr>
+                  </arg>
+                </send>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <send selector="equalTo:">
+                    <expr>
+                      <literal class="Integer" value="5"/>
+                    </expr>
+                    <arg order="1">
+                      <expr>
+                        <literal class="Integer" value="5"/>
+                      </expr>
+                    </arg>
+                  </send>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="8">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
                   </expr>
                 </send>
               </expr>

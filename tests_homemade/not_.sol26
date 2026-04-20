@@ -1,6 +1,7 @@
 class Main : Integer {
   run [|
-    r := true.
-    _ := (r not: asString) print.
+    r := false.
+    r := r not.
+    _ := (r asString) print.
   ]
 }

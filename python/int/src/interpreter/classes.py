@@ -279,9 +279,9 @@ class TrueR(Object):
         """Convert true to string."""
         return String("true")
 
-    def not_(self, obj: TrueR) -> bool:
+    def not_(self) -> bool:
         """Negate true boolean."""
-        return not (obj)
+        return FalseR(False)
 
     def if_true_if_false(
         self, condition: bool, true_block: BlockClass, false_block: BlockClass
@@ -297,14 +297,14 @@ class TrueR(Object):
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        print(f"self.boolean: {self.boolean}, obj.boolean: {obj.boolean}")
+        # print(f"self.boolean: {self.boolean}, obj.boolean: {obj.boolean}")
         if obj.boolean is True:
             return TrueR(True)
         return FalseR(False)
 
-    def or_(self, obj: Any) -> Any:
+    def or_(self, obj: TrueR | FalseR) -> TrueR | FalseR:
         """Logical OR operation."""
-        return bool(self.boolean is True or obj.boolean is True)
+        return TrueR(True) if self.boolean is True or obj.boolean is True else FalseR(False)
 
 
 class FalseR(Object):
@@ -324,13 +324,13 @@ class FalseR(Object):
         """Convert false to string."""
         return String("false")
 
-    def not_(self, obj: FalseR) -> bool:
+    def not_(self) -> bool:
         """Negate false boolean."""
-        return not (obj)
+        return TrueR(True)
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        print(f"self.boolean: {type(self.boolean)}, obj.boolean: {type(obj.boolean)}")
+        # print(f"self.boolean: {type(self.boolean)}, obj.boolean: {type(obj.boolean)}")
 
         return FalseR(False)
 
@@ -347,6 +347,6 @@ class FalseR(Object):
         """Check if object is boolean."""
         return TrueR(True)
 
-    def or_(self, obj: Any) -> Any:
+    def or_(self, obj: TrueR | FalseR) -> TrueR | FalseR:
         """Logical OR operation."""
-        return bool(self.boolean is True or obj.boolean is True)
+        return TrueR(True) if self.boolean is True or obj.boolean is True else FalseR(False)

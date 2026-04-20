@@ -1,0 +1,8 @@
+class Main : Object {
+  run [|
+    r := false.
+    t := true.
+    h := r or: t.
+    _ := (h asString) print.
+  ]
+}
