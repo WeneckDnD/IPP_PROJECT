@@ -104,6 +104,12 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
     setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
 
+def call_block(interpreter: Interpreter, block: Block, scope: Scope) -> Any:
+    """Call a block with the given arguments."""
+    def execute_block_class(*args: Any) -> Any:
+        """Execute a block with the given arguments."""
+        return interpreter.execute_block(block, scope, args)
+    return execute_block_class
 
 class Interpreter:
     """
@@ -221,12 +227,16 @@ class Interpreter:
     def send_message2(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
         """Send message to receiver."""
         # print("selector",receiver.__class__.__name__, selector )
+
+        if isinstance(receiver, BlockClass) and "value" in selector:
+            return receiver.value(*args)
+        
         method = getattr(receiver, selector, None)  ## test the inherited methods
         # parent_name = receiver.__class__.__bases__[0].__name__
 
         if method is None and selector[-1] == ":":
             check_method = getattr(receiver, selector[:-1], None)
-            if check_method is not None:
+            if check_method is not None and (callable(check_method) or isinstance(check_method, Method)):
                 raise InterpreterError(
                     error_code=ErrorCode.INT_INST_ATTR,
                     message=f"Method already exists in class {receiver.__class__.__name__}",
@@ -323,11 +333,16 @@ class Interpreter:
             return self.execute_literal(expr.literal)
         if expr.var is not None:
             return current_scope.get_variable(expr.var.name)
-        # if expr.block is not None:
-        #     return NewObject(None, expr.block, None)
+        if expr.block is not None:
+            return self.execute_setup_block(expr.block, current_scope)
         raise InterpreterError(
             error_code=ErrorCode.INT_OTHER, message="Invalid or unsupported expression"
         )
+
+    def execute_setup_block(self, block: Block, current_scope: Scope) -> Any:
+        """Execute a setup block and return the result."""
+        class_block = BlockClass(call_block(self, block, current_scope))
+        return class_block
 
     # value is used in special case for 'from:' selector
     def execute_literal(self, literal: Literal) -> base_class_type | Any:

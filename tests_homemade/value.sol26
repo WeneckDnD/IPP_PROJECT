@@ -1,8 +1,16 @@
 class Main : Integer {
   run [|
-    "42"
     b := [ :x:y | r := x plus: y. ].
     c := b value: 11 value: 31.
     _ := (c asString) print.
+    "42"
+    o := Integer new.
+    _ := o attr: 1.
+    _ := o attr: 2.
+    x := self attr: 3.
+    g := self attr: 4.
+    y := [| ret := (self attr) greaterThan: 0.] whileTrue:
+            [| r := ((self attr) asString) print.
+              r := self attr: ((self attr) minus: 1).].
   ]
 }

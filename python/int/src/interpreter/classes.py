@@ -257,8 +257,11 @@ class BlockClass(Object):
     def while_true(self, body: BlockClass) -> Any:
         """Execute while condition is true."""
         result = None
-        while self.value():
+        bl = self.value().boolean
+        print(f"bl: {bl}, type: {type(bl)}")
+        while bl is True:
             result = body.value()
+            bl = self.value().boolean
         return result
 
 
