@@ -15,5 +15,10 @@ class Main : Integer {
     "false"
     b := n identicalTo: 3.
     _ := (b asString) print.
+
+    m := Nil.
+    d := Nil.
+    v := n identicalTo: Nil.
+    _ := (v asString) print.
   ]
 }

@@ -28,6 +28,7 @@ class Object:
 
     def identical_to(self, obj: Object) -> bool:
         """Check if objects are identical."""
+        print(f"self: {self}, obj: {obj}, {type(obj)}")
         return TrueR(True) if self is obj else FalseR(False)
 
     @classmethod
@@ -61,11 +62,11 @@ class Object:
         return FalseR(False)
 
 
-nil = Object()
+
 class Nil(Object):
     """Nil object with inherited methods from parent Object"""
 
-    instance = nil
+    instance = Object()
 
     @override
     def as_string(self) -> String:
@@ -79,7 +80,7 @@ class Nil(Object):
     @classmethod
     def new(cls, value: Any) -> Any:
         """Create new nil instance from value."""
-        return cls()
+        return cls(value)
 
     def identical_to(self, obj: any) -> bool:
         """Check if objects are identical."""
@@ -91,7 +92,7 @@ class Nil(Object):
     #     """Get nil instance from class."""
     #     return cls.instance
 
-
+nil = Nil()
 class Integer(Object):
     """Integer object with inherited methods from parent Object"""
 
@@ -172,14 +173,14 @@ class Integer(Object):
         """Convert to integer."""
         return Integer(self)
 
-    def times_repeat(self, n: int, block: BlockClass) -> Any:
+    def times_repeat(self, block: BlockClass) -> Any:
         """Repeat block n times."""
-        if n <= 0:
+        if self.value <= 0:
             return Nil()
 
         result = None
-        for i in range(1, n + 1):
-            result = block.value(i)
+        for i in range(1, self.value + 1):
+            result = block.value(Integer(i))
         return result
 
 

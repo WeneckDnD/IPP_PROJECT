@@ -1,6 +1,8 @@
 class Main : Integer {
   run [|
     "skipped"
-    _ := ('skipped' asString) print.
+    bb := [ :x| _ := (x asString) print.].
+    c := 0 timesRepeat: bb.
+    _ := (c asString) print.
   ]
 }
