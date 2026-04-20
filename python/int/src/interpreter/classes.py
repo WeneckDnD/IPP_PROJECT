@@ -22,7 +22,6 @@ class Object:
 
     def identical_to(self, obj: Object) -> bool:
         """Check if objects are identical."""
-        print(f"self: {self}, obj: {obj}, {type(obj)}")
         return TrueR(True) if self is obj else FalseR(False)
 
     @classmethod
