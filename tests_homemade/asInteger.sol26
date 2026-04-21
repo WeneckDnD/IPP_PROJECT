@@ -12,7 +12,7 @@ class Main : Integer {
     t := 'nope' asInteger.
     _ := (t asString) print.
 
-    "-9 or nil ???????"
+    "-9"
     t := '-9' asInteger.
     _ := (t asString) print.
 
