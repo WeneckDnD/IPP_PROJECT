@@ -24,7 +24,7 @@ class Scope:
             return self.variables[name]
         if self.parent is not None:
             return self.parent.get_variable(name)
-        raise InterpreterError(error_code=ErrorCode.INT_OTHER, message="no such variable")
+        raise InterpreterError(error_code=ErrorCode.SEM_UNDEF, message="no such variable")
 
     def update_variable(self, name: str, new: Any) -> None:
         """Set ``name`` to ``new`` in this scope or the nearest defining parent."""
