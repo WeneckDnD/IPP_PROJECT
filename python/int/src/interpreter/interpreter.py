@@ -139,7 +139,7 @@ class Interpreter:
         if parent_cls is None:
             parent_class_def = self.find_class(base_class_name)
             if parent_class_def is None:
-                self.define_new_class(base_class_name, "Object", [])  # zmenene z {} na [ ]
+                self.define_new_class(base_class_name, "Object", []) 
             else:
                 self.define_new_class(
                     base_class_name, parent_class_def.parent, parent_class_def.methods
@@ -254,9 +254,6 @@ class Interpreter:
             current_scope.set_variable(assgn_target.name, exp)
             ret_value = exp
         return ret_value
-
-    def execute_params(self) -> None:
-        """Placeholder for parameter execution (unused)."""
 
     def execute_expression(self, expr: Expr, current_scope: Scope) -> Any:
         """Evaluate an expression in the given scope and return its value."""

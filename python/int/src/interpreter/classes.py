@@ -196,7 +196,7 @@ class String(Object):
 
     def print(self) -> Any:
         """Print string and return self."""
-        print(self.string)
+        print(self.string, end="")
         return self
 
     def equal_to(self, obj: String) -> TrueR | FalseR:
