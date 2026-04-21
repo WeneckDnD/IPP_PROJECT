@@ -15,10 +15,21 @@ ARG NODE_SETUP_MAJOR=24
 # ─────────────────────────────────────────
 FROM python:3.14-slim AS check
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libxml2-dev \
+    libxslt1-dev \
+    zlib1g-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 COPY python/int/requirements.txt /tmp/requirements.txt
 COPY python/int/requirements-dev.txt /tmp/requirements-dev.txt
-RUN pip install --no-cache-dir -r /tmp/requirements.txt -r /tmp/requirements-dev.txt \
-    && rm -f /tmp/requirements.txt /tmp/requirements-dev.txt
+COPY sol2xml/requirements.txt /tmp/sol2xml-requirements.txt
+RUN pip install --no-cache-dir \
+    -r /tmp/requirements.txt \
+    -r /tmp/requirements-dev.txt \
+    -r /tmp/sol2xml-requirements.txt \
+    && rm -f /tmp/requirements.txt /tmp/requirements-dev.txt /tmp/sol2xml-requirements.txt
 
 # Node.js + npm pre TypeScript nástroje (tester)
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -33,13 +44,17 @@ WORKDIR /src
 RUN printf '%s\n' '#!/bin/sh' 'set -eu' 'cd /src/int' 'if [ "$#" -eq 0 ]; then exec ruff check src; fi' 'exec ruff "$@"' > /src/ruff \
     && chmod +x /src/ruff \
     && printf '%s\n' '#!/bin/sh' 'set -eu' 'cd /src/int' 'if [ "$#" -eq 0 ]; then exec mypy src; fi' 'exec mypy "$@"' > /src/mypy \
-    && chmod +x /src/mypy
+    && chmod +x /src/mypy \
+    && printf '%s\n' '#!/bin/sh' 'set -eu' 'cd /src/tester' 'if [ ! -x node_modules/.bin/eslint ]; then npm ci; fi' 'exec npm exec -- eslint -- "$@"' > /usr/local/bin/eslint \
+    && chmod +x /usr/local/bin/eslint \
+    && printf '%s\n' '#!/bin/sh' 'set -eu' 'cd /src/tester' 'if [ ! -x node_modules/.bin/prettier ]; then npm ci; fi' 'exec npm exec -- prettier -- "$@"' > /usr/local/bin/prettier \
+    && chmod +x /usr/local/bin/prettier
 
 # Adresáre budú pripojené ako bind mount za behu:
 #   --mount type=bind,source=./python/int,target=/src/int
 #   --mount type=bind,source=./typescript/tester,target=/src/tester
 
-ENTRYPOINT ["bash"]
+ENTRYPOINT ["/bin/sh"]
 
 
 # ─────────────────────────────────────────
@@ -64,6 +79,13 @@ FROM python:3.14-slim AS runtime
 
 WORKDIR /app
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    build-essential \
+    libxml2-dev \
+    libxslt1-dev \
+    zlib1g-dev \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Skopíruj iba zdrojový kód Pythonu (nie dev závislosti)
 COPY python/int/ ./
 
@@ -71,6 +93,9 @@ COPY python/int/ ./
 RUN if [ -f requirements.txt ]; then \
         pip install --no-cache-dir -r requirements.txt; \
     fi
+COPY sol2xml/requirements.txt /tmp/sol2xml-requirements.txt
+RUN pip install --no-cache-dir -r /tmp/sol2xml-requirements.txt \
+    && rm -f /tmp/sol2xml-requirements.txt
 
 # CLI vstupný bod je src/solint.py (balík interpreter je relatívny k tomuto adresáru)
 WORKDIR /app/src
@@ -96,4 +121,4 @@ COPY --from=build-test /src/tester/dist ./dist
 COPY --from=build-test /src/tester/node_modules ./node_modules
 COPY --from=build-test /src/tester/package.json ./
 
-ENTRYPOINT ["node", "dist/tester.js"]
+ENTRYPOINT ["/bin/sh"]

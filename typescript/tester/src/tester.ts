@@ -10,10 +10,10 @@
  *
  * Author: Ondřej Ondryáš <iondryas@fit.vut.cz>
  * Author: Tadeas Bujdoso <xbujdot00>
- * 
+ *
  * AI usage notice: The author used OpenAI Codex to create the implementation of this
  *                  module based on its Python counterpart.
-*/
+ */
 import {
   existsSync,
   lstatSync,
@@ -297,6 +297,111 @@ function parseExitCode(raw: string, prefix: string): number {
   return value;
 }
 
+interface ParsedSoltestHeaderState {
+  description: string | null;
+  category: string | null;
+  points: number | null;
+  parserCodes: number[];
+  interpreterCodes: number[];
+}
+
+interface ParsedSoltestHeader {
+  description: string | null;
+  category: string;
+  points: number;
+  parserCodes: number[];
+  interpreterCodes: number[];
+}
+
+function createEmptyHeaderState(): ParsedSoltestHeaderState {
+  return {
+    description: null,
+    category: null,
+    points: null,
+    parserCodes: [],
+    interpreterCodes: [],
+  };
+}
+
+function parseHeaderLine(line: string, state: ParsedSoltestHeaderState): void {
+  if (line.startsWith("***")) {
+    const description = line.slice(3).trim();
+    state.description = description.length > 0 ? description : null;
+    return;
+  }
+
+  if (line.startsWith("+++")) {
+    const value = line.slice(3).trim();
+    if (value.length === 0) {
+      throw new Error("malformed_test_case: empty category");
+    }
+    state.category = value;
+    return;
+  }
+
+  if (line.startsWith("!C!")) {
+    state.parserCodes.push(parseExitCode(line.slice(3), "parser"));
+    return;
+  }
+
+  if (line.startsWith("!I!")) {
+    state.interpreterCodes.push(parseExitCode(line.slice(3), "interpreter"));
+    return;
+  }
+
+  if (line.startsWith(">>>")) {
+    const parsedPoints = parseExitCode(line.slice(3), "points");
+    if (parsedPoints <= 0) {
+      throw new Error("malformed_test_case: points must be > 0");
+    }
+    state.points = parsedPoints;
+    return;
+  }
+
+  throw new Error(`malformed_test_case: unknown header line '${line}'`);
+}
+
+function parseSoltestHeader(header: string[]): ParsedSoltestHeader {
+  const state = createEmptyHeaderState();
+  for (const rawLine of header) {
+    parseHeaderLine(rawLine.trim(), state);
+  }
+
+  if (state.category === null) {
+    throw new Error("malformed_test_case: missing category");
+  }
+  if (state.points === null) {
+    throw new Error("malformed_test_case: missing points");
+  }
+
+  return {
+    description: state.description,
+    category: state.category,
+    points: state.points,
+    parserCodes: state.parserCodes,
+    interpreterCodes: state.interpreterCodes,
+  };
+}
+
+function parseExpectedExitCodes(sourceCode: string, header: ParsedSoltestHeader) {
+  const sourceIsXml = sourceCode.trimStart().startsWith("<");
+  const expectedParser = header.parserCodes.length > 0 ? header.parserCodes : null;
+  const expectedInterpreter = header.interpreterCodes.length > 0 ? header.interpreterCodes : null;
+
+  if (sourceIsXml) {
+    if (expectedParser !== null) {
+      throw new Error("cannot_determine_type");
+    }
+    if (expectedInterpreter === null) {
+      throw new Error("malformed_test_case: missing interpreter exit codes for XML source");
+    }
+  } else if (expectedParser === null) {
+    throw new Error("malformed_test_case: missing parser exit codes for SOL source");
+  }
+
+  return { sourceIsXml, expectedParser, expectedInterpreter };
+}
+
 function parseSoltest(content: string): ParsedSoltest {
   const lines = content.split(/\r?\n/u);
   const separatorIdx = lines.findIndex((line) => line.trim().length === 0);
@@ -311,74 +416,16 @@ function parseSoltest(content: string): ParsedSoltest {
     throw new Error("malformed_test_case: missing source code");
   }
 
-  let description: string | null = null;
-  let category: string | null = null;
-  let points: number | null = null;
-  const parserCodes: number[] = [];
-  const interpreterCodes: number[] = [];
-
-  for (const rawLine of header) {
-    const line = rawLine.trim();
-    if (line.startsWith("***")) {
-      description = line.slice(3).trim();
-      if (description.length === 0) {
-        description = null;
-      }
-      continue;
-    }
-    if (line.startsWith("+++")) {
-      const value = line.slice(3).trim();
-      if (value.length === 0) {
-        throw new Error("malformed_test_case: empty category");
-      }
-      category = value;
-      continue;
-    }
-    if (line.startsWith("!C!")) {
-      parserCodes.push(parseExitCode(line.slice(3), "parser"));
-      continue;
-    }
-    if (line.startsWith("!I!")) {
-      interpreterCodes.push(parseExitCode(line.slice(3), "interpreter"));
-      continue;
-    }
-    if (line.startsWith(">>>")) {
-      const parsedPoints = parseExitCode(line.slice(3), "points");
-      if (parsedPoints <= 0) {
-        throw new Error("malformed_test_case: points must be > 0");
-      }
-      points = parsedPoints;
-      continue;
-    }
-    throw new Error(`malformed_test_case: unknown header line '${line}'`);
-  }
-
-  if (category === null) {
-    throw new Error("malformed_test_case: missing category");
-  }
-  if (points === null) {
-    throw new Error("malformed_test_case: missing points");
-  }
-
-  const sourceIsXml = sourceCode.trimStart().startsWith("<");
-  const expectedParser = parserCodes.length > 0 ? parserCodes : null;
-  const expectedInterpreter = interpreterCodes.length > 0 ? interpreterCodes : null;
-
-  if (sourceIsXml) {
-    if (expectedParser !== null) {
-      throw new Error("cannot_determine_type");
-    }
-    if (expectedInterpreter === null) {
-      throw new Error("malformed_test_case: missing interpreter exit codes for XML source");
-    }
-  } else if (expectedParser === null) {
-    throw new Error("malformed_test_case: missing parser exit codes for SOL source");
-  }
+  const headerState = parseSoltestHeader(header);
+  const { sourceIsXml, expectedParser, expectedInterpreter } = parseExpectedExitCodes(
+    sourceCode,
+    headerState
+  );
 
   return {
-    description,
-    category,
-    points,
+    description: headerState.description,
+    category: headerState.category,
+    points: headerState.points,
     expected_parser_exit_codes: expectedParser,
     expected_interpreter_exit_codes: expectedInterpreter,
     source_code: sourceCode,
@@ -448,9 +495,7 @@ function isMatch(value: string, filters: string[] | null, useRegex: boolean): bo
 
 function shouldIncludeTest(testCase: TestCaseDefinition, args: CliArguments): boolean {
   const included =
-    args.include === null &&
-    args.include_category === null &&
-    args.include_test === null
+    args.include === null && args.include_category === null && args.include_test === null
       ? true
       : isMatch(testCase.name, args.include_test, args.regex_filters) ||
         isMatch(testCase.category, args.include_category, args.regex_filters) ||
@@ -469,7 +514,11 @@ function shouldIncludeTest(testCase: TestCaseDefinition, args: CliArguments): bo
   return !excluded;
 }
 
-function runProcess(command: string, commandArgs: string[], stdinInput: string | null): ProcessResult {
+function runProcess(
+  command: string,
+  commandArgs: string[],
+  stdinInput: string | null
+): ProcessResult {
   const result = spawnSync(command, commandArgs, {
     encoding: "utf8",
     input: stdinInput ?? undefined,
@@ -478,20 +527,26 @@ function runProcess(command: string, commandArgs: string[], stdinInput: string |
 
   return {
     exitCode: result.status,
-    stdout: result.stdout ?? "",
-    stderr: result.stderr ?? "",
+    stdout: result.stdout,
+    stderr: result.stderr,
     cannotExecute: result.error !== undefined,
   };
 }
 
-function expectedCodesContains(actualCode: number | null, expectedCodes: number[] | null): boolean {
+function expectedCodesContains(
+  actualCode: number | null,
+  expectedCodes: number[] | null
+): boolean {
   if (actualCode === null || expectedCodes === null) {
     return false;
   }
   return expectedCodes.includes(actualCode);
 }
 
-function runDiff(expectedStdoutPath: string, actualStdout: string): {
+function runDiff(
+  expectedStdoutPath: string,
+  actualStdout: string
+): {
   same: boolean;
   output: string | null;
 } {
@@ -519,7 +574,10 @@ function runDiff(expectedStdoutPath: string, actualStdout: string): {
   }
 }
 
-function withTemporaryXmlFile(xmlContent: string, callback: (path: string) => TestCaseReport): TestCaseReport {
+function withTemporaryXmlFile(
+  xmlContent: string,
+  callback: (path: string) => TestCaseReport
+): TestCaseReport {
   const tempDirectory = mkdtempSync(join(tmpdir(), "sol26-int-"));
   const xmlPath = join(tempDirectory, "combined.xml");
   writeFileSync(xmlPath, xmlContent, "utf8");
@@ -608,8 +666,15 @@ function executeTestCase(
   writeFileSync(sourcePath, testCase.source_code, "utf8");
 
   try {
-    if (definition.test_type === TestCaseType.PARSE_ONLY || definition.test_type === TestCaseType.COMBINED) {
-      const parser = runProcess(toolPaths.pythonExecutable, [toolPaths.parserScript, sourcePath], null);
+    if (
+      definition.test_type === TestCaseType.PARSE_ONLY ||
+      definition.test_type === TestCaseType.COMBINED
+    ) {
+      const parser = runProcess(
+        toolPaths.pythonExecutable,
+        [toolPaths.parserScript, sourcePath],
+        null
+      );
       if (parser.cannotExecute) {
         return new UnexecutedReason(
           UnexecutedReasonCode.CANNOT_EXECUTE,
