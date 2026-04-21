@@ -87,8 +87,10 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["True"], "and:", TrueR.and_)
     setattr(CLASS_REGISTRY["True"], "or:", TrueR.or_)
     setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
-    CLASS_REGISTRY["True"].isBoolean = TrueR.is_boolean
-    CLASS_REGISTRY["True"].new = TrueR.new
+    setattr(CLASS_REGISTRY["True"], "isBoolean:", TrueR.is_boolean)
+    setattr(CLASS_REGISTRY["True"], "new", TrueR.new)
+    # CLASS_REGISTRY["True"].isBoolean = TrueR.is_boolean
+    # CLASS_REGISTRY["True"].new = TrueR.new
 
     CLASS_REGISTRY["False"].asString = FalseR.as_string
     setattr(CLASS_REGISTRY["False"], "not", FalseR.not_)
@@ -100,8 +102,29 @@ def update_built_in_classes() -> None:
 
     setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
-    CLASS_REGISTRY["Block"].new = BlockClass.new
+    setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
+    # CLASS_REGISTRY["Block"].new = BlockClass.new
 
+
+def get_class_from_registry(class_name: str) -> type[Any]:
+    """Get a class from the registry."""
+    class_def = CLASS_REGISTRY.get(class_name, None)
+    if class_def is None:
+        raise InterpreterError(
+            error_code=ErrorCode.SEM_UNDEF,
+            message=f"Undefined class '{class_name}'",
+        )
+    return class_def
+
+def get_class_from_registry(class_name: str) -> type[Any]:
+    """Get a class from the registry."""
+    class_def = CLASS_REGISTRY.get(class_name, None)
+    if class_def is None:
+        raise InterpreterError(
+            error_code=ErrorCode.SEM_UNDEF,
+            message=f"Undefined class '{class_name}'",
+        )
+    return class_def
 
 class Interpreter:
     """
@@ -135,7 +158,8 @@ class Interpreter:
 
     def define_new_class(self, name: str, base_class_name: str, methods: list[Method]) -> Any:
         """Define new class."""
-        parent_cls = CLASS_REGISTRY.get(base_class_name)
+        # Získame rodičovskú triedu z registra (napr. Object)
+        parent_cls = get_class_from_registry(base_class_name)
         if parent_cls is None:
             parent_class_def = self.find_class(base_class_name)
             if parent_class_def is None:
@@ -144,7 +168,7 @@ class Interpreter:
                 self.define_new_class(
                     base_class_name, parent_class_def.parent, parent_class_def.methods
                 )
-            parent_cls = CLASS_REGISTRY.get(base_class_name)
+            parent_cls = get_class_from_registry(base_class_name)
             if parent_cls is None:
                 raise InterpreterError(
                     error_code=ErrorCode.SEM_UNDEF,
@@ -218,7 +242,7 @@ class Interpreter:
                 error_code=ErrorCode.SEM_MAIN, message="No run method found in the Main class"
             )
 
-        main_class = CLASS_REGISTRY["Main"]()
+        main_class = get_class_from_registry("Main")()
         self.send_message(main_class, "run", [], scope)
 
     def execute_method(self, method: Method | Any, parent_scope: Scope, args: list[Any]) -> Any:
@@ -277,9 +301,11 @@ class Interpreter:
     def execute_literal(self, literal: Literal) -> base_class_type | Any:
         """Build a class instance for a literal value."""
         if literal.class_id == "class":
-            return CLASS_REGISTRY[literal.value]()
+            return get_class_from_registry(literal.value)()
 
-        return CLASS_REGISTRY[literal.class_id](literal.value)
+        return get_class_from_registry(literal.class_id)(literal.value)
+
+
 
     def find_class(self, class_name: str) -> ClassDef | None:
         """Look up a class definition by name in the loaded program."""

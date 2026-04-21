@@ -156,6 +156,8 @@ class Integer(Object):
 
     def times_repeat(self, block: BlockClass) -> Any:
         """Repeat block n times."""
+        if not isinstance(cast(Any, block), BlockClass):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "timesRepeat: expected Block operand")
         if self.value <= 0:
             return Nil()
 
@@ -219,10 +221,16 @@ class String(Object):
 
     def concatenate_with(self, obj: String) -> String:
         """Concatenate with another string."""
+        if not isinstance(cast(Any, obj), String):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "concatenateWith: expected String operand")
         return String(self.string + cast(Any, obj).string)
 
     def starts_with_ends_before(self, index_start: Integer, index_end: Integer) -> String | Nil:
         """Get substring between indices."""
+        if not isinstance(cast(Any, index_start), Integer):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "startsWith:endsBefore: expected Integer operand")
+        if not isinstance(cast(Any, index_end), Integer):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "startsWith:endsBefore: expected Integer operand")
         if int(index_start.value) <= 0 or int(index_end.value) <= 0:
             return Nil()
         if int(index_start.value) < 1:
@@ -303,12 +311,16 @@ class TrueR(Object):
 
     def and_(self, obj: Any) -> TrueR | FalseR:
         """Logical AND operation."""
+        if not isinstance(cast(Any, obj), TrueR | FalseR):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "and: expected Boolean operand")
         if obj.boolean is True:
             return TrueR(True)
         return FalseR(False)
 
     def or_(self, obj: TrueR | FalseR) -> TrueR | FalseR:
         """Logical OR operation."""
+        if not isinstance(cast(Any, obj), TrueR | FalseR):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "or: expected Boolean operand")
         return TrueR(True) if self.boolean is True or obj.boolean is True else FalseR(False)
 
 
@@ -335,6 +347,8 @@ class FalseR(Object):
 
     def and_(self, obj: Any) -> FalseR:
         """Logical AND operation."""
+        if not isinstance(cast(Any, obj), TrueR | FalseR):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "and: expected Boolean operand")
         return FalseR(False)
 
     def if_true_if_false(self, true_block: BlockClass, false_block: BlockClass) -> Any:
@@ -349,4 +363,6 @@ class FalseR(Object):
 
     def or_(self, obj: TrueR | FalseR) -> TrueR | FalseR:
         """Logical OR operation."""
+        if not isinstance(cast(Any, obj), TrueR | FalseR):
+            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "or: expected Boolean operand")
         return TrueR(True) if self.boolean is True or obj.boolean is True else FalseR(False)
