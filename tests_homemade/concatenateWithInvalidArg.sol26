@@ -1,0 +1,6 @@
+class Main : Integer {
+  run [|
+    "ERR_concatenateWith_invalid_arg_should_be_runtime_type_error"
+    r := 'abc' concatenateWith: 1.
+  ]
+}

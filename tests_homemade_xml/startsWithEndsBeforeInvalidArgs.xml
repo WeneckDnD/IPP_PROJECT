@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="SOL26" description="ERR_startsWith_endsBefore_invalid_arg_should_be_runtime_type_error">
+  <class name="Main" parent="Integer">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="r"/>
+          <expr>
+            <send selector="startsWith:endsBefore:">
+              <expr>
+                <literal class="String" value="abcdef"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="String" value="x"/>
+                </expr>
+              </arg>
+              <arg order="2">
+                <expr>
+                  <literal class="Integer" value="3"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+</program>

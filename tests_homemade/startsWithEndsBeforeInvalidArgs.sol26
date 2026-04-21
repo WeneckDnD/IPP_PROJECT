@@ -1,0 +1,6 @@
+class Main : Integer {
+  run [|
+    "ERR_startsWith_endsBefore_invalid_arg_should_be_runtime_type_error"
+    r := 'abcdef' startsWith: 'x' endsBefore: 3.
+  ]
+}

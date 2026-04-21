@@ -1,0 +1,6 @@
+class Main : Integer {
+  run [|
+    "ERR_or_invalid_arg_should_be_runtime_type_error"
+    r := false or: 'x'.
+  ]
+}
