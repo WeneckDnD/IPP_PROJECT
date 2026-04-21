@@ -68,17 +68,17 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["Integer"], "timesRepeat:", Integer.times_repeat)
     setattr(CLASS_REGISTRY["Integer"], "new:", Integer.new)
 
-    CLASS_REGISTRY["String"].read = String.read
-    CLASS_REGISTRY["String"].print = String.print
+    # CLASS_REGISTRY["String"].read = String.read
+    # CLASS_REGISTRY["String"].print = String.print
     setattr(CLASS_REGISTRY["String"], "equalTo:", String.equal_to)
     CLASS_REGISTRY["String"].asString = String.as_string
     CLASS_REGISTRY["String"].asInteger = String.as_integer
     setattr(CLASS_REGISTRY["String"], "concatenateWith:", String.concatenate_with)
     setattr(CLASS_REGISTRY["String"], "startsWith:endsBefore:", String.starts_with_ends_before)
-    CLASS_REGISTRY["String"].length = String.length
-    CLASS_REGISTRY["String"].new = String.new
+    # CLASS_REGISTRY["String"].length = String.length
+    # CLASS_REGISTRY["String"].new = String.new
 
-    CLASS_REGISTRY["Nil"].new = Nil.new
+    # CLASS_REGISTRY["Nil"].new = Nil.new
     CLASS_REGISTRY["Nil"].asString = Nil.as_string
     setattr(CLASS_REGISTRY["Nil"], "identicalTo:", Nil.identical_to)
 
@@ -88,7 +88,7 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["True"], "or:", TrueR.or_)
     setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
     setattr(CLASS_REGISTRY["True"], "isBoolean:", TrueR.is_boolean)
-    setattr(CLASS_REGISTRY["True"], "new", TrueR.new)
+    # setattr(CLASS_REGISTRY["True"], "new", TrueR.new)
     # CLASS_REGISTRY["True"].isBoolean = TrueR.is_boolean
     # CLASS_REGISTRY["True"].new = TrueR.new
 
@@ -98,17 +98,17 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["False"], "or:", FalseR.or_)
     setattr(CLASS_REGISTRY["False"], "ifTrue:ifFalse:", FalseR.if_true_if_false)
     setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
-    CLASS_REGISTRY["False"].new = FalseR.new
+    # CLASS_REGISTRY["False"].new = FalseR.new
 
     setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
-    setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
+    # setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
     # CLASS_REGISTRY["Block"].new = BlockClass.new
 
 
 def get_class_from_registry(class_name: str) -> type[Any]:
     """Get a class from the registry."""
-    class_def = CLASS_REGISTRY.get(class_name, None)
+    class_def = CLASS_REGISTRY.get(class_name)
     if class_def is None:
         raise InterpreterError(
             error_code=ErrorCode.SEM_UNDEF,
@@ -116,15 +116,6 @@ def get_class_from_registry(class_name: str) -> type[Any]:
         )
     return class_def
 
-def get_class_from_registry(class_name: str) -> type[Any]:
-    """Get a class from the registry."""
-    class_def = CLASS_REGISTRY.get(class_name, None)
-    if class_def is None:
-        raise InterpreterError(
-            error_code=ErrorCode.SEM_UNDEF,
-            message=f"Undefined class '{class_name}'",
-        )
-    return class_def
 
 class Interpreter:
     """
@@ -163,7 +154,7 @@ class Interpreter:
         if parent_cls is None:
             parent_class_def = self.find_class(base_class_name)
             if parent_class_def is None:
-                self.define_new_class(base_class_name, "Object", []) 
+                self.define_new_class(base_class_name, "Object", [])
             else:
                 self.define_new_class(
                     base_class_name, parent_class_def.parent, parent_class_def.methods
@@ -304,8 +295,6 @@ class Interpreter:
             return get_class_from_registry(literal.value)()
 
         return get_class_from_registry(literal.class_id)(literal.value)
-
-
 
     def find_class(self, class_name: str) -> ClassDef | None:
         """Look up a class definition by name in the loaded program."""

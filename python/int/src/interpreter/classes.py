@@ -157,7 +157,9 @@ class Integer(Object):
     def times_repeat(self, block: BlockClass) -> Any:
         """Repeat block n times."""
         if not isinstance(cast(Any, block), BlockClass):
-            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "timesRepeat: expected Block operand")
+            raise InterpreterError(
+                ErrorCode.INT_INVALID_ARG, "timesRepeat: expected Block operand"
+            )
         if self.value <= 0:
             return Nil()
 
@@ -222,15 +224,21 @@ class String(Object):
     def concatenate_with(self, obj: String) -> String:
         """Concatenate with another string."""
         if not isinstance(cast(Any, obj), String):
-            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "concatenateWith: expected String operand")
+            raise InterpreterError(
+                ErrorCode.INT_INVALID_ARG, "concatenateWith: expected String operand"
+            )
         return String(self.string + cast(Any, obj).string)
 
     def starts_with_ends_before(self, index_start: Integer, index_end: Integer) -> String | Nil:
         """Get substring between indices."""
         if not isinstance(cast(Any, index_start), Integer):
-            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "startsWith:endsBefore: expected Integer operand")
+            raise InterpreterError(
+                ErrorCode.INT_INVALID_ARG, "startsWith:endsBefore: expected Integer operand"
+            )
         if not isinstance(cast(Any, index_end), Integer):
-            raise InterpreterError(ErrorCode.INT_INVALID_ARG, "startsWith:endsBefore: expected Integer operand")
+            raise InterpreterError(
+                ErrorCode.INT_INVALID_ARG, "startsWith:endsBefore: expected Integer operand"
+            )
         if int(index_start.value) <= 0 or int(index_end.value) <= 0:
             return Nil()
         if int(index_start.value) < 1:
