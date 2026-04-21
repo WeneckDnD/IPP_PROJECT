@@ -170,6 +170,7 @@ class Integer(Object):
 
 class String(Object):
     """String object with inherited methods from parent Object"""
+    _input_stream: TextIO | None = None
 
     def __init__(self, value: Any = "") -> None:
         """Initialize string with value."""
@@ -192,10 +193,14 @@ class String(Object):
         """Create new instance of String"""
         return cls(*args)
 
+
     @classmethod
     def read(cls) -> String:
-        """Read string from input."""
-        return cls(input())
+        """Read one line from interpreter input without trailing newline."""
+        try:
+            return cls(input())
+        except EOFError:
+            return String("")
 
     def print(self) -> Any:
         """Print string and return self."""

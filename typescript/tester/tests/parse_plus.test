@@ -1,0 +1,18 @@
+>>> 2
++++ BASIC_PARSE
+*** Parse-only: plus selector and integer literals
+!C! 0
+
+class Main : Integer {
+  run [|
+    "123"
+    r := 100 plus: 23.
+    _ := (r asString) print.
+    "0"
+    r := 0 plus: 0.
+    _ := (r asString) print.
+    "-1"
+    r := -3 plus: 2.
+    _ := (r asString) print.
+  ]
+}

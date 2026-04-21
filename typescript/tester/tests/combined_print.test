@@ -1,0 +1,16 @@
+!I! 0
+>>> 3
+*** Combined: compile SOL26 and interpret
+!C! 0
++++ BASIC_COMBINED
+
+class Main : Integer {
+  run [|
+    "line-a"
+    "line-a"
+    _ := ('line-a' print) print.
+    "line-b"
+    "line-b"
+    _ := ('line-b' print) print.
+  ]
+}

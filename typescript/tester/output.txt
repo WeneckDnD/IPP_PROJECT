@@ -1,0 +1,331 @@
+
+> sol26-tester@1.0.0 start
+> npm run build && node dist/tester.js ./tests
+
+
+> sol26-tester@1.0.0 build
+> tsc --project tsconfig.json
+
+{
+  "discovered_test_cases": [
+    {
+      "name": "combined_print",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/combined_print.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 2,
+      "description": "Combined: compile SOL26 and interpret",
+      "category": "BASIC_COMBINED",
+      "points": 3,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": [
+        0
+      ]
+    },
+    {
+      "name": "combined_read",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/combined_read.test",
+      "stdin_file": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/combined_read.in",
+      "expected_stdout_file": null,
+      "test_type": 2,
+      "description": "Combined: read from stdin and print it",
+      "category": "BASIC_COMBINED",
+      "points": 2,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": [
+        0
+      ]
+    },
+    {
+      "name": "execute_print_xml",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/execute_print_xml.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 1,
+      "description": "Execute-only XML: nested print",
+      "category": "BASIC_XML",
+      "points": 2,
+      "expected_parser_exit_codes": null,
+      "expected_interpreter_exit_codes": [
+        0
+      ]
+    },
+    {
+      "name": "execute_read_xml",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/execute_read_xml.test",
+      "stdin_file": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/execute_read_xml.in",
+      "expected_stdout_file": null,
+      "test_type": 1,
+      "description": "Execute-only XML: read from stdin and print",
+      "category": "BASIC_XML",
+      "points": 2,
+      "expected_parser_exit_codes": null,
+      "expected_interpreter_exit_codes": [
+        0
+      ]
+    },
+    {
+      "name": "parse_and",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_and.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: boolean and:",
+      "category": "HOMEMADE_PARSE",
+      "points": 1,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    },
+    {
+      "name": "parse_minus",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_minus.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: minus arithmetic",
+      "category": "HOMEMADE_PARSE",
+      "points": 1,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    },
+    {
+      "name": "parse_multiplyBy",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_multiplyBy.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: multiplyBy arithmetic",
+      "category": "HOMEMADE_PARSE",
+      "points": 1,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    },
+    {
+      "name": "parse_not",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_not.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: unary not",
+      "category": "HOMEMADE_PARSE",
+      "points": 1,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    },
+    {
+      "name": "parse_or",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_or.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: boolean or:",
+      "category": "HOMEMADE_PARSE",
+      "points": 1,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    },
+    {
+      "name": "parse_plus",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_plus.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: plus selector and integer literals",
+      "category": "BASIC_PARSE",
+      "points": 2,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    },
+    {
+      "name": "parse_print",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_print.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: nested print sends",
+      "category": "BASIC_PARSE",
+      "points": 1,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    },
+    {
+      "name": "parse_whileTrue",
+      "test_source_path": "/home/weneck/school/IPP_latest/ipp26-project-templates-main/typescript/tester/tests/parse_whileTrue.test",
+      "stdin_file": null,
+      "expected_stdout_file": null,
+      "test_type": 0,
+      "description": "Parse-only: whileTrue with block",
+      "category": "HOMEMADE_PARSE",
+      "points": 2,
+      "expected_parser_exit_codes": [
+        0
+      ],
+      "expected_interpreter_exit_codes": null
+    }
+  ],
+  "unexecuted": {},
+  "results": {
+    "BASIC_COMBINED": {
+      "total_points": 5,
+      "passed_points": 5,
+      "test_results": {
+        "combined_print": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": 0,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"line-a\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"print\">\n                  <expr>\n                    <literal class=\"String\" value=\"line-a\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"print\">\n                  <expr>\n                    <literal class=\"String\" value=\"line-b\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": "line-aline-aline-bline-b",
+          "interpreter_stderr": "",
+          "diff_output": null
+        },
+        "combined_read": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": 0,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"ur keyboard input\">\n  <class name=\"Main\" parent=\"String\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"read\">\n                  <expr>\n                    <literal class=\"class\" value=\"String\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": "",
+          "interpreter_stderr": "",
+          "diff_output": null
+        }
+      }
+    },
+    "BASIC_XML": {
+      "total_points": 4,
+      "passed_points": 4,
+      "test_results": {
+        "execute_print_xml": {
+          "result": "passed",
+          "parser_exit_code": null,
+          "interpreter_exit_code": 0,
+          "parser_stdout": null,
+          "parser_stderr": null,
+          "interpreter_stdout": "line-aline-aline-bline-b",
+          "interpreter_stderr": "",
+          "diff_output": null
+        },
+        "execute_read_xml": {
+          "result": "passed",
+          "parser_exit_code": null,
+          "interpreter_exit_code": 0,
+          "parser_stdout": null,
+          "parser_stderr": null,
+          "interpreter_stdout": "",
+          "interpreter_stderr": "",
+          "diff_output": null
+        }
+      }
+    },
+    "HOMEMADE_PARSE": {
+      "total_points": 7,
+      "passed_points": 7,
+      "test_results": {
+        "parse_and": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"true\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"and:\">\n              <expr>\n                <literal class=\"True\" value=\"true\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <send selector=\"equalTo:\">\n                    <expr>\n                      <literal class=\"Integer\" value=\"5\"/>\n                    </expr>\n                    <arg order=\"1\">\n                      <expr>\n                        <literal class=\"Integer\" value=\"5\"/>\n                      </expr>\n                    </arg>\n                  </send>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"3\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"and:\">\n              <expr>\n                <literal class=\"False\" value=\"false\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"False\" value=\"false\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"4\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"5\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"and:\">\n              <expr>\n                <literal class=\"False\" value=\"false\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <send selector=\"equalTo:\">\n                    <expr>\n                      <literal class=\"Integer\" value=\"5\"/>\n                    </expr>\n                    <arg order=\"1\">\n                      <expr>\n                        <literal class=\"Integer\" value=\"5\"/>\n                      </expr>\n                    </arg>\n                  </send>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"6\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"7\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"and:\">\n              <expr>\n                <send selector=\"equalTo:\">\n                  <expr>\n                    <literal class=\"Integer\" value=\"5\"/>\n                  </expr>\n                  <arg order=\"1\">\n                    <expr>\n                      <literal class=\"Integer\" value=\"5\"/>\n                    </expr>\n                  </arg>\n                </send>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <send selector=\"equalTo:\">\n                    <expr>\n                      <literal class=\"Integer\" value=\"5\"/>\n                    </expr>\n                    <arg order=\"1\">\n                      <expr>\n                        <literal class=\"Integer\" value=\"5\"/>\n                      </expr>\n                    </arg>\n                  </send>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"8\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"9\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"and:\">\n              <expr>\n                <literal class=\"True\" value=\"true\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"False\" value=\"false\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"10\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"11\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"and:\">\n              <expr>\n                <literal class=\"True\" value=\"true\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <send selector=\"greaterThan:\">\n                    <expr>\n                      <literal class=\"Integer\" value=\"1\"/>\n                    </expr>\n                    <arg order=\"1\">\n                      <expr>\n                        <literal class=\"Integer\" value=\"2\"/>\n                      </expr>\n                    </arg>\n                  </send>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"12\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"13\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"and:\">\n              <expr>\n                <send selector=\"and:\">\n                  <expr>\n                    <literal class=\"True\" value=\"true\"/>\n                  </expr>\n                  <arg order=\"1\">\n                    <expr>\n                      <literal class=\"True\" value=\"true\"/>\n                    </expr>\n                  </arg>\n                </send>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <send selector=\"not\">\n                    <expr>\n                      <literal class=\"False\" value=\"false\"/>\n                    </expr>\n                  </send>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"14\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        },
+        "parse_minus": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"42\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"minus:\">\n              <expr>\n                <literal class=\"Integer\" value=\"50\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"8\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"3\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"minus:\">\n              <expr>\n                <literal class=\"Integer\" value=\"3\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"8\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"4\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"5\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"minus:\">\n              <expr>\n                <literal class=\"Integer\" value=\"-4\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"-4\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"6\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        },
+        "parse_multiplyBy": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"42\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"multiplyBy:\">\n              <expr>\n                <literal class=\"Integer\" value=\"6\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"7\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"3\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"multiplyBy:\">\n              <expr>\n                <literal class=\"Integer\" value=\"6\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"0\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"4\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"5\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"multiplyBy:\">\n              <expr>\n                <literal class=\"Integer\" value=\"3\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"-4\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"6\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        },
+        "parse_not": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"true\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"r\"/>\n          <expr>\n            <literal class=\"False\" value=\"false\"/>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"not\">\n              <expr>\n                <var name=\"r\"/>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"3\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"4\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"not\">\n              <expr>\n                <literal class=\"True\" value=\"true\"/>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"5\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"6\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"not\">\n              <expr>\n                <send selector=\"not\">\n                  <expr>\n                    <literal class=\"True\" value=\"true\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"7\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        },
+        "parse_or": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"true\">\n  <class name=\"Main\" parent=\"Object\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"r\"/>\n          <expr>\n            <literal class=\"False\" value=\"false\"/>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"t\"/>\n          <expr>\n            <literal class=\"True\" value=\"true\"/>\n          </expr>\n        </assign>\n        <assign order=\"3\">\n          <var name=\"h\"/>\n          <expr>\n            <send selector=\"or:\">\n              <expr>\n                <var name=\"r\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <var name=\"t\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"4\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"h\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"5\">\n          <var name=\"h\"/>\n          <expr>\n            <send selector=\"or:\">\n              <expr>\n                <literal class=\"False\" value=\"false\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"False\" value=\"false\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"6\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"h\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"7\">\n          <var name=\"h\"/>\n          <expr>\n            <send selector=\"or:\">\n              <expr>\n                <literal class=\"True\" value=\"true\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"False\" value=\"false\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"8\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"h\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"9\">\n          <var name=\"h\"/>\n          <expr>\n            <send selector=\"or:\">\n              <expr>\n                <send selector=\"equalTo:\">\n                  <expr>\n                    <literal class=\"Integer\" value=\"1\"/>\n                  </expr>\n                  <arg order=\"1\">\n                    <expr>\n                      <literal class=\"Integer\" value=\"2\"/>\n                    </expr>\n                  </arg>\n                </send>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <send selector=\"equalTo:\">\n                    <expr>\n                      <literal class=\"Integer\" value=\"2\"/>\n                    </expr>\n                    <arg order=\"1\">\n                      <expr>\n                        <literal class=\"Integer\" value=\"2\"/>\n                      </expr>\n                    </arg>\n                  </send>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"10\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"h\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        },
+        "parse_whileTrue": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"3\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"cnt:\">\n              <expr>\n                <var name=\"self\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"3\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"whileTrue:\">\n              <expr>\n                <block arity=\"0\">\n                  <assign order=\"1\">\n                    <var name=\"c\"/>\n                    <expr>\n                      <send selector=\"greaterThan:\">\n                        <expr>\n                          <send selector=\"cnt\">\n                            <expr>\n                              <var name=\"self\"/>\n                            </expr>\n                          </send>\n                        </expr>\n                        <arg order=\"1\">\n                          <expr>\n                            <literal class=\"Integer\" value=\"0\"/>\n                          </expr>\n                        </arg>\n                      </send>\n                    </expr>\n                  </assign>\n                </block>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <block arity=\"0\">\n                    <assign order=\"1\">\n                      <var name=\"_\"/>\n                      <expr>\n                        <send selector=\"print\">\n                          <expr>\n                            <send selector=\"asString\">\n                              <expr>\n                                <send selector=\"cnt\">\n                                  <expr>\n                                    <var name=\"self\"/>\n                                  </expr>\n                                </send>\n                              </expr>\n                            </send>\n                          </expr>\n                        </send>\n                      </expr>\n                    </assign>\n                    <assign order=\"2\">\n                      <var name=\"_\"/>\n                      <expr>\n                        <send selector=\"cnt:\">\n                          <expr>\n                            <var name=\"self\"/>\n                          </expr>\n                          <arg order=\"1\">\n                            <expr>\n                              <send selector=\"minus:\">\n                                <expr>\n                                  <send selector=\"cnt\">\n                                    <expr>\n                                      <var name=\"self\"/>\n                                    </expr>\n                                  </send>\n                                </expr>\n                                <arg order=\"1\">\n                                  <expr>\n                                    <literal class=\"Integer\" value=\"1\"/>\n                                  </expr>\n                                </arg>\n                              </send>\n                            </expr>\n                          </arg>\n                        </send>\n                      </expr>\n                    </assign>\n                  </block>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        }
+      }
+    },
+    "BASIC_PARSE": {
+      "total_points": 3,
+      "passed_points": 3,
+      "test_results": {
+        "parse_plus": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"123\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"plus:\">\n              <expr>\n                <literal class=\"Integer\" value=\"100\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"23\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"3\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"plus:\">\n              <expr>\n                <literal class=\"Integer\" value=\"0\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"0\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"4\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"5\">\n          <var name=\"r\"/>\n          <expr>\n            <send selector=\"plus:\">\n              <expr>\n                <literal class=\"Integer\" value=\"-3\"/>\n              </expr>\n              <arg order=\"1\">\n                <expr>\n                  <literal class=\"Integer\" value=\"2\"/>\n                </expr>\n              </arg>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"6\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"asString\">\n                  <expr>\n                    <var name=\"r\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        },
+        "parse_print": {
+          "result": "passed",
+          "parser_exit_code": 0,
+          "interpreter_exit_code": null,
+          "parser_stdout": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<program language=\"SOL26\" description=\"line-a\">\n  <class name=\"Main\" parent=\"Integer\">\n    <method selector=\"run\">\n      <block arity=\"0\">\n        <assign order=\"1\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"print\">\n                  <expr>\n                    <literal class=\"String\" value=\"line-a\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n        <assign order=\"2\">\n          <var name=\"_\"/>\n          <expr>\n            <send selector=\"print\">\n              <expr>\n                <send selector=\"print\">\n                  <expr>\n                    <literal class=\"String\" value=\"line-b\"/>\n                  </expr>\n                </send>\n              </expr>\n            </send>\n          </expr>\n        </assign>\n      </block>\n    </method>\n  </class>\n</program>\n",
+          "parser_stderr": "",
+          "interpreter_stdout": null,
+          "interpreter_stderr": null,
+          "diff_output": null
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,12 @@
+*** Combined: read from stdin and print it
+!I! 0
++++ BASIC_COMBINED
+!C! 0
+>>> 2
+
+class Main : String {
+  run [|
+    "ur keyboard input"
+    _ := (String read) print.
+  ]
+}

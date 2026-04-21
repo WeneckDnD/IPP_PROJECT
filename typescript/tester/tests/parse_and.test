@@ -1,0 +1,36 @@
+*** Parse-only: boolean and:
+!C! 0
+>>> 1
++++ HOMEMADE_PARSE
+
+class Main : Integer {
+  run [|
+    "true"
+    r := true and: (5 equalTo: 5).
+    _ := (r asString) print.
+
+    "false"
+    r := false and: false.
+    _ := (r asString) print.
+
+    "false"
+    r := false and: (5 equalTo: 5).
+    _ := (r asString) print.
+
+    "true"
+    r := (5 equalTo: 5) and: (5 equalTo: 5).
+    _ := (r asString) print.
+
+    "false"
+    r := true and: false.
+    _ := (r asString) print.
+
+    "false"
+    r := true and: (1 greaterThan: 2).
+    _ := (r asString) print.
+
+    "true"
+    r := (true and: true) and: (false not).
+    _ := (r asString) print.
+  ]
+}

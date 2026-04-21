@@ -1,0 +1,21 @@
+>>> 1
+*** Parse-only: unary not
++++ HOMEMADE_PARSE
+!C! 0
+
+class Main : Integer {
+  run [|
+    "true"
+    r := false.
+    r := r not.
+    _ := (r asString) print.
+
+    "false"
+    r := true not.
+    _ := (r asString) print.
+
+    "true"
+    r := (true not) not.
+    _ := (r asString) print.
+  ]
+}

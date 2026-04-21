@@ -1,0 +1,28 @@
+!I! 0
++++ BASIC_XML
+>>> 2
+*** Execute-only XML: read from stdin and print
+
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="SOL26" description="ur keyboard input">
+  <class name="Main" parent="String">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="read">
+                  <expr>
+                    <literal class="class" value="String"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+</program>

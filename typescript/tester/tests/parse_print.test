@@ -1,0 +1,15 @@
+!C! 0
+*** Parse-only: nested print sends
++++ BASIC_PARSE
+>>> 1
+
+class Main : Integer {
+  run [|
+    "line-a"
+    "line-a"
+    _ := ('line-a' print) print.
+    "line-b"
+    "line-b"
+    _ := ('line-b' print) print.
+  ]
+}
