@@ -4,7 +4,7 @@ This module contains the main logic of the interpreter.
 IPP: You must definitely modify this file. Bend it to your will.
 
 Author: Ondřej Ondryáš <iondryas@fit.vut.cz>
-Author: Tadeas Bujdoso <xbjdot00>
+Author: Tadeas Bujdoso <xbujdot00>
 """
 
 import logging
@@ -29,7 +29,6 @@ from interpreter.input_model import (
 
 from .classes import BlockClass, FalseR, Integer, Nil, Object, String, TrueR
 
-# from .objects import NewObject
 from .scope import Scope
 
 logger = logging.getLogger(__name__)
@@ -81,7 +80,6 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["String"], "new", String.new)
 
     setattr(CLASS_REGISTRY["Nil"], "new", Nil.new)
-    # setattr(CLASS_REGISTRY["Nil"], "from:", Nil.from_)
     setattr(CLASS_REGISTRY["Nil"], "asString", Nil.as_string)
     setattr(CLASS_REGISTRY["Nil"], "identicalTo:", Nil.identical_to)
 
@@ -137,7 +135,6 @@ class Interpreter:
 
     def define_new_class(self, name: str, base_class_name: str, methods: list[Method]) -> Any:
         """Define new class."""
-        # Získame rodičovskú triedu z registra (napr. Object)
         parent_cls = CLASS_REGISTRY.get(base_class_name)
         if parent_cls is None:
             parent_class_def = self.find_class(base_class_name)
@@ -158,75 +155,17 @@ class Interpreter:
         for method in methods:
             all_methods[method.selector] = method
 
-        # Dynamicky vytvoríme novú triedu
-        # type(meno, (rodičia,), {atribúty/metódy})
         new_cls = type(name, (parent_cls,), all_methods)
-        # print(name, parent_cls.__name__)
-        # Zaregistrujeme ju, aby sa z nej dali vytvárať inštancie
         CLASS_REGISTRY[name] = new_cls
         return new_cls
 
-    # def send_message(
-    #     self, receiver: NewObject, selector: str, args: list[Any], scope: Scope
-    # ) -> Any:
-    #     """Dispatch a message send to a receiver object."""
-    #     if isinstance(receiver.value, Block):
-    #         return self.execute_block(receiver.value, scope, args)
-    #     method, class_def = receiver.lookup(
-    #         selector, cast(Program, self.current_program).classes
-    #     )
-    #     if method is None:
-    #         att = receiver.get_attribute(selector)
-    #         if att is not None:
-    #             return att
-    #     # built-in vs user-defined
-    #     if callable(method):
-    #         is_param = selector in receiver.param_foos and method is not None
-    #         new_args = []
-    #         for arg in args or []:
-    #             if isinstance(arg.value, Block):
-    #                 new_value = self.execute_block(arg.value, scope, [])
-    #                 new_args.append(new_value)
-    #             else:
-    #                 new_args.append(arg)
-
-    #         new_value = method(*new_args) if is_param else method()
-    #         value_type = type(new_value).__name__
-    #         new_parent = self.create_parent_by_type(value_type, new_value)
-    #         return NewObject(None, new_value, new_parent)
-    #     if method is None:
-    #         current_self = scope.get_variable("self")
-    #         attr_name = selector[:-1]
-    #         searched_method, _ = receiver.lookup(
-    #             attr_name, cast(Program, self.current_program).classes
-    #         )
-    #         if searched_method is not None:
-    #             raise InterpreterError(
-    #                 error_code=ErrorCode.INT_INST_ATTR,
-    #                 message=f"Attribute '{attr_name}' already exists as method",
-    #             )
-    #         current_self.set_attribute(attr_name, *args)
-    #         scope.update_variable("self", current_self)
-    #         return current_self
-
-    #     new_class_scope = Scope(scope)
-    #     if class_def is not None:
-    #         self_receiver = NewObject(class_def, receiver.value, receiver.parent)
-    #         super_receiver = self.get_super_class(self_receiver)
-    #         new_class_scope.set_variable("self", receiver)
-    #         new_class_scope.set_variable("super", super_receiver)
-    #     return self.execute_method(method, new_class_scope, args)
-
-    # from type[CLASS_REG] -> type
     def send_message(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
         """Send message to receiver."""
-        # print("selector",receiver.__class__.__name__, selector )
 
         if isinstance(receiver, BlockClass) and "value" in selector:
             return receiver.value(*args)
         
-        method = getattr(receiver, selector, None)  ## test the inherited methods
-        # parent_name = receiver.__class__.__bases__[0].__name__
+        method = getattr(receiver, selector, None)
 
         if method is None and selector[-1] == ":":
             check_method = getattr(receiver, selector[:-1], None)
@@ -235,11 +174,10 @@ class Interpreter:
                     error_code=ErrorCode.INT_INST_ATTR,
                     message=f"Method already exists in class {receiver.__class__.__name__}",
                 )
-            setattr(receiver, selector[:-1], args[0])  ## TODO !!!!! check more args
+            setattr(receiver, selector[:-1], args[0])
             return args[0]
 
         if method is None:
-            # print(dir(receiver)) COMMENTED
             raise InterpreterError(
                 error_code=ErrorCode.INT_DNU,
                 message=f"Method '{selector}' not found in class {receiver.__class__.__name__}",
@@ -280,7 +218,6 @@ class Interpreter:
 
         main_class = CLASS_REGISTRY["Main"]()
         self.send_message(main_class, "run", [], scope)
-        # print("end of program, ret",ret) COMMENTED
 
     def execute_method(self, method: Method | Any, parent_scope: Scope, args: list[Any]) -> Any:
         """Run a user-defined method body with the given arguments."""
@@ -346,16 +283,6 @@ class Interpreter:
 
         return CLASS_REGISTRY[literal.class_id](literal.value)
 
-    # def find_parent(self, parent: str) -> str:
-    #     """Walk the class hierarchy and return the root parent name."""
-    #     class_def = self.find_class(parent)
-    #     prev_class_def = None
-    #     while class_def is not None:
-    #         prev_class_def = class_def
-    #         class_def = self.find_class(class_def.parent)
-    #     if prev_class_def is not None:
-    #         return prev_class_def.parent
-    #     return parent
 
     def find_class(self, class_name: str) -> ClassDef | None:
         """Look up a class definition by name in the loaded program."""

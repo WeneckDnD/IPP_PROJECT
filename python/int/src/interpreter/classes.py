@@ -31,7 +31,6 @@ class Object:
 
     def equal_to(self, obj: Any) -> bool:
         """Check if objects are equal."""
-        # removed ret_val
         return self.identical_to(obj)
 
     def is_number(self) -> FalseR:
@@ -80,10 +79,6 @@ class Nil(Object):
         if isinstance(obj, Nil):
             return TrueR(True)
         return FalseR(False)
-    # @classmethod
-    # def from_(cls) -> Any:
-    #     """Get nil instance from class."""
-    #     return cls.instance
 
 nil = Nil()
 class Integer(Object):
@@ -156,13 +151,6 @@ class Integer(Object):
         if obj.value == 0:
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "Division by zero is not allowed.")
         return Integer(int(self.value) // int(obj.value))
-
-        #Processing: divBy.sol26
-        # selector Main run
-        # selector Integer divBy:
-        # get_variable r {'r': 11}
-        # selector int asString
-        # Error 51: Method 'asString' not found in class int
 
     def as_integer(self) -> Any:
         """Convert to integer."""
@@ -319,7 +307,6 @@ class TrueR(Object):
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        # print(f"self.boolean: {self.boolean}, obj.boolean: {obj.boolean}")
         if obj.boolean is True:
             return TrueR(True)
         return FalseR(False)
@@ -352,8 +339,6 @@ class FalseR(Object):
 
     def and_(self, obj: Any) -> Any:
         """Logical AND operation."""
-        # print(f"self.boolean: {type(self.boolean)}, obj.boolean: {type(obj.boolean)}")
-
         return FalseR(False)
 
 

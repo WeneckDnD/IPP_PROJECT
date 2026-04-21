@@ -1,4 +1,6 @@
 # syntax=docker/dockerfile:1
+# Created by <xbujdot00> with Generative AI
+
 
 # Node konfigurácia:
 # - predvolené: 24.12 (LTS)
@@ -37,13 +39,13 @@ RUN printf '%s\n' '#!/bin/sh' 'set -eu' 'cd /src/int' 'if [ "$#" -eq 0 ]; then e
 #   --mount type=bind,source=./python/int,target=/src/int
 #   --mount type=bind,source=./typescript/tester,target=/src/tester
 
-CMD ["bash"]
+ENTRYPOINT ["bash"]
 
 
 # ─────────────────────────────────────────
-# Stage: build
+# Stage: build-test
 # ─────────────────────────────────────────
-FROM ${NODE_IMAGE} AS build
+FROM ${NODE_IMAGE} AS build-test
 
 WORKDIR /src/tester
 
@@ -80,7 +82,7 @@ ENTRYPOINT ["python", "solint.py"]
 # ─────────────────────────────────────────
 FROM runtime AS test
 
-# Node ako v stage build/check (predvolený balík z Debianu je zvyčajne starší)
+# Node ako v stage build-test/check (predvolený balík z Debianu je zvyčajne starší)
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl ca-certificates \
     && curl -fsSL https://deb.nodesource.com/setup_${NODE_SETUP_MAJOR}.x | bash - \
@@ -89,9 +91,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 WORKDIR /tester
 
-# Skopíruj preložený tester z build stage
-COPY --from=build /src/tester/dist ./dist
-COPY --from=build /src/tester/node_modules ./node_modules
-COPY --from=build /src/tester/package.json ./
+# Skopíruj preložený tester z build-test stage
+COPY --from=build-test /src/tester/dist ./dist
+COPY --from=build-test /src/tester/node_modules ./node_modules
+COPY --from=build-test /src/tester/package.json ./
 
 ENTRYPOINT ["node", "dist/tester.js"]
