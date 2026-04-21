@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<program language="SOL26" description="123">
+<program language="SOL26" description="-123">
   <class name="Main" parent="Integer">
     <method selector="run">
       <block arity="0">
@@ -116,18 +116,6 @@
           </expr>
         </assign>
         <assign order="9">
-          <var name="m"/>
-          <expr>
-            <literal class="class" value="Nil"/>
-          </expr>
-        </assign>
-        <assign order="10">
-          <var name="d"/>
-          <expr>
-            <literal class="class" value="Nil"/>
-          </expr>
-        </assign>
-        <assign order="11">
           <var name="v"/>
           <expr>
             <send selector="identicalTo:">
@@ -142,7 +130,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="12">
+        <assign order="10">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -150,6 +138,93 @@
                 <send selector="asString">
                   <expr>
                     <var name="v"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="11">
+          <var name="i"/>
+          <expr>
+            <send selector="from:">
+              <expr>
+                <literal class="class" value="Integer"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="True" value="true"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="12">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="i"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="13">
+          <var name="i"/>
+          <expr>
+            <send selector="from:">
+              <expr>
+                <literal class="class" value="Integer"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="False" value="false"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="14">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="i"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="15">
+          <var name="i"/>
+          <expr>
+            <send selector="from:">
+              <expr>
+                <literal class="class" value="Integer"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Nil" value="nil"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="16">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="i"/>
                   </expr>
                 </send>
               </expr>

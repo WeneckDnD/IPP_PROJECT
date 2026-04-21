@@ -99,6 +99,108 @@
             </send>
           </expr>
         </assign>
+        <assign order="5">
+          <var name="x"/>
+          <expr>
+            <literal class="Integer" value="10"/>
+          </expr>
+        </assign>
+        <assign order="6">
+          <var name="r"/>
+          <expr>
+            <send selector="ifTrue:ifFalse:">
+              <expr>
+                <literal class="True" value="true"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <block arity="0">
+                    <assign order="1">
+                      <var name="r"/>
+                      <expr>
+                        <var name="x"/>
+                      </expr>
+                    </assign>
+                  </block>
+                </expr>
+              </arg>
+              <arg order="2">
+                <expr>
+                  <block arity="0">
+                    <assign order="1">
+                      <var name="r"/>
+                      <expr>
+                        <literal class="Integer" value="99"/>
+                      </expr>
+                    </assign>
+                  </block>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="7">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="8">
+          <var name="r"/>
+          <expr>
+            <send selector="ifTrue:ifFalse:">
+              <expr>
+                <literal class="False" value="false"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <block arity="0">
+                    <assign order="1">
+                      <var name="r"/>
+                      <expr>
+                        <var name="x"/>
+                      </expr>
+                    </assign>
+                  </block>
+                </expr>
+              </arg>
+              <arg order="2">
+                <expr>
+                  <block arity="0">
+                    <assign order="1">
+                      <var name="r"/>
+                      <expr>
+                        <literal class="Integer" value="99"/>
+                      </expr>
+                    </assign>
+                  </block>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="9">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
   </class>

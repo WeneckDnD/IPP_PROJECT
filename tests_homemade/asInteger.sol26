@@ -3,12 +3,21 @@ class Main : Integer {
     "240"
     r := '240' asInteger.
     _ := (r asString) print.
+
+    "7"
+    r := '007' asInteger.
+    _ := (r asString) print.
+
     "nil"
     t := 'nope' asInteger.
     _ := (t asString) print.
-    "specific object"
+
+    "-9 or nil ???????"
+    t := '-9' asInteger.
+    _ := (t asString) print.
+
+    "99"
     y := 99 asInteger.
-    _ := ( 'Object: ' asString ) print.
     _ := (y asString) print.
   ]
 }

@@ -1,8 +1,21 @@
 class Main : Object {
   run [|
+    "true"
     r := false.
     t := true.
     h := r or: t.
+    _ := (h asString) print.
+
+    "false"
+    h := false or: false.
+    _ := (h asString) print.
+
+    "true"
+    h := true or: false.
+    _ := (h asString) print.
+
+    "true"
+    h := (1 equalTo: 2) or: (2 equalTo: 2).
     _ := (h asString) print.
   ]
 }

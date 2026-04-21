@@ -6,5 +6,14 @@ class Main : Integer {
     "false"
     r := 3 greaterThan: 10.
     _ := (r asString) print.
+    "false"
+    r := 3 greaterThan: 3.
+    _ := (r asString) print.
+    "true"
+    r := 0 greaterThan: -1.
+    _ := (r asString) print.
+    "false"
+    r := -10 greaterThan: -2.
+    _ := (r asString) print.
   ]
 }

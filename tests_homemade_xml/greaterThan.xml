@@ -61,6 +61,93 @@
             </send>
           </expr>
         </assign>
+        <assign order="5">
+          <var name="r"/>
+          <expr>
+            <send selector="greaterThan:">
+              <expr>
+                <literal class="Integer" value="3"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="3"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="6">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="7">
+          <var name="r"/>
+          <expr>
+            <send selector="greaterThan:">
+              <expr>
+                <literal class="Integer" value="0"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="-1"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="8">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="9">
+          <var name="r"/>
+          <expr>
+            <send selector="greaterThan:">
+              <expr>
+                <literal class="Integer" value="-10"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="-2"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="10">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
   </class>

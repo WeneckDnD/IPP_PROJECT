@@ -1,6 +1,6 @@
 class Main : Integer {
   run [|
-    "123"
+    "-123"
     i := Integer from: -123.
     _ := (i asString) print.
 
@@ -16,9 +16,20 @@ class Main : Integer {
     b := n identicalTo: 3.
     _ := (b asString) print.
 
-    m := Nil.
-    d := Nil.
+    "true"
     v := n identicalTo: Nil.
     _ := (v asString) print.
+
+    "1"
+    i := Integer from: true.
+    _ := (i asString) print.
+
+    "0"
+    i := Integer from: false.
+    _ := (i asString) print.
+
+    "0"
+    i := Integer from: nil.
+    _ := (i asString) print.
   ]
 }

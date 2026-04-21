@@ -3,5 +3,13 @@ class Main : Integer {
     "bcd"
     r := 'abcdef' startsWith: 2 endsBefore: 5.
     _ := (r asString) print.
+
+    "abcde"
+    r := 'abcdef' startsWith: 1 endsBefore: 6.
+    _ := (r asString) print.
+
+    "f"
+    r := 'abcdef' startsWith: 6 endsBefore: 99.
+    _ := (r asString) print.
   ]
 }

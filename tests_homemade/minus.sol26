@@ -3,5 +3,11 @@ class Main : Integer {
     "42"
     r := 50 minus: 8.
     _ := (r asString) print.
+    "-5"
+    r := 3 minus: 8.
+    _ := (r asString) print.
+    "0"
+    r := -4 minus: -4.
+    _ := (r asString) print.
   ]
 }

@@ -97,6 +97,70 @@
             </send>
           </expr>
         </assign>
+        <assign order="7">
+          <var name="r"/>
+          <expr>
+            <send selector="startsWith:endsBefore:">
+              <expr>
+                <literal class="String" value="abcdef"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="-2"/>
+                </expr>
+              </arg>
+              <arg order="2">
+                <expr>
+                  <literal class="Integer" value="3"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="8">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="9">
+          <var name="r"/>
+          <expr>
+            <send selector="startsWith:endsBefore:">
+              <expr>
+                <literal class="String" value="abcdef"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="Integer" value="5"/>
+                </expr>
+              </arg>
+              <arg order="2">
+                <expr>
+                  <literal class="Integer" value="1"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="10">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <var name="r"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
   </class>

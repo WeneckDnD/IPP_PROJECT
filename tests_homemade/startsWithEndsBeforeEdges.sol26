@@ -11,5 +11,13 @@ class Main : Integer {
     "def"
     r := 'abcdef' startsWith: 4 endsBefore: 99.
     _ := r print.
+
+    "nil"
+    r := 'abcdef' startsWith: -2 endsBefore: 3.
+    _ := (r asString) print.
+
+    ""
+    r := 'abcdef' startsWith: 5 endsBefore: 1.
+    _ := r print.
   ]
 }

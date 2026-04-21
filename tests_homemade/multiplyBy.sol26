@@ -3,5 +3,11 @@ class Main : Integer {
     "42"
     r := 6 multiplyBy: 7.
     _ := (r asString) print.
+    "0"
+    r := 6 multiplyBy: 0.
+    _ := (r asString) print.
+    "-12"
+    r := 3 multiplyBy: -4.
+    _ := (r asString) print.
   ]
 }
