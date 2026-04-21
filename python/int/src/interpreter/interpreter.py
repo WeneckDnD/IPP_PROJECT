@@ -55,7 +55,6 @@ def update_built_in_classes() -> None:
     CLASS_REGISTRY["Object"].isBlock = Object.is_block
     CLASS_REGISTRY["Object"].isNil = Object.is_nil
     CLASS_REGISTRY["Object"].isBoolean = Object.is_boolean
-    setattr(CLASS_REGISTRY["Object"], "new:", Object.new)
 
     setattr(CLASS_REGISTRY["Integer"], "equalTo:", Integer.equal_to)
     setattr(CLASS_REGISTRY["Integer"], "greaterThan:", Integer.greater_than)
@@ -63,47 +62,35 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["Integer"], "minus:", Integer.minus)
     setattr(CLASS_REGISTRY["Integer"], "multiplyBy:", Integer.multiply_by)
     setattr(CLASS_REGISTRY["Integer"], "divBy:", Integer.div_by)
+    setattr(CLASS_REGISTRY["Integer"], "timesRepeat:", Integer.times_repeat)
     CLASS_REGISTRY["Integer"].asString = Integer.as_string
     CLASS_REGISTRY["Integer"].asInteger = Integer.as_integer
-    setattr(CLASS_REGISTRY["Integer"], "timesRepeat:", Integer.times_repeat)
-    setattr(CLASS_REGISTRY["Integer"], "new:", Integer.new)
 
-    # CLASS_REGISTRY["String"].read = String.read
-    # CLASS_REGISTRY["String"].print = String.print
     setattr(CLASS_REGISTRY["String"], "equalTo:", String.equal_to)
-    CLASS_REGISTRY["String"].asString = String.as_string
-    CLASS_REGISTRY["String"].asInteger = String.as_integer
     setattr(CLASS_REGISTRY["String"], "concatenateWith:", String.concatenate_with)
     setattr(CLASS_REGISTRY["String"], "startsWith:endsBefore:", String.starts_with_ends_before)
-    # CLASS_REGISTRY["String"].length = String.length
-    # CLASS_REGISTRY["String"].new = String.new
+    CLASS_REGISTRY["String"].asInteger = String.as_integer
+    CLASS_REGISTRY["String"].asString = String.as_string
 
-    # CLASS_REGISTRY["Nil"].new = Nil.new
-    CLASS_REGISTRY["Nil"].asString = Nil.as_string
     setattr(CLASS_REGISTRY["Nil"], "identicalTo:", Nil.identical_to)
+    CLASS_REGISTRY["Nil"].asString = Nil.as_string
 
-    CLASS_REGISTRY["True"].asString = TrueR.as_string
     setattr(CLASS_REGISTRY["True"], "not", TrueR.not_)
     setattr(CLASS_REGISTRY["True"], "and:", TrueR.and_)
     setattr(CLASS_REGISTRY["True"], "or:", TrueR.or_)
     setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
     setattr(CLASS_REGISTRY["True"], "isBoolean:", TrueR.is_boolean)
-    # setattr(CLASS_REGISTRY["True"], "new", TrueR.new)
-    # CLASS_REGISTRY["True"].isBoolean = TrueR.is_boolean
-    # CLASS_REGISTRY["True"].new = TrueR.new
+    CLASS_REGISTRY["True"].asString = TrueR.as_string
 
-    CLASS_REGISTRY["False"].asString = FalseR.as_string
     setattr(CLASS_REGISTRY["False"], "not", FalseR.not_)
     setattr(CLASS_REGISTRY["False"], "and:", FalseR.and_)
     setattr(CLASS_REGISTRY["False"], "or:", FalseR.or_)
     setattr(CLASS_REGISTRY["False"], "ifTrue:ifFalse:", FalseR.if_true_if_false)
     setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
-    # CLASS_REGISTRY["False"].new = FalseR.new
+    CLASS_REGISTRY["False"].asString = FalseR.as_string
 
     setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
-    # setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
-    # CLASS_REGISTRY["Block"].new = BlockClass.new
 
 
 def get_class_from_registry(class_name: str) -> type[Any]:
@@ -149,7 +136,6 @@ class Interpreter:
 
     def define_new_class(self, name: str, base_class_name: str, methods: list[Method]) -> Any:
         """Define new class."""
-        # Získame rodičovskú triedu z registra (napr. Object)
         parent_cls = get_class_from_registry(base_class_name)
         if parent_cls is None:
             parent_class_def = self.find_class(base_class_name)

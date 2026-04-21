@@ -11,7 +11,6 @@ from interpreter.exceptions import InterpreterError
 
 class Object:
     """main class object"""
-
     def __init__(self, *args: Any) -> None:
         """Initialize object with arguments."""
         self.args = args
