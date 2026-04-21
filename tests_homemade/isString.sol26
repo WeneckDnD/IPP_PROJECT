@@ -6,7 +6,7 @@ class Main : Integer {
     r := 0 isString.
     _ := (r asString) print.
     "false"
-    r := '' isString.
+    r := 'g' isString.
     _ := (r asString) print.
     "false"
     r := nil isString.

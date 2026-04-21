@@ -33,7 +33,7 @@
           <expr>
             <send selector="isString">
               <expr>
-                <literal class="String" value=""/>
+                <literal class="String" value="g"/>
               </expr>
             </send>
           </expr>

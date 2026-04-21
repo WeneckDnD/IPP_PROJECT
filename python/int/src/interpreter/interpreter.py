@@ -28,7 +28,6 @@ from interpreter.input_model import (
 )
 
 from .classes import BlockClass, FalseR, Integer, Nil, Object, String, TrueR
-
 from .scope import Scope
 
 logger = logging.getLogger(__name__)
@@ -50,12 +49,12 @@ def update_built_in_classes() -> None:
     # equalTo:
     setattr(CLASS_REGISTRY["Object"], "identicalTo:", Object.identical_to)
     setattr(CLASS_REGISTRY["Object"], "equalTo:", Object.equal_to)
-    setattr(CLASS_REGISTRY["Object"], "asString", Object.as_string)
-    setattr(CLASS_REGISTRY["Object"], "isNumber", Object.is_number)
-    setattr(CLASS_REGISTRY["Object"], "isString", Object.is_string)
-    setattr(CLASS_REGISTRY["Object"], "isBlock", Object.is_block)
-    setattr(CLASS_REGISTRY["Object"], "isNil", Object.is_nil)
-    setattr(CLASS_REGISTRY["Object"], "isBoolean", Object.is_boolean)
+    CLASS_REGISTRY["Object"].asString = Object.as_string
+    CLASS_REGISTRY["Object"].isNumber = Object.is_number
+    CLASS_REGISTRY["Object"].isString = Object.is_string
+    CLASS_REGISTRY["Object"].isBlock = Object.is_block
+    CLASS_REGISTRY["Object"].isNil = Object.is_nil
+    CLASS_REGISTRY["Object"].isBoolean = Object.is_boolean
     setattr(CLASS_REGISTRY["Object"], "new:", Object.new)
 
     setattr(CLASS_REGISTRY["Integer"], "equalTo:", Integer.equal_to)
@@ -64,44 +63,44 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["Integer"], "minus:", Integer.minus)
     setattr(CLASS_REGISTRY["Integer"], "multiplyBy:", Integer.multiply_by)
     setattr(CLASS_REGISTRY["Integer"], "divBy:", Integer.div_by)
-    setattr(CLASS_REGISTRY["Integer"], "asString", Integer.as_string)
-    setattr(CLASS_REGISTRY["Integer"], "asInteger", Integer.as_integer)
+    CLASS_REGISTRY["Integer"].asString = Integer.as_string
+    CLASS_REGISTRY["Integer"].asInteger = Integer.as_integer
     setattr(CLASS_REGISTRY["Integer"], "timesRepeat:", Integer.times_repeat)
     setattr(CLASS_REGISTRY["Integer"], "new:", Integer.new)
 
-    setattr(CLASS_REGISTRY["String"], "read", String.read)
-    setattr(CLASS_REGISTRY["String"], "print", String.print)
+    CLASS_REGISTRY["String"].read = String.read
+    CLASS_REGISTRY["String"].print = String.print
     setattr(CLASS_REGISTRY["String"], "equalTo:", String.equal_to)
-    setattr(CLASS_REGISTRY["String"], "asString", String.as_string)
-    setattr(CLASS_REGISTRY["String"], "asInteger", String.as_integer)
+    CLASS_REGISTRY["String"].asString = String.as_string
+    CLASS_REGISTRY["String"].asInteger = String.as_integer
     setattr(CLASS_REGISTRY["String"], "concatenateWith:", String.concatenate_with)
     setattr(CLASS_REGISTRY["String"], "startsWith:endsBefore:", String.starts_with_ends_before)
-    setattr(CLASS_REGISTRY["String"], "length", String.length)
-    setattr(CLASS_REGISTRY["String"], "new", String.new)
+    CLASS_REGISTRY["String"].length = String.length
+    CLASS_REGISTRY["String"].new = String.new
 
-    setattr(CLASS_REGISTRY["Nil"], "new", Nil.new)
-    setattr(CLASS_REGISTRY["Nil"], "asString", Nil.as_string)
+    CLASS_REGISTRY["Nil"].new = Nil.new
+    CLASS_REGISTRY["Nil"].asString = Nil.as_string
     setattr(CLASS_REGISTRY["Nil"], "identicalTo:", Nil.identical_to)
 
-    setattr(CLASS_REGISTRY["True"], "asString", TrueR.as_string)
+    CLASS_REGISTRY["True"].asString = TrueR.as_string
     setattr(CLASS_REGISTRY["True"], "not", TrueR.not_)
     setattr(CLASS_REGISTRY["True"], "and:", TrueR.and_)
     setattr(CLASS_REGISTRY["True"], "or:", TrueR.or_)
     setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
-    setattr(CLASS_REGISTRY["True"], "isBoolean", TrueR.is_boolean)
-    setattr(CLASS_REGISTRY["True"], "new", TrueR.new)
+    CLASS_REGISTRY["True"].isBoolean = TrueR.is_boolean
+    CLASS_REGISTRY["True"].new = TrueR.new
 
-    setattr(CLASS_REGISTRY["False"], "asString", FalseR.as_string)
+    CLASS_REGISTRY["False"].asString = FalseR.as_string
     setattr(CLASS_REGISTRY["False"], "not", FalseR.not_)
     setattr(CLASS_REGISTRY["False"], "and:", FalseR.and_)
     setattr(CLASS_REGISTRY["False"], "or:", FalseR.or_)
     setattr(CLASS_REGISTRY["False"], "ifTrue:ifFalse:", FalseR.if_true_if_false)
     setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
-    setattr(CLASS_REGISTRY["False"], "new", FalseR.new)
+    CLASS_REGISTRY["False"].new = FalseR.new
 
     setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
-    setattr(CLASS_REGISTRY["Block"], "new", BlockClass.new)
+    CLASS_REGISTRY["Block"].new = BlockClass.new
 
 class Interpreter:
     """
@@ -164,12 +163,13 @@ class Interpreter:
 
         if isinstance(receiver, BlockClass) and "value" in selector:
             return receiver.value(*args)
-        
+
         method = getattr(receiver, selector, None)
 
         if method is None and selector[-1] == ":":
             check_method = getattr(receiver, selector[:-1], None)
-            if check_method is not None and (callable(check_method) or isinstance(check_method, Method)):
+            if check_method is not None and (callable(check_method) or
+                isinstance(check_method, Method)):
                 raise InterpreterError(
                     error_code=ErrorCode.INT_INST_ATTR,
                     message=f"Method already exists in class {receiver.__class__.__name__}",
@@ -225,7 +225,7 @@ class Interpreter:
             return self.execute_block(method.block, parent_scope, args)
         raise InterpreterError(error_code=ErrorCode.INT_DNU, message="method not found")
 
-    def execute_block(self, block: Block, parent_scope: Scope, args: list[Any]) -> Any:
+    def execute_block(self, block: Block, parent_scope: Scope, args: Any) -> Any:
         """Evaluate a block: bind parameters, then run assignments in order."""
         if len(args) != block.arity:
             raise InterpreterError(
@@ -272,8 +272,7 @@ class Interpreter:
 
     def execute_setup_block(self, block: Block, current_scope: Scope) -> Any:
         """Execute a setup block and return the result."""
-        class_block = BlockClass(call_block(self, block, current_scope))
-        return class_block
+        return BlockClass(call_block(self, block, current_scope))
 
     # value is used in special case for 'from:' selector
     def execute_literal(self, literal: Literal) -> base_class_type | Any:
