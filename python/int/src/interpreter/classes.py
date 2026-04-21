@@ -11,6 +11,7 @@ from interpreter.exceptions import InterpreterError
 
 class Object:
     """main class object"""
+
     def __init__(self, *args: Any) -> None:
         """Initialize object with arguments."""
         self.args = args
@@ -335,6 +336,12 @@ class TrueR(Object):
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "or: expected Boolean operand")
         return TrueR(True) if self.boolean is True or obj.boolean is True else FalseR(False)
 
+    def identical_to(self, obj: Any) -> TrueR | FalseR:
+        """Check if objects are identical."""
+        if isinstance(obj, TrueR):
+            return TrueR(True)
+        return FalseR(False)
+
 
 class FalseR(Object):
     """False object with inherited methods from parent Object"""
@@ -378,3 +385,9 @@ class FalseR(Object):
         if not isinstance(cast(Any, obj), TrueR | FalseR):
             raise InterpreterError(ErrorCode.INT_INVALID_ARG, "or: expected Boolean operand")
         return TrueR(True) if self.boolean is True or obj.boolean is True else FalseR(False)
+
+    def identical_to(self, obj: Any) -> TrueR | FalseR:
+        """Check if objects are identical."""
+        if isinstance(obj, FalseR):
+            return TrueR(True)
+        return FalseR(False)

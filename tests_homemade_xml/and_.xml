@@ -264,6 +264,64 @@
             </send>
           </expr>
         </assign>
+        <assign order="15">
+          <var name="g"/>
+          <expr>
+            <send selector="identicalTo:">
+              <expr>
+                <literal class="True" value="true"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="True" value="true"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="16">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="g"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="17">
+          <var name="h"/>
+          <expr>
+            <send selector="identicalTo:">
+              <expr>
+                <literal class="False" value="false"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="False" value="false"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="18">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="h"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
   </class>

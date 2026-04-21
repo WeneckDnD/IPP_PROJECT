@@ -27,5 +27,13 @@ class Main : Integer {
     "true"
     r := (true and: true) and: (false not).
     _ := (r asString) print.
+
+    "true"
+    g := true identicalTo: true.
+    _ := (g asString) print.
+
+    "true"
+    h := false identicalTo: false.
+    _ := (h asString) print.
   ]
 }

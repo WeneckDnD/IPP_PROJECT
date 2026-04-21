@@ -80,6 +80,7 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["True"], "or:", TrueR.or_)
     setattr(CLASS_REGISTRY["True"], "ifTrue:ifFalse:", TrueR.if_true_if_false)
     setattr(CLASS_REGISTRY["True"], "isBoolean:", TrueR.is_boolean)
+    setattr(CLASS_REGISTRY["True"], "identicalTo:", TrueR.identical_to)
     CLASS_REGISTRY["True"].asString = TrueR.as_string
 
     setattr(CLASS_REGISTRY["False"], "not", FalseR.not_)
@@ -87,6 +88,7 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["False"], "or:", FalseR.or_)
     setattr(CLASS_REGISTRY["False"], "ifTrue:ifFalse:", FalseR.if_true_if_false)
     setattr(CLASS_REGISTRY["False"], "isBoolean:", FalseR.is_boolean)
+    setattr(CLASS_REGISTRY["False"], "identicalTo:", FalseR.identical_to)
     CLASS_REGISTRY["False"].asString = FalseR.as_string
 
     setattr(CLASS_REGISTRY["Block"], "value:", BlockClass.value)
