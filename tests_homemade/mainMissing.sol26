@@ -1,0 +1,6 @@
+class Worker : Integer {
+  run [|
+    "ERR_sem_main_missing_main_class"
+    _ := 1.
+  ]
+}

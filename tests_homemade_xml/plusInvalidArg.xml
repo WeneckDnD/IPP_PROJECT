@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="SOL26" description="ERR_plus_invalid_arg">
+  <class name="Main" parent="Integer">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="r"/>
+          <expr>
+            <send selector="plus:">
+              <expr>
+                <literal class="Integer" value="1"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <literal class="String" value="x"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+</program>

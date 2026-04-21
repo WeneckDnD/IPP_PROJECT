@@ -1,0 +1,6 @@
+class Main : Integer {
+  run [|
+    "ERR_plus_invalid_arg"
+    r := 1 plus: 'x'.
+  ]
+}

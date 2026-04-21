@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<program language="SOL26" description="ERR_dnu_unknown_selector">
+  <class name="Main" parent="Integer">
+    <method selector="run">
+      <block arity="0">
+        <assign order="1">
+          <var name="r"/>
+          <expr>
+            <send selector="doesNotExist">
+              <expr>
+                <literal class="Integer" value="1"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+      </block>
+    </method>
+  </class>
+</program>

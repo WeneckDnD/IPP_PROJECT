@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "ERR_sem_arity_block_value"
+    b := [ :x | _ := x. ].
+    r := b value.
+  ]
+}

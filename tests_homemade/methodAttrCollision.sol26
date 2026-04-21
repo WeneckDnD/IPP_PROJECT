@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "ERR_int_inst_attr_method_collision"
+    o := Object new.
+    _ := o asString: 1.
+  ]
+}

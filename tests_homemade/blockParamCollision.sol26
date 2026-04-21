@@ -1,0 +1,7 @@
+class Main : Integer {
+  run [|
+    "ERR_sem_collision_param_assign"
+    b := [ :x| x := 1. ].
+    r := b value: 0.
+  ]
+}

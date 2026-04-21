@@ -1,0 +1,6 @@
+class Main : Integer {
+  run [|
+    "ERR_div_by_zero"
+    r := 1 divBy: 0.
+  ]
+}

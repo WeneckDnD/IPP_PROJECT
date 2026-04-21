@@ -1,0 +1,6 @@
+class Main : Integer {
+  run [|
+    "ERR_dnu_unknown_selector"
+    r := 1 doesNotExist.
+  ]
+}

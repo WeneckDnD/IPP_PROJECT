@@ -1,0 +1,6 @@
+class Main : Integer {
+  helper [|
+    "ERR_sem_main_missing_run_method"
+    _ := 1.
+  ]
+}
