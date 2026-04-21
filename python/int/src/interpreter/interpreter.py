@@ -263,6 +263,8 @@ class Interpreter:
         if expr.literal is not None:
             return self.execute_literal(expr.literal)
         if expr.var is not None:
+            if expr.var.name == "super":
+                return current_scope.get_variable("self")
             return current_scope.get_variable(expr.var.name)
         if expr.block is not None:
             return self.execute_setup_block(expr.block, current_scope)
