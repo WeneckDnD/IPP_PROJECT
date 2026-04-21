@@ -54,7 +54,6 @@ class Object:
         return TrueR(True) if isinstance(self, TrueR | FalseR) else FalseR(False)
 
 
-
 class Nil(Object):
     """Nil object with inherited methods from parent Object"""
 
@@ -78,7 +77,10 @@ class Nil(Object):
             return TrueR(True)
         return FalseR(False)
 
+
 nil = Nil()
+
+
 class Integer(Object):
     """Integer object with inherited methods from parent Object"""
 
@@ -289,9 +291,7 @@ class TrueR(Object):
         """Negate true boolean."""
         return FalseR(False)
 
-    def if_true_if_false(
-        self, true_block: BlockClass, false_block: BlockClass
-    ) -> Any:
+    def if_true_if_false(self, true_block: BlockClass, false_block: BlockClass) -> Any:
         """Execute if true or false block."""
         if self.boolean is True:
             return true_block.value()
@@ -337,10 +337,7 @@ class FalseR(Object):
         """Logical AND operation."""
         return FalseR(False)
 
-
-    def if_true_if_false(
-        self, true_block: BlockClass, false_block: BlockClass
-    ) -> Any:
+    def if_true_if_false(self, true_block: BlockClass, false_block: BlockClass) -> Any:
         """Execute if true or false block."""
         if self.boolean is True:
             return true_block.value()

@@ -102,6 +102,7 @@ def update_built_in_classes() -> None:
     setattr(CLASS_REGISTRY["Block"], "whileTrue:", BlockClass.while_true)
     CLASS_REGISTRY["Block"].new = BlockClass.new
 
+
 class Interpreter:
     """
     The main interpreter class, responsible for loading the source file and executing the program.
@@ -168,8 +169,9 @@ class Interpreter:
 
         if method is None and selector[-1] == ":":
             check_method = getattr(receiver, selector[:-1], None)
-            if check_method is not None and (callable(check_method) or
-                isinstance(check_method, Method)):
+            if check_method is not None and (
+                callable(check_method) or isinstance(check_method, Method)
+            ):
                 raise InterpreterError(
                     error_code=ErrorCode.INT_INST_ATTR,
                     message=f"Method already exists in class {receiver.__class__.__name__}",
@@ -282,7 +284,6 @@ class Interpreter:
 
         return CLASS_REGISTRY[literal.class_id](literal.value)
 
-
     def find_class(self, class_name: str) -> ClassDef | None:
         """Look up a class definition by name in the loaded program."""
         for cls in cast(Program, self.current_program).classes:
@@ -312,9 +313,12 @@ class Interpreter:
             return self.send_message(class_y, "new", arguments, current_scope)
         return self.send_message(class_y, selector, arguments, current_scope)
 
+
 def call_block(interpreter: Interpreter, block: Block, scope: Scope) -> Any:
     """Call a block with the given arguments."""
+
     def execute_block_class(*args: Any) -> Any:
         """Execute a block with the given arguments."""
         return interpreter.execute_block(block, scope, args)
+
     return execute_block_class
