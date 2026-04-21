@@ -218,7 +218,7 @@ class Interpreter:
     #     return self.execute_method(method, new_class_scope, args)
 
     # from type[CLASS_REG] -> type
-    def send_message2(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
+    def send_message(self, receiver: type, selector: str, args: list[Any], scope: Scope) -> Any:
         """Send message to receiver."""
         # print("selector",receiver.__class__.__name__, selector )
 
@@ -279,7 +279,7 @@ class Interpreter:
             )
 
         main_class = CLASS_REGISTRY["Main"]()
-        self.send_message2(main_class, "run", [], scope)
+        self.send_message(main_class, "run", [], scope)
         # print("end of program, ret",ret) COMMENTED
 
     def execute_method(self, method: Method | Any, parent_scope: Scope, args: list[Any]) -> Any:
@@ -383,8 +383,8 @@ class Interpreter:
                     message="from: requires a value argument",
                 )
 
-            return self.send_message2(class_y, "new", arguments, current_scope)
-        return self.send_message2(class_y, selector, arguments, current_scope)
+            return self.send_message(class_y, "new", arguments, current_scope)
+        return self.send_message(class_y, selector, arguments, current_scope)
 
 def call_block(interpreter: Interpreter, block: Block, scope: Scope) -> Any:
     """Call a block with the given arguments."""
