@@ -225,10 +225,10 @@ class String(Object):
         return String(self.string)
 
     def as_integer(self) -> Integer | Nil:
-        """Convert string to integer."""
-        if self.string.isdigit():
+        try:
             return Integer(int(self.string))
-        return Nil()
+        except (TypeError, ValueError):
+            return Nil()
 
     def concatenate_with(self, obj: String) -> Any:
         """Concatenate with another string."""
