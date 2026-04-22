@@ -6,30 +6,38 @@ class Main : Integer {
     x := 9.
     r := x identicalTo: x.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "false"
     y := 9.
     r := x identicalTo: y.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "true"
     s := 'z'.
     r := s identicalTo: s.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "true TODO: FIX now false"
     r := nil identicalTo: nil.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "true"
     o := Box new.
     r := o identicalTo: o.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "false"
     p := Box new.
     r := o identicalTo: p.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "TODO FIX: now false"
     r := true identicalTo: true.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "TODO FIX: now false"
     r := false identicalTo: false.
     _ := (r asString) print.
+    _ := ' == true\n' print.
   ]
 }

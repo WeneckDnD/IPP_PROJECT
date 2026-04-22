@@ -3,37 +3,46 @@ class Main : Integer {
     "true"
     r := true and: (5 equalTo: 5).
     _ := (r asString) print.
+    _ := ' == true\n' print.
 
     "false"
     r := false and: false.
     _ := (r asString) print.
+    _ := ' == false\n' print.
 
     "false"
     r := false and: (5 equalTo: 5).
     _ := (r asString) print.
+    _ := ' == false\n' print.
 
     "true"
     r := (5 equalTo: 5) and: (5 equalTo: 5).
     _ := (r asString) print.
+    _ := ' == true\n' print.
 
     "false"
     r := true and: false.
     _ := (r asString) print.
+    _ := ' == false\n' print.
 
     "false"
     r := true and: (1 greaterThan: 2).
     _ := (r asString) print.
+    _ := ' == false\n' print.
 
     "true"
     r := (true and: true) and: (false not).
     _ := (r asString) print.
+    _ := ' == true\n' print.
 
     "true"
     g := true identicalTo: true.
     _ := (g asString) print.
+    _ := ' == true\n' print.
 
     "true"
     h := false identicalTo: false.
     _ := (h asString) print.
+    _ := ' == true\n' print.
   ]
 }

@@ -38,6 +38,16 @@
           </expr>
         </assign>
         <assign order="3">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == nil&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="4">
           <var name="r"/>
           <expr>
             <send selector="startsWith:endsBefore:">
@@ -57,7 +67,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="4">
+        <assign order="5">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -67,7 +77,17 @@
             </send>
           </expr>
         </assign>
-        <assign order="5">
+        <assign order="6">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == &#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="7">
           <var name="r"/>
           <expr>
             <send selector="startsWith:endsBefore:">
@@ -87,7 +107,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="6">
+        <assign order="8">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -97,7 +117,17 @@
             </send>
           </expr>
         </assign>
-        <assign order="7">
+        <assign order="9">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == def&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="10">
           <var name="r"/>
           <expr>
             <send selector="startsWith:endsBefore:">
@@ -117,7 +147,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="8">
+        <assign order="11">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -131,7 +161,17 @@
             </send>
           </expr>
         </assign>
-        <assign order="9">
+        <assign order="12">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == nil&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="13">
           <var name="r"/>
           <expr>
             <send selector="startsWith:endsBefore:">
@@ -151,12 +191,22 @@
             </send>
           </expr>
         </assign>
-        <assign order="10">
+        <assign order="14">
           <var name="_"/>
           <expr>
             <send selector="print">
               <expr>
                 <var name="r"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="15">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == &#10;"/>
               </expr>
             </send>
           </expr>

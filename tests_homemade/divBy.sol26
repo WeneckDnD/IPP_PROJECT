@@ -3,13 +3,16 @@ class Main : Integer {
     "11"
     r := 100 divBy: 9.
     _ := (r asString) print.
+    _ := ' == 11\n' print.
 
     "5"
     r := 20 divBy: 4.
     _ := (r asString) print.
+    _ := ' == 5\n' print.
 
     "-3"
     r := -10 divBy: 3.
     _ := (r asString) print.
+    _ := ' == -3\n' print.
   ]
 }

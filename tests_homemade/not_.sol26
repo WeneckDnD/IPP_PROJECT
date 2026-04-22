@@ -4,13 +4,16 @@ class Main : Integer {
     r := false.
     r := r not.
     _ := (r asString) print.
+    _ := ' == true\n' print.
 
     "false"
     r := true not.
     _ := (r asString) print.
+    _ := ' == false\n' print.
 
     "true"
     r := (true not) not.
     _ := (r asString) print.
+    _ := ' == true\n' print.
   ]
 }

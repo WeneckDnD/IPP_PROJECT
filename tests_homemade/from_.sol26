@@ -3,33 +3,41 @@ class Main : Integer {
     "-123"
     i := Integer from: -123.
     _ := (i asString) print.
+    _ := ' == -123\n' print.
 
     "456"
     s := String from: '456'.
     _ := s print.
+    _ := ' == 456\n' print.
 
     "nil"
     n := Nil from: 7.
     _ := (n asString) print.
+    _ := ' == nil\n' print.
 
     "false"
     b := n identicalTo: 3.
     _ := (b asString) print.
+    _ := ' == false\n' print.
 
     "true"
     v := n identicalTo: Nil.
     _ := (v asString) print.
+    _ := ' == true\n' print.
 
     "1"
     i := Integer from: true.
     _ := (i asString) print.
+    _ := ' == 1\n' print.
 
     "0"
     i := Integer from: false.
     _ := (i asString) print.
+    _ := ' == 0\n' print.
 
     "0"
     i := Integer from: nil.
     _ := (i asString) print.
+    _ := ' == 0\n' print.
   ]
 }

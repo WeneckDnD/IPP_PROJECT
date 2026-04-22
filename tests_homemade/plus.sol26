@@ -3,11 +3,14 @@ class Main : Integer {
     "123"
     r := 100 plus: 23.
     _ := (r asString) print.
+    _ := ' == 123\n' print.
     "0"
     r := 0 plus: 0.
     _ := (r asString) print.
+    _ := ' == 0\n' print.
     "-1"
     r := -3 plus: 2.
     _ := (r asString) print.
+    _ := ' == -1\n' print.
   ]
 }

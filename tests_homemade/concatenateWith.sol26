@@ -3,5 +3,6 @@ class Main : Integer {
     "foobar"
     r := 'foo' concatenateWith: 'bar'.
     _ := (r asString) print.
+    _ := ' == foobar\n' print.
   ]
 }

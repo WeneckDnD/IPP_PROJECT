@@ -3,13 +3,16 @@ class Main : Integer {
     "bcd"
     r := 'abcdef' startsWith: 2 endsBefore: 5.
     _ := (r asString) print.
+    _ := ' == bcd\n' print.
 
     "abcde"
     r := 'abcdef' startsWith: 1 endsBefore: 6.
     _ := (r asString) print.
+    _ := ' == abcde\n' print.
 
     "f"
     r := 'abcdef' startsWith: 6 endsBefore: 99.
     _ := (r asString) print.
+    _ := ' == f\n' print.
   ]
 }

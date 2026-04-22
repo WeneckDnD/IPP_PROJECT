@@ -3,5 +3,6 @@ class Main : Integer {
     "30"
     n := 'ignored_operand_in_classes_py' length.
     _ := (n asString) print.
+    _ := ' == 30\n' print.
   ]
 }

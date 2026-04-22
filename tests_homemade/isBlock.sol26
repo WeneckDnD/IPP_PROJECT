@@ -6,25 +6,32 @@ class Main : Integer {
     blk := [| r := 1. ].
     r := blk isBlock.
     _ := (r asString) print.
+    _ := ' == true\n' print.
 
     "false"
     r := 1 isBlock.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := 'b' isBlock.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := nil isBlock.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := true isBlock.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := false isBlock.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     o := Box new.
     r := o isBlock.
     _ := (r asString) print.
+    _ := ' == false\n' print.
   ]
 }

@@ -5,21 +5,27 @@ class Main : Integer {
     "false"
     r := 0 isString.
     _ := (r asString) print.
-    "false"
+    _ := ' == false\n' print.
+    "true"
     r := 'g' isString.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "false"
     r := nil isString.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := true isString.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := false isString.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     o := Box new.
     r := o isString.
     _ := (r asString) print.
+    _ := ' == false\n' print.
   ]
 }

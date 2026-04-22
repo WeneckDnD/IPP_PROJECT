@@ -30,7 +30,7 @@
           <expr>
             <send selector="timesRepeat:">
               <expr>
-                <literal class="Integer" value="0"/>
+                <literal class="Integer" value="3"/>
               </expr>
               <arg order="1">
                 <expr>
@@ -45,11 +45,7 @@
           <expr>
             <send selector="print">
               <expr>
-                <send selector="asString">
-                  <expr>
-                    <var name="c"/>
-                  </expr>
-                </send>
+                <literal class="String" value=" == 123&#10;"/>
               </expr>
             </send>
           </expr>

@@ -3,17 +3,22 @@ class Main : Integer {
     "true"
     r := 10 greaterThan: 3.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "false"
     r := 3 greaterThan: 10.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := 3 greaterThan: 3.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "true"
     r := 0 greaterThan: -1.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "false"
     r := -10 greaterThan: -2.
     _ := (r asString) print.
+    _ := ' == false\n' print.
   ]
 }

@@ -4,6 +4,7 @@ class Main : Integer {
     c := b value: 11 value: 31.
     _ := (c asString) print.
     "42"
+    _ := ' == 42\n' print.
     o := Integer new.
     _ := o attr: 1.
     _ := o attr: 2.
@@ -12,5 +13,6 @@ class Main : Integer {
     y := [| ret := (self attr) greaterThan: 0.] whileTrue:
             [| r := ((self attr) asString) print.
               r := self attr: ((self attr) minus: 1).].
+    _ := ' == 4321\n' print.
   ]
 }

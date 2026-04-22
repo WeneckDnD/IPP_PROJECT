@@ -3,21 +3,26 @@ class Main : Integer {
     "240"
     r := '240' asInteger.
     _ := (r asString) print.
+    _ := ' == 240\n' print.
 
     "7"
     r := '007' asInteger.
     _ := (r asString) print.
+    _ := ' == 7\n' print.
 
     "nil"
     t := 'nope' asInteger.
     _ := (t asString) print.
+    _ := ' == nil\n' print.
 
     "-9"
     t := '-9' asInteger.
     _ := (t asString) print.
+    _ := ' == -9\n' print.
 
     "99"
     y := 99 asInteger.
     _ := (y asString) print.
+    _ := ' == 99\n' print.
   ]
 }

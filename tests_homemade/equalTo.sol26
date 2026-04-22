@@ -5,31 +5,40 @@ class Main : Integer {
     "true"
     r := 42 equalTo: 42.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "false"
     r := 42 equalTo: 7.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "true"
     r := 'sol' equalTo: 'sol'.
     _ := (r asString) print.
+    _ := ' == true\n' print.
     "false"
     r := 'sol' equalTo: 'nos'.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false ???" 
     a := Box new.
     b := Box new.
     r := a equalTo: b.
     _ := (r asString) print.
+    _ := ' == false ???\n' print.
     "false ???"
     r := a equalTo: a.
     _ := (r asString) print.
+    _ := ' == false ???\n' print.
     "false"
     r := nil equalTo: nil.
     _ := (r asString) print.
+    _ := ' == false ???\n' print.
     "false"
     r := true equalTo: true.
     _ := (r asString) print.
+    _ := ' == false\n' print.
     "false"
     r := false equalTo: false.
     _ := (r asString) print.
+    _ := ' == false\n' print.
   ]
 }

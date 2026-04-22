@@ -22,11 +22,31 @@
           <expr>
             <send selector="print">
               <expr>
+                <literal class="String" value=" == line-aline-a&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="3">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
                 <send selector="print">
                   <expr>
                     <literal class="String" value="line-b"/>
                   </expr>
                 </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="4">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == line-bline-b&#10;"/>
               </expr>
             </send>
           </expr>

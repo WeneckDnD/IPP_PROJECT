@@ -27,6 +27,16 @@
             </send>
           </expr>
         </assign>
+        <assign order="3">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == 30&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
       </block>
     </method>
   </class>

@@ -40,12 +40,22 @@
           </expr>
         </assign>
         <assign order="4">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == true&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="5">
           <var name="y"/>
           <expr>
             <literal class="Integer" value="9"/>
           </expr>
         </assign>
-        <assign order="5">
+        <assign order="6">
           <var name="r"/>
           <expr>
             <send selector="identicalTo:">
@@ -60,7 +70,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="6">
+        <assign order="7">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -74,13 +84,23 @@
             </send>
           </expr>
         </assign>
-        <assign order="7">
+        <assign order="8">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == false&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="9">
           <var name="s"/>
           <expr>
             <literal class="String" value="z"/>
           </expr>
         </assign>
-        <assign order="8">
+        <assign order="10">
           <var name="r"/>
           <expr>
             <send selector="identicalTo:">
@@ -90,35 +110,6 @@
               <arg order="1">
                 <expr>
                   <var name="s"/>
-                </expr>
-              </arg>
-            </send>
-          </expr>
-        </assign>
-        <assign order="9">
-          <var name="_"/>
-          <expr>
-            <send selector="print">
-              <expr>
-                <send selector="asString">
-                  <expr>
-                    <var name="r"/>
-                  </expr>
-                </send>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="10">
-          <var name="r"/>
-          <expr>
-            <send selector="identicalTo:">
-              <expr>
-                <literal class="Nil" value="nil"/>
-              </expr>
-              <arg order="1">
-                <expr>
-                  <literal class="Nil" value="nil"/>
                 </expr>
               </arg>
             </send>
@@ -139,11 +130,11 @@
           </expr>
         </assign>
         <assign order="12">
-          <var name="o"/>
+          <var name="_"/>
           <expr>
-            <send selector="new">
+            <send selector="print">
               <expr>
-                <literal class="class" value="Box"/>
+                <literal class="String" value=" == true&#10;"/>
               </expr>
             </send>
           </expr>
@@ -153,11 +144,11 @@
           <expr>
             <send selector="identicalTo:">
               <expr>
-                <var name="o"/>
+                <literal class="Nil" value="nil"/>
               </expr>
               <arg order="1">
                 <expr>
-                  <var name="o"/>
+                  <literal class="Nil" value="nil"/>
                 </expr>
               </arg>
             </send>
@@ -178,6 +169,65 @@
           </expr>
         </assign>
         <assign order="15">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == true&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="16">
+          <var name="o"/>
+          <expr>
+            <send selector="new">
+              <expr>
+                <literal class="class" value="Box"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="17">
+          <var name="r"/>
+          <expr>
+            <send selector="identicalTo:">
+              <expr>
+                <var name="o"/>
+              </expr>
+              <arg order="1">
+                <expr>
+                  <var name="o"/>
+                </expr>
+              </arg>
+            </send>
+          </expr>
+        </assign>
+        <assign order="18">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="19">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == true&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="20">
           <var name="p"/>
           <expr>
             <send selector="new">
@@ -187,7 +237,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="16">
+        <assign order="21">
           <var name="r"/>
           <expr>
             <send selector="identicalTo:">
@@ -202,7 +252,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="17">
+        <assign order="22">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -216,7 +266,17 @@
             </send>
           </expr>
         </assign>
-        <assign order="18">
+        <assign order="23">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == false&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="24">
           <var name="r"/>
           <expr>
             <send selector="identicalTo:">
@@ -231,7 +291,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="19">
+        <assign order="25">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -245,7 +305,17 @@
             </send>
           </expr>
         </assign>
-        <assign order="20">
+        <assign order="26">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == true&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="27">
           <var name="r"/>
           <expr>
             <send selector="identicalTo:">
@@ -260,7 +330,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="21">
+        <assign order="28">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -270,6 +340,16 @@
                     <var name="r"/>
                   </expr>
                 </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="29">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == true&#10;"/>
               </expr>
             </send>
           </expr>

@@ -3,8 +3,10 @@ class Main : Integer {
     "line-a"
     "line-a"
     _ := ('line-a' print) print.
+    _ := ' == line-aline-a\n' print.
     "line-b"
     "line-b"
     _ := ('line-b' print) print.
+    _ := ' == line-bline-b\n' print.
   ]
 }

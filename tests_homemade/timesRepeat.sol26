@@ -2,7 +2,7 @@ class Main : Integer {
   run [|
     "skipped"
     bb := [ :x| _ := (x asString) print.].
-    c := 0 timesRepeat: bb.
-    _ := (c asString) print.
+    c := 3 timesRepeat: bb.
+    _ := ' == 123\n' print.
   ]
 }

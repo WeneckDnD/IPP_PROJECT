@@ -3,17 +3,21 @@ class Main : Integer {
     "T"
     r := true ifTrue: [ | r := 'T'. ] ifFalse: [ | r := 'F'. ].
     _ := (r asString) print.
+    _ := ' == T\n' print.
     "F"
     r := false ifTrue: [ | r := 'T'. ] ifFalse: [ | r := 'F'. ].
     _ := (r asString) print.
+    _ := ' == F\n' print.
 
     "10"
     x := 10.
     r := true ifTrue: [ | r := x. ] ifFalse: [ | r := 99. ].
     _ := (r asString) print.
+    _ := ' == 10\n' print.
 
     "99"
     r := false ifTrue: [ | r := x. ] ifFalse: [ | r := 99. ].
     _ := (r asString) print.
+    _ := ' == 99\n' print.
   ]
 }

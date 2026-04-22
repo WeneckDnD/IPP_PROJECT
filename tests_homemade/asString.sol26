@@ -4,16 +4,22 @@ class Main : Integer {
   run [|
     "5"
     _ := (5 asString) print.
+    _ := ' == 5\n' print.
     "hello"
     _ := ('hello' asString) print.
+    _ := ' == hello\n' print.
     "nil"
     _ := (nil asString) print.
+    _ := ' == nil\n' print.
     "true"
     _ := (true asString) print.
+    _ := ' == true\n' print.
     "false"
     _ := (false asString) print.
+    _ := ' == false\n' print.
     "0"
     o := Box new.
     _ := (o asString) print.
+    _ := ' == 0\n' print.
   ]
 }

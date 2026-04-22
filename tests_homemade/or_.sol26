@@ -5,17 +5,21 @@ class Main : Object {
     t := true.
     h := r or: t.
     _ := (h asString) print.
+    _ := ' == true\n' print.
 
     "false"
     h := false or: false.
     _ := (h asString) print.
+    _ := ' == false\n' print.
 
     "true"
     h := true or: false.
     _ := (h asString) print.
+    _ := ' == true\n' print.
 
     "true"
     h := (1 equalTo: 2) or: (2 equalTo: 2).
     _ := (h asString) print.
+    _ := ' == true\n' print.
   ]
 }

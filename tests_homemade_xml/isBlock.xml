@@ -42,6 +42,16 @@
           </expr>
         </assign>
         <assign order="4">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == true&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="5">
           <var name="r"/>
           <expr>
             <send selector="isBlock">
@@ -51,7 +61,7 @@
             </send>
           </expr>
         </assign>
-        <assign order="5">
+        <assign order="6">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -61,16 +71,6 @@
                     <var name="r"/>
                   </expr>
                 </send>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="6">
-          <var name="r"/>
-          <expr>
-            <send selector="isBlock">
-              <expr>
-                <literal class="String" value="b"/>
               </expr>
             </send>
           </expr>
@@ -80,11 +80,7 @@
           <expr>
             <send selector="print">
               <expr>
-                <send selector="asString">
-                  <expr>
-                    <var name="r"/>
-                  </expr>
-                </send>
+                <literal class="String" value=" == false&#10;"/>
               </expr>
             </send>
           </expr>
@@ -94,7 +90,7 @@
           <expr>
             <send selector="isBlock">
               <expr>
-                <literal class="Nil" value="nil"/>
+                <literal class="String" value="b"/>
               </expr>
             </send>
           </expr>
@@ -114,16 +110,26 @@
           </expr>
         </assign>
         <assign order="10">
-          <var name="r"/>
+          <var name="_"/>
           <expr>
-            <send selector="isBlock">
+            <send selector="print">
               <expr>
-                <literal class="True" value="true"/>
+                <literal class="String" value=" == false&#10;"/>
               </expr>
             </send>
           </expr>
         </assign>
         <assign order="11">
+          <var name="r"/>
+          <expr>
+            <send selector="isBlock">
+              <expr>
+                <literal class="Nil" value="nil"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="12">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -133,16 +139,6 @@
                     <var name="r"/>
                   </expr>
                 </send>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="12">
-          <var name="r"/>
-          <expr>
-            <send selector="isBlock">
-              <expr>
-                <literal class="False" value="false"/>
               </expr>
             </send>
           </expr>
@@ -152,36 +148,22 @@
           <expr>
             <send selector="print">
               <expr>
-                <send selector="asString">
-                  <expr>
-                    <var name="r"/>
-                  </expr>
-                </send>
+                <literal class="String" value=" == false&#10;"/>
               </expr>
             </send>
           </expr>
         </assign>
         <assign order="14">
-          <var name="o"/>
+          <var name="r"/>
           <expr>
-            <send selector="new">
+            <send selector="isBlock">
               <expr>
-                <literal class="class" value="Box"/>
+                <literal class="True" value="true"/>
               </expr>
             </send>
           </expr>
         </assign>
         <assign order="15">
-          <var name="r"/>
-          <expr>
-            <send selector="isBlock">
-              <expr>
-                <var name="o"/>
-              </expr>
-            </send>
-          </expr>
-        </assign>
-        <assign order="16">
           <var name="_"/>
           <expr>
             <send selector="print">
@@ -191,6 +173,94 @@
                     <var name="r"/>
                   </expr>
                 </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="16">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == false&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="17">
+          <var name="r"/>
+          <expr>
+            <send selector="isBlock">
+              <expr>
+                <literal class="False" value="false"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="18">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="19">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == false&#10;"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="20">
+          <var name="o"/>
+          <expr>
+            <send selector="new">
+              <expr>
+                <literal class="class" value="Box"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="21">
+          <var name="r"/>
+          <expr>
+            <send selector="isBlock">
+              <expr>
+                <var name="o"/>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="22">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <send selector="asString">
+                  <expr>
+                    <var name="r"/>
+                  </expr>
+                </send>
+              </expr>
+            </send>
+          </expr>
+        </assign>
+        <assign order="23">
+          <var name="_"/>
+          <expr>
+            <send selector="print">
+              <expr>
+                <literal class="String" value=" == false&#10;"/>
               </expr>
             </send>
           </expr>
